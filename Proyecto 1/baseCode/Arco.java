@@ -13,6 +13,8 @@ public class Arco {
      * Crea una arista entre los vertices src y dst.
      */
     public Arco(String src, String dst) {
+    	this.src = src;
+    	this.dst = dst;
     }
 
     /**
@@ -34,21 +36,23 @@ public class Arco {
      * Indica si la arista de entrada es igual a this.
      */
     public boolean equals(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Arco d = (Arco) o;
+    	return (o instanceof Arco) && d.dst.equalsIgnoreCase(dst) && 
+    	d.src.equalsIgnoreCase(src);
     }
 
     /**
      * Retorna el vertice src de la arista.
      */
     public String getSrc() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.src;
     }
 
     /**
      * Retorna el vertice dst de la arista.
      */
     public String getDst() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.dst;
     }
 
     /**
