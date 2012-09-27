@@ -8,6 +8,7 @@ public class Arco {
 
     private Arco() {
     }
+    
     /**
      * Crea una arista entre los vertices src y dst.
      */
