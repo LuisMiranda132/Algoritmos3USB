@@ -19,7 +19,7 @@ public class Caja<E> {
 	 * Devuelve el contenido de la caja.
 	 */
 	public E obtenerCont() {
-		return cont;
+		return this.cont;
 	}
 	
 	/*

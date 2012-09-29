@@ -38,12 +38,13 @@ public class MiLista<E> implements Lista<E>{
     		loLogre = true;
     	}
     	else if (tam != 0) {
-		Caja<E> aux;
-		aux = this.ultimo.obtenerSiguiente();
+    		Caja<E> aux;
+    		aux = this.ultimo.obtenerSiguiente();
     		aux = nueva;
     		this.ultimo = nueva;
     		loLogre = true;
-	}
+    	}
+    	
     	this.tam ++;
     	return loLogre;
     }
@@ -62,19 +63,30 @@ public class MiLista<E> implements Lista<E>{
      * Determina si el elemento dado esta en la lista.
      */
     public boolean contains(Object element){
-    	boolean encontre = false;
-    	Caja<E> aux = this.primero;
-    	E elemAux = aux.obtenerCont();
-    	
-    	while ((aux != null) && (!encontre)) {
-    		encontre = (elemAux == element);
-    		aux = aux.obtenerSiguiente();
-    		if (aux != null) {
+    	if (this.tam == 0) {
+    		return false;
+    	}
+    	else {
+    		boolean encontre = false;
+    		Caja<E> aux = this.obtenerPrimero();
+    		E elemAux;
+    		if (aux == null) {
+    			return false;
+    		}
+    		else {
     			elemAux = aux.obtenerCont();
     		}
+        
+    		while ((aux != null) && (!encontre)) {
+    			encontre = (elemAux == element);
+    			aux = aux.obtenerSiguiente();
+    			if (aux != null) {
+    				elemAux = aux.obtenerCont();
+    			}
+    		}
+    	   	
+    		return encontre;
     	}
-    	
-    	return encontre;
     }
     
     /*
@@ -91,7 +103,7 @@ public class MiLista<E> implements Lista<E>{
     	boolean igual = true;
     	
     	if (this.getSize() == lista.getSize()) {
-    		Caja<E> aux = this.primero;
+    		Caja<E> aux = this.obtenerPrimero();
         	Caja<E> aux2 = lista.obtenerPrimero();
         	E elemAux = aux.obtenerCont();
         	E elemAux2 = aux2.obtenerCont();

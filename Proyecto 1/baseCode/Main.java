@@ -7,7 +7,7 @@ public class Main {
 
 		Arco prueba1 = new Arco("pedro","pepe");
 
-		Arco prueba2 = new Arco("nipedro","nipepe");
+		Arco prueba2 = new Arco("lalala","lelele");
 //		Arco prueba1 = (Arco)prueba.clone();
 
 		System.out.println(prueba.getDst()+"\n"+prueba1.getSrc());
@@ -37,6 +37,7 @@ public class Main {
 		
 		a = listaPrueba.contains(prueba);
 		System.out.println(a);
+		
 		
 		int tam;
 		
@@ -68,10 +69,14 @@ public class Main {
 		System.out.println(a);
 		a = listaPrueba.add(prueba2);
 		System.out.println(a);
+		a = listaPrueba.add(prueba);
+		System.out.println(a);
 		
 		a = listaPrueba2.add(prueba);
 		System.out.println(a);
-		a = listaPrueba2.add(prueba1);
+		a = listaPrueba2.add(prueba);
+		System.out.println(a);
+		a = listaPrueba2.add(prueba2);
 		System.out.println(a);
 		
 		a = listaPrueba2.equals(listaPrueba);
