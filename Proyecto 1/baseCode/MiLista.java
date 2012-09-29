@@ -38,9 +38,10 @@ public class MiLista<E> implements Lista<E>{
     		loLogre = true;
     	}
     	else if (tam != 0) {
-    		Caja<E> aux;
-    		aux = this.ultimo.obtenerSiguiente();
-    		aux = nueva;
+//    		Caja<E> aux;
+//    		aux = this.ultimo.obtenerSiguiente();
+//    		aux = nueva;
+    		this.ultimo.cambiarSiguiente(nueva);
     		this.ultimo = nueva;
     		loLogre = true;
     	}
@@ -189,7 +190,12 @@ public class MiLista<E> implements Lista<E>{
     	while (aux != null) {
     		arreglin[i] = elemAct;
     		aux = aux.obtenerSiguiente();
-    		elemAct = aux.obtenerCont();
+    		try{
+    			elemAct = aux.obtenerCont();
+    		i++;
+    		}catch(java.lang.NullPointerException e){
+    			return arreglin;
+    		}
     	}
     	
     	return arreglin;

@@ -10,78 +10,101 @@ public class Main {
 		Arco prueba2 = new Arco("lalala","lelele");
 //		Arco prueba1 = (Arco)prueba.clone();
 
-		System.out.println(prueba.getDst()+"\n"+prueba1.getSrc());
+//		System.out.println(prueba.getDst()+"\n"+prueba1.getSrc());
 		
-		System.out.println(prueba.equals(prueba1));
+//		System.out.println(prueba.equals(prueba1));
 		
 		Lista<Arco> listaPrueba = new MiLista<Arco>();
 		Lista<Arco> listaPrueba2 = new MiLista<Arco>();
 		boolean a=true;
 		
+		System.out.println("isEmpty");
+		a = listaPrueba.isEmpty();
+		System.out.println(a);
+		
 		a = listaPrueba.add(prueba);
-		System.out.println(a);
+//		System.out.println(a);
+		
+		System.out.println("getSize");
+		int tam = listaPrueba.getSize();
+		System.out.println(tam);
+
 		a = listaPrueba.add(prueba1);
-		System.out.println(a);
+//		System.out.println(a);
+		
+		System.out.println("getSize");
+		tam = listaPrueba.getSize();
+		System.out.println(tam);
 		
 		a = listaPrueba.contains(prueba2);
-		System.out.println(a);
+//		System.out.println(a);
 		
+		System.out.println("isEmpty");
 		a = listaPrueba.isEmpty();
 		System.out.println(a);
 		
 		a = listaPrueba2.isEmpty();
-		System.out.println(a);
+//		System.out.println(a);
 		
 		a = listaPrueba.remove(prueba);
+//		System.out.print("remove");
+//		System.out.println(a);
+		
+		a = listaPrueba.contains(prueba1);
+		System.out.println("contains");
 		System.out.println(a);
 		
-		a = listaPrueba.contains(prueba);
-		System.out.println(a);
 		
-		
-		int tam;
-		
+		System.out.println("getSize");
 		tam = listaPrueba.getSize();
 		System.out.println(tam);
 		
 		listaPrueba.clear();
 		
 		tam = listaPrueba.getSize();
-		System.out.println(tam);
+//		System.out.println(tam);
 		
 		a = listaPrueba.add(prueba);
-		System.out.println(a);
+//		System.out.println(a);
 		a = listaPrueba.add(prueba1);
-		System.out.println(a);
+//		System.out.println(a);
 		
 		a = listaPrueba2.add(prueba);
-		System.out.println(a);
+//		System.out.println(a);
 		a = listaPrueba2.add(prueba1);
-		System.out.println(a);
+//		System.out.println(a);
 		
-		a = listaPrueba.equals(listaPrueba2);
-		System.out.println(a);
+		System.out.println("Equals");
+		System.out.println(listaPrueba.equals(listaPrueba2));
+		System.out.println(listaPrueba2.equals(listaPrueba));
 		
 		listaPrueba.clear();
 		listaPrueba2.clear();
 		
 		a = listaPrueba.add(prueba);
-		System.out.println(a);
+//		System.out.println(a);
 		a = listaPrueba.add(prueba2);
-		System.out.println(a);
+//		System.out.println(a);
 		a = listaPrueba.add(prueba);
-		System.out.println(a);
+//		System.out.println(a);
 		
 		a = listaPrueba2.add(prueba);
-		System.out.println(a);
-		a = listaPrueba2.add(prueba);
-		System.out.println(a);
+//		System.out.println(a);
 		a = listaPrueba2.add(prueba2);
-		System.out.println(a);
+//		System.out.println(a);
+		a = listaPrueba2.add(prueba1);
+//		System.out.println(a);
 		
+		System.out.println("Equals");
 		a = listaPrueba2.equals(listaPrueba);
 		System.out.println(a);
 		
+		System.out.println("\nImprimir");
+		Object[] array = (Object[]) listaPrueba2.toArray();
+		for(int i=0; i<array.length;i++){
+			System.out.println(array[i].toString());
+		}
+
 	}
 
 }
