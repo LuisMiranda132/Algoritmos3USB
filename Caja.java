@@ -42,7 +42,7 @@ public class Caja<E> {
 	public String toString() {
 		String imprimir = ""; 
 		imprimir = this.cont.toString();
-		return imprimir;
+		return imprimir;   
 	}
 
 }
