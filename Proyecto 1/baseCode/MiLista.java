@@ -10,20 +10,41 @@ public class MiLista<E> implements Lista<E>{
      * con un centinela.
      * La primera "caja" esta vacia.
      *
-     * http://es.wikipedia.org/wiki/Lista_(informática)#Nodos_Centinelas
+     * http://es.wikipedia.org/wiki/Lista_(informï¿½tica)#Nodos_Centinelas
      */
+	
+	protected Caja<E> primero;
+	protected Caja<E> ultimo;
+	protected int tam;
 
     /*
      * Constructor
      */
     public MiLista() {
+    	this.primero = null;
+    	this.ultimo = null;
+    	this.tam = 0;
     }
 
     /**
      * Agrega un elemento al final de la lista.
      */
     public boolean add(E element) {
-	throw new UnsupportedOperationException("Not supported yet.");
+    	boolean loLogre = false;
+    	Caja<E> nueva = new Caja<E>(element,null);
+    	
+    	if (tam == 0) {
+    		this.primero = nueva;
+    		this.ultimo = nueva;
+    		loLogre = true;
+    	}
+    	else if (tam != 0) {
+    		this.ultimo.siguiente = nueva;
+    		this.ultimo = nueva;
+    		loLogre = true;
+    	}
+    	this.tam ++;
+    	return loLogre;
     }
 
     /**
@@ -31,28 +52,71 @@ public class MiLista<E> implements Lista<E>{
      * como recien creada.
      */
     public void clear(){
-	throw new UnsupportedOperationException("Not supported yet.");
+    	this.primero = null;
+    	this.ultimo = null;
+    	this.tam = 0;
     }
 
     /**
      * Determina si el elemento dado esta en la lista.
      */
     public boolean contains(Object element){
-	throw new UnsupportedOperationException("Not supported yet.");
+    	boolean encontre = false;
+    	Caja<E> aux = this.primero;
+    	E elemAux = aux.obtenerCont();
+    	
+    	while ((aux != null) && (!encontre)) {
+    		encontre = (elemAux == element);
+    		aux = aux.obtenerSiguiente();
+    		if (aux != null) {
+    			elemAux = aux.obtenerCont();
+    		}
+    	}
+    	
+    	return encontre;
+    }
+    
+    /*
+     * Devuelve el primero de la lista
+     */
+    public Caja<E> obtenerPrimero() {
+    	return this.primero;
     }
 
     /**
      * Determina si la lista dada es igual a la lista.
      */
     public boolean equals(Lista<E> lista){
-	throw new UnsupportedOperationException("Not supported yet.");
+    	
+    	boolean igual = true;
+    	
+    	if (this.getSize() == lista.getSize()) {
+    		Caja<E> aux = this.primero;
+        	Caja<E> aux2 = lista.obtenerPrimero();
+        	E elemAux = aux.obtenerCont();
+        	E elemAux2 = aux2.obtenerCont();
+        	igual = (elemAux == elemAux2);
+        	
+        	while ((aux.obtenerSiguiente() != null) && (igual)) {
+        		aux = aux.obtenerSiguiente();
+        		aux2 = aux2.obtenerSiguiente();
+        		elemAux = aux.obtenerCont();
+        		elemAux2 = aux2.obtenerCont();
+        		igual = (elemAux == elemAux2);
+         	}
+    	}
+    	else {
+    		igual = false;
+    	}
+    	
+    	return igual;
     }
 
     /**
      * Determina si la lista es vacia.
      */
     public boolean isEmpty(){
-	throw new UnsupportedOperationException("Not supported yet.");
+    	return (this.tam == 0);
     }
 
     /**
@@ -60,14 +124,40 @@ public class MiLista<E> implements Lista<E>{
      * retorna true, sino retorna false.
      */
     public boolean remove(E element){
-	throw new UnsupportedOperationException("Not supported yet.");
+    	boolean existe = this.contains(element);
+    	
+    	if (existe) {
+    		Caja<E> aux = this.primero;
+    		Caja<E> ant = null;
+    		Caja<E> sig = null;
+    		E elemAux = aux.obtenerCont();
+    		
+    		while ((aux != null) && (elemAux != element)) {
+    			ant = aux;
+    			aux = aux.obtenerSiguiente();
+    			elemAux = aux.obtenerCont();
+    		}
+    		
+    		sig = aux.obtenerSiguiente();
+    		
+    		if (ant == null) {
+    			this.primero = sig;
+    		}
+    		else {
+    			ant.siguiente = sig;
+    		}
+    		
+    		this.tam --;
+    	}
+    	
+    	return existe;
     }
 
     /**
      * Retorna el numero de elementos en la lista
      */
     public int getSize(){
-	throw new UnsupportedOperationException("Not supported yet.");
+		return (this.tam);
     }
 
     /**
@@ -78,7 +168,19 @@ public class MiLista<E> implements Lista<E>{
      */
 
     public Object[] toArray() {
-	throw new UnsupportedOperationException("Not supported yet.");	
+    	Object[] arreglin = new Object[this.tam];
+    	E elemAct;
+    	Caja<E> aux = this.primero;
+    	elemAct = aux.obtenerCont();
+    	int i = 0;
+    	
+    	while (aux != null) {
+    		arreglin[i] = elemAct;
+    		aux = aux.obtenerSiguiente();
+    		elemAct = aux.obtenerCont();
+    	}
+    	
+    	return arreglin;
     }
 
 }

@@ -21,6 +21,11 @@ public interface Lista<E> {
      * Determina si el elemento dado esta en la lista.
      */
     public boolean contains(Object element);
+    
+    /*
+     * Devuelve el primero de la lista
+     */
+    public Caja<E> obtenerPrimero();
 
     /**
      * Determina si la lista dada es igual a la lista.
