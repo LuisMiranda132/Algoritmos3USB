@@ -12,7 +12,6 @@ public class MiLista<E> implements Lista<E>{
      *
      * http://es.wikipedia.org/wiki/Lista_(inform�tica)#Nodos_Centinelas
      */
-	
 	protected Caja<E> primero;
 	protected Caja<E> ultimo;
 	protected int tam;
@@ -39,10 +38,12 @@ public class MiLista<E> implements Lista<E>{
     		loLogre = true;
     	}
     	else if (tam != 0) {
-    		this.ultimo.siguiente = nueva;
+		Caja<E> aux;
+		aux = this.ultimo.obtenerSiguiente();
+    		aux = nueva;
     		this.ultimo = nueva;
     		loLogre = true;
-    	}
+	}
     	this.tam ++;
     	return loLogre;
     }
@@ -87,7 +88,6 @@ public class MiLista<E> implements Lista<E>{
      * Determina si la lista dada es igual a la lista.
      */
     public boolean equals(Lista<E> lista){
-    	
     	boolean igual = true;
     	
     	if (this.getSize() == lista.getSize()) {
@@ -157,7 +157,7 @@ public class MiLista<E> implements Lista<E>{
      * Retorna el numero de elementos en la lista
      */
     public int getSize(){
-		return (this.tam);
+	return (this.tam);
     }
 
     /**

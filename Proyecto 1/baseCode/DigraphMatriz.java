@@ -11,9 +11,7 @@ public class DigraphMatriz extends Digraph {
      * @see Constructor para Digraph.
      */
     public DigraphMatriz() {
-    	super();
-    	this.nodos = new Nodo[0];
-    	this.matriz = new int[0][0];
+	super();
     }
 
     /*
