@@ -16,7 +16,7 @@ public class Nodo {
      */
     @Override
     protected Object clone() {
-	return new Nodo(id);
+	return new Nodo(this.id);
     }
 
     /**
