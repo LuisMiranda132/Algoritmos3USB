@@ -29,7 +29,7 @@ public class Matriz {
 			DynamicArray dummy = (DynamicArray)this.quad.getArray()[x];
 			dummy.add(1,y);
 		}catch(java.lang.ArrayIndexOutOfBoundsException e){
-			System.out.println("Estas meando");
+			System.out.println("Estas agregando fuera de la matriz");
 		}
 	}
 	
