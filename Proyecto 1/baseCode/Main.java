@@ -105,6 +105,31 @@ public class Main {
 			System.out.println(array[i].toString());
 		}
 
+		Matriz matrix = new Matriz();
+		
+		matrix.print();
+		matrix.addFila();
+		matrix.addColumna();
+		matrix.print();
+		matrix.addFila();
+		matrix.addColumna();
+		matrix.addColumna();
+		matrix.addColumna();
+		matrix.addColumna();
+		for(int i=0;i<3;i++){
+			matrix.add(i, i);
+		}
+		matrix.add(2, 0);
+		matrix.add(0, 2);		
+		for(int i=3;i<6;i++){
+			for(int j=0;j<3;j++){
+				matrix.add(j,i);
+			}
+		}
+		matrix.remove(0, 5);
+		matrix.remove(2 ,5);
+		matrix.remove(1, 4);
+		matrix.print();
 	}
 
 }

@@ -17,7 +17,7 @@ public class Matriz {
 	public Matriz(){
 		this.quad = new DynamicArray();
 		DynamicArray dummy = new DynamicArray();
-		dummy.addFinal(1);
+		dummy.addFinal(0);
 		this.quad.addFinal(dummy);
 	}
 	
@@ -88,7 +88,7 @@ public class Matriz {
 		for(int i=0;i<this.quad.getArray().length;i++){
 			dummy = (DynamicArray) this.quad.getArray()[i];			
 			for(int j=0;j<dummy.getArray().length;j++){
-				System.out.print(dummy.getArray()[j]+"\t");
+				System.out.print(dummy.getArray()[j]+" ");
 			}	
 			System.out.println();
 		}		
