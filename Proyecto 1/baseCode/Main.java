@@ -117,19 +117,143 @@ public class Main {
 		matrix.addColumna();
 		matrix.addColumna();
 		for(int i=0;i<3;i++){
-			matrix.add(i, i);
+			matrix.add(i, i,9);
 		}
-		matrix.add(2, 0);
-		matrix.add(0, 2);		
+		matrix.add(2, 0,1);
+		System.out.println("Esta?\n"+matrix.esta(2, 1));
+		matrix.add(0, 2,5);		
 		for(int i=3;i<6;i++){
 			for(int j=0;j<3;j++){
-				matrix.add(j,i);
+				matrix.add(j,i,1);
 			}
 		}
-		matrix.remove(0, 5);
-		matrix.remove(2 ,5);
-		matrix.remove(1, 4);
+		matrix.add(0, 5,0);
+		matrix.add(2 ,5,0);
+		matrix.add(1, 4,0);
 		matrix.print();
-	}
+		
+		DigraphMatriz sinNombre = new DigraphMatriz();
+		System.out.println(sinNombre.add(new Nodo("A")));
+		System.out.println(sinNombre.add(new Nodo("B")));
+		System.out.println(sinNombre.add(new Nodo("A")));
+		System.out.println(sinNombre.add(new Arco("A","A")));
+		System.out.println(sinNombre.add(new Nodo("D")));
+		System.out.println(sinNombre.add(new Arco("B","B")));
+		System.out.println(sinNombre.add(new Arco("A","D")));
+		System.out.println(sinNombre.add(new Arco("D","D")));
+		
+		sinNombre.clear();
+		System.out.println(sinNombre.add(new Nodo("D")));
+		System.out.println(sinNombre.add(new Nodo("B")));
+		System.out.println(sinNombre.add(new Nodo("A")));
+		System.out.println(sinNombre.add(new Arco("A","D")));
+		System.out.println(sinNombre.add(new Arco("D","B")));
+		
+		System.out.println("Contains\n"+sinNombre.contains("A", "D"));
+		System.out.println(sinNombre.contains("D", "A"));
+		System.out.println(sinNombre.contains("B", "A"));
+		System.out.println(sinNombre.contains("A", "E"));
+		System.out.println(sinNombre.contains("E", "F"));
+		System.out.println(sinNombre.contains("E", "D"));
+		
+		System.out.println("\n"+sinNombre.contains("A"));
+		System.out.println(sinNombre.contains("E")+"\n");
+		
+		try{
+			System.out.println(sinNombre.get("A", "D").toString());
+		}catch(java.lang.NullPointerException w){
+			System.out.println("null");
+		}
+		try{
+			System.out.println(sinNombre.get("D", "A").toString());
+		}catch(java.lang.NullPointerException w){
+			System.out.println("null");
+		}
+		
+		sinNombre.add(new Nodo("E"));
+		sinNombre.add(new Nodo("F"));
+		sinNombre.add(new Arco("F","F"));
+		sinNombre.add(new Arco("B","F"));
+		System.out.println();
+		sinNombre.add(new Arco("A","F"));
+		Object[] wut = sinNombre.getArcos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		
+		System.out.println("\ngetInArcos");
+		wut = sinNombre.getInArcos("F").toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		
+		System.out.println("\ngetOutArcos");
+		wut = sinNombre.getOutArcos("A").toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		
+		System.out.println("\nNodos");
+		try{
+			System.out.println(sinNombre.get("A").toString());
+		}catch(java.lang.NullPointerException w){
+			System.out.println("null");
+		}
+		try{
+			System.out.println(sinNombre.get("G").toString());
+		}catch(java.lang.NullPointerException w){
+			System.out.println("null");
+		}
+		
+		System.out.println();
+		wut = sinNombre.getNodos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		
+		System.out.println();
+		wut = sinNombre.getArcos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		System.out.println(sinNombre.remove("F", "F"));
+		System.out.println(sinNombre.remove("B", "A"));
+		
+		wut = sinNombre.getArcos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		
+		sinNombre.clear();
+		sinNombre.add(new Nodo("A"));
+		sinNombre.add(new Nodo("B"));
+		sinNombre.add(new Nodo("C"));
+		sinNombre.add(new Nodo("D"));
+		
+		sinNombre.add(new Arco("A","B"));
+		sinNombre.add(new Arco("C","D"));
+		sinNombre.add(new Arco("A","C"));
+		sinNombre.add(new Arco("D","B"));
+		
+		wut = sinNombre.getNodos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		wut = sinNombre.getArcos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		
+		sinNombre.remove("A");
+		
+		wut = sinNombre.getNodos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		wut = sinNombre.getArcos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+	}	
 
 }

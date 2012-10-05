@@ -24,21 +24,13 @@ public class Matriz {
 	/*
 	 * Marca un "1" a la posicion (x,y) de la matriz
 	 */
-	public void add(int x, int y){
+	public void add(int x, int y, int val){
 		try{
-			DynamicArray dummy = (DynamicArray)this.quad.getArray()[x];
-			dummy.add(1,y);
+			DynamicArray dummy = (DynamicArray)this.quad.getArray()[y];
+			dummy.add(val,x);
 		}catch(java.lang.ArrayIndexOutOfBoundsException e){
 			System.out.println("Estas agregando fuera de la matriz");
 		}
-	}
-	
-	/*
-	 * Marca un "0" a la posicion (x,y) de la matriz
-	 */
-	public void remove(int x, int y){
-		DynamicArray dummy = (DynamicArray)this.quad.getArray()[x];
-		dummy.getArray()[y] = 0;
 	}
 	
 	/*
@@ -71,7 +63,7 @@ public class Matriz {
 		DynamicArray dummy = (DynamicArray) this.quad.getArray()[this.quad.getArray().length-1];
 		for(int j=0;j<dummy2.getArray().length;j++){
 			dummy.addFinal(0);
-		}		
+		}
 	}
 	/*
 	 * Remueve la fila numero "pos" de la matriz
@@ -91,7 +83,17 @@ public class Matriz {
 				System.out.print(dummy.getArray()[j]+" ");
 			}	
 			System.out.println();
-		}		
+		}			
+	}
+	
+	public boolean esta(int x, int y){
+		try{
+			DynamicArray dummy = (DynamicArray)this.quad.getArray()[y];
+			return dummy.getArray()[x].equals(1);
+		}catch(java.lang.ArrayIndexOutOfBoundsException e){
+			System.out.println("Estas revisando un campo que no esta en la matriz");
+			return false;
+		}
 	}
 
 }

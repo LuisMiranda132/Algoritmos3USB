@@ -4,14 +4,16 @@
  */
 public class DigraphMatriz extends Digraph {
 
-    private  Nodo nodos[];
-    private int matriz[][];
+    private  DynamicArray nodos;
+    private Matriz matriz;
 
      /*
      * @see Constructor para Digraph.
      */
     public DigraphMatriz() {
 	super();
+	this.matriz = new Matriz();
+	this.nodos = new DynamicArray();	
     }
 
     /*
@@ -20,7 +22,37 @@ public class DigraphMatriz extends Digraph {
      * retorna false. Si se agrega la nueva arista, retorna true.
      */
     public  boolean add(Arco e){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	int src = 0;
+    	Nodo dummy = (Nodo) this.nodos.getArray()[src];
+    	try{
+    		while(!(e.getSrc().equalsIgnoreCase(dummy.toString()))
+    				){
+    			src++;
+    			dummy = (Nodo) this.nodos.getArray()[src];
+    		}
+    	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
+    		System.out.println("El origen del arco no existe");
+    		return false;
+    	}
+    	
+    	int dst = 0;
+    	dummy = (Nodo) this.nodos.getArray()[dst];
+    	try{
+    		while(!(e.getDst().equalsIgnoreCase(dummy.toString()))
+    				){
+    			dst++;
+    			dummy = (Nodo) this.nodos.getArray()[dst];
+    			}
+    	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
+    		System.out.println("El origen del arco no existe");
+    		return false;
+    	}
+    	if(this.matriz.esta(src, dst)){
+    		return false;
+    	}
+    	this.matriz.add(src,dst, 1);
+    	this.numArcos++;
+    	return true;    	
     }
 
     /*
@@ -28,28 +60,75 @@ public class DigraphMatriz extends Digraph {
      * se agrega el nodo, retorna true.
      */
     public  boolean add(Nodo n){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	if(!(this.contains(n.toString()))){
+    		if(this.numVertices != 0){
+    			this.matriz.addFila();    			
+    			this.matriz.addColumna();
+    		}
+    		this.nodos.addFinal(n);
+    		this.numVertices++;
+    		return((Nodo) this.nodos.getArray()[this.nodos.getArray().length-1] == n); 
+    	}
+    	return false;
     }
 
     /*
      * Elimina los nodos y aristas del grafo.
      */
-    public  void clear(){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void clear(){
+    	for(int i=0;i<this.numVertices-1;i++){
+    		this.nodos.remove(0);
+    		this.matriz.removeFila(0);    		
+    	}
+    	this.nodos.remove(0);
+    	for(int i=0;i<this.numVertices-1;i++){
+    		this.matriz.removeColumna(0);
+    	}
+    	this.numVertices =0;
+    	this.numArcos=0;
+    	this.matriz.add(0, 0,0);
+    	System.out.println(this.nodos.getArray().length+"\nDespues del clear");
+    	this.matriz.print();
     }
 
     /*
      * Chequea si el grafo contiene una arista del nodo src a dst
      */
     public  boolean contains(String src, String dst){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	int i=0;
+    	try{
+    		while(!(src.equalsIgnoreCase(this.nodos.getArray()[i].toString()))){
+    			i++;
+    		}
+    	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
+    		System.out.println("El arco de origen no existe");
+    		return false;
+    	}
+    	int j=0;
+    	try{
+    		while(!(dst.equalsIgnoreCase(this.nodos.getArray()[j].toString()))){
+    			j++;
+    		}
+    	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
+    		System.out.println("El arco de llegada no existe");
+    		return false;
+    	}
+    	return this.matriz.esta(i, j);
     }
 
     /*
      * Chequea si el grafo contiene un nodo con id nod
      */
     public boolean contains(String nod) {
-	throw new UnsupportedOperationException("Not supported yet.");
+    	int i=0;
+    	try{
+    		while(!(nod.equalsIgnoreCase(this.nodos.getArray()[i].toString()))){
+    			i++;
+    		}
+    	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
+    		return false;
+    	}
+    	return true;
     }
 
     /*
@@ -57,14 +136,27 @@ public class DigraphMatriz extends Digraph {
      * src y dst. Si no existe dicha arista, retorna null.
      */
     public  Arco get(String src, String dst){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	if(this.contains(src, dst)){
+    		return new Arco(src,dst);
+    	}else{
+    		return null;
+    	}
     }
 
     /*
      *Retorna todas las aristas del grafo
      */
     public  Lista<Arco> getArcos(){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	MiLista<Arco> lista = new MiLista<Arco>();
+    	for(int i=0;i<this.numVertices;i++){
+    		for(int j=0;j<this.numVertices;j++){
+    			if(this.matriz.esta(i, j)){
+    				lista.add(this.get(this.nodos.getArray()[i].toString(),
+    						this.nodos.getArray()[j].toString()));
+    			}
+    		}
+    	}
+    	return lista;
     }
 
     /*
@@ -72,14 +164,22 @@ public class DigraphMatriz extends Digraph {
      * retorna null.
      */
     public Nodo get(String nod){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	if(this.contains(nod)){
+    		return new Nodo(nod);
+    	}
+    	return null;
     }
 
     /* 
      * Retorna todos los nodos del grafo.
      */
     public  Lista<Nodo> getNodos(){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	MiLista<Nodo> lista = new MiLista<Nodo>();
+    	
+    	for(int i=0;i<this.nodos.getArray().length;i++){
+    		lista.add((Nodo)this.nodos.getArray()[i]);
+    	}
+    	return lista;
     }
 
     /*
@@ -87,7 +187,16 @@ public class DigraphMatriz extends Digraph {
      * destino. Si el vertice no existe, retorna null.
      */
     public  Lista<Arco> getInArcos(String nodo){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	if(this.contains(nodo)){
+    		MiLista<Arco> lista = new MiLista<Arco>();
+    		for(int i=0;i<this.numVertices;i++){
+    			if(null != this.get(this.nodos.getArray()[i].toString(), nodo)){
+    				lista.add(this.get(this.nodos.getArray()[i].toString(),nodo));
+    			}
+    		}    		
+    		return lista;
+    	}
+    	return null;
     }
 
     /*
@@ -95,7 +204,16 @@ public class DigraphMatriz extends Digraph {
      * origen. Si el vertice no existe, retorna null.
      */
     public  Lista<Arco> getOutArcos(String nodo){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	if(this.contains(nodo)){
+    		MiLista<Arco> lista = new MiLista<Arco>();
+    		for(int i=0;i<this.numVertices;i++){
+    			if(null != this.get(nodo,this.nodos.getArray()[i].toString())){
+    				lista.add(this.get(nodo,this.nodos.getArray()[i].toString()));
+    			}
+    		}    		
+    		return lista;
+    	}
+    	return null;
     }
 
     /*
@@ -104,7 +222,43 @@ public class DigraphMatriz extends Digraph {
      * retorna true.
      */
     public  boolean remove(String src, String dst){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	int i = 0;
+    	Lista<Arco> antes = this.getArcos();
+    	Nodo dummy = (Nodo) this.nodos.getArray()[i];
+
+    	try{
+    		while(!(src.equalsIgnoreCase(dummy.toString()))
+    				){
+    			i++;
+    			dummy = (Nodo) this.nodos.getArray()[i];
+    		}
+    	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
+    		System.out.println("El origen del arco no existe");
+    		return false;
+    	}
+    	
+    	int j = 0;
+    	dummy = (Nodo) this.nodos.getArray()[j];
+    	try{
+    		while(!(dst.equalsIgnoreCase(dummy.toString()))
+    				){
+    			j++;
+    			dummy = (Nodo) this.nodos.getArray()[j];
+    			}
+    	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
+    		System.out.println("El origen del arco no existe");
+    		return false;
+    	}
+    	
+    	System.out.println(i+"-"+j);
+    	this.matriz.print();
+    	this.matriz.add(i, j,0);
+    	this.matriz.print();
+
+    	if(antes.getSize() != this.getArcos().getSize()){
+    		this.numArcos--;
+    	}
+    	return (antes.getSize() != this.getArcos().getSize());
     }
 
     /*
@@ -113,7 +267,28 @@ public class DigraphMatriz extends Digraph {
      * grafo cambia, retorna true.
      */
     public  boolean remove(String nod){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	int arcosEliminar = 0;
+    	if(this.contains(nod)){    		
+    		int i =0;
+    		for(i=0;i<this.getArcos().toArray().length;i++){
+    			Arco dummy = (Arco) this.getArcos().toArray()[i];
+    		
+    			if(dummy.getSrc().equalsIgnoreCase(nod) || dummy.getDst().equalsIgnoreCase(nod)){
+    				arcosEliminar += 1;
+    			}    			
+    		}
+    		
+    		i = 0;    		
+			while(!(nod.equalsIgnoreCase(this.nodos.getArray()[i].toString()))){
+				i++;
+			}
+			
+			this.nodos.remove(i);
+			this.matriz.removeColumna(i);
+			this.matriz.removeFila(i);
+    	}    		
+    	this.numArcos -= arcosEliminar;
+    	return this.contains(nod);
     }
 
 }
