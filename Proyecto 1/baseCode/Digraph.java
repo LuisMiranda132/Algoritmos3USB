@@ -50,9 +50,7 @@ public abstract class Digraph {
     /*
      * Chequa que el grafo contiene una nodo con id nod
      */
-    public boolean contains(String nod) {
-	throw new UnsupportedOperationException("Not supported yet.");
-    }
+    public abstract boolean contains(String nod);
 
     /*
      * Retorna la arista del grafo que conecta a los vertices
@@ -99,12 +97,22 @@ public abstract class Digraph {
     /*
      * Retorna los predecesores del nodo con id nodo
      */
-    @SuppressWarnings("unchecked")
     public  Lista<Nodo> getPreds(String nodo){
-	Lista<Nodo> preds = (Lista<Nodo>) new MiLista();
-
-
-	return preds;
+    	Lista<Nodo> preds = (Lista<Nodo>) new MiLista<Nodo>();
+    	try{
+    		Lista<Arco> arcos = this.getInArcos(nodo);
+    	
+    		Caja<Arco> caja = arcos.obtenerPrimero();
+    	    	
+    		for(int i=0;i<arcos.getSize();i++){
+    			Arco dummy = caja.obtenerCont();
+    			preds.add(new Nodo(dummy.getSrc()));
+    			caja = caja.obtenerSiguiente();
+    		}
+    	}catch(java.lang.NullPointerException e){
+    		return null;
+    	}    	
+    	return preds;
     }
 
     /*
@@ -116,12 +124,23 @@ public abstract class Digraph {
     /*
      * Retorna los sucesores del nodo con id nodo
      */
-    @SuppressWarnings("unchecked")
     public  Lista<Nodo> getSucs(String nodo){
-	Lista<Nodo> sucs = new MiLista();
-
-
-	return sucs;
+    	Lista<Nodo> sucs = new MiLista<Nodo>();
+    	try{
+    		Lista<Arco> arcos = this.getOutArcos(nodo);
+    	
+    		Caja<Arco> caja = arcos.obtenerPrimero();
+    	    	
+    		for(int i=0;i<arcos.getSize();i++){
+    			Arco dummy = caja.obtenerCont();
+    			sucs.add(new Nodo(dummy.getDst()));
+    			caja = caja.obtenerSiguiente();
+    		}
+    	}catch(java.lang.NullPointerException e){
+    		return null;
+    	}
+    	
+    	return sucs;
     }
 
     /*
@@ -129,14 +148,22 @@ public abstract class Digraph {
      * vertice no existe, retorna -1.
      */
     public int getInDegree(String nodo)  {
-        throw new UnsupportedOperationException("Not supported yet.");
+    	if(this.contains(nodo)){
+    		Lista <Arco> arcos = this.getInArcos(nodo);
+    		return arcos.getSize();
+    	}
+    	return -1;
     }
     /*
      * Retorna el out-degree del vertice dado. Si el
      * vertice no existe, retorna -1.
      */
     public int getOutDegree(String nodo) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    	if(this.contains(nodo)){
+    		Lista <Arco> arcos = this.getOutArcos(nodo);
+    		return arcos.getSize();
+    	}
+    	return -1;
     }
 
     /*

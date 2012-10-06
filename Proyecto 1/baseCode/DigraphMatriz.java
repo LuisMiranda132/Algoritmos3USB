@@ -250,10 +250,7 @@ public class DigraphMatriz extends Digraph {
     		return false;
     	}
     	
-    	System.out.println(i+"-"+j);
-    	this.matriz.print();
     	this.matriz.add(i, j,0);
-    	this.matriz.print();
 
     	if(antes.getSize() != this.getArcos().getSize()){
     		this.numArcos--;
@@ -288,6 +285,7 @@ public class DigraphMatriz extends Digraph {
 			this.matriz.removeFila(i);
     	}    		
     	this.numArcos -= arcosEliminar;
+    	this.numVertices--;
     	return this.contains(nod);
     }
 

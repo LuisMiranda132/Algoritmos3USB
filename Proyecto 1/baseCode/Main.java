@@ -254,6 +254,50 @@ public class Main {
 		for(int i=0;i<wut.length;i++){
 			System.out.println(wut[i].toString());
 		}
+		
+		sinNombre.add(new Nodo("E"));
+		sinNombre.add(new Nodo("F"));
+		
+		sinNombre.add(new Arco("B","B"));
+		sinNombre.add(new Arco("B","D"));
+		sinNombre.add(new Arco("D","B"));
+		sinNombre.add(new Arco("E","F"));
+		sinNombre.add(new Arco("F","B"));
+		
+		wut = sinNombre.getPreds("B").toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		System.out.println(sinNombre.getInDegree("B")+
+				"---"+sinNombre.getOutDegree("B"));
+		wut = sinNombre.getSucs("B").toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		
+		sinNombre.remove("B","B");
+		sinNombre.remove("D","B");
+		sinNombre.remove("F","B");
+		
+		try{
+		wut = sinNombre.getPreds("B").toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		}catch(java.lang.NullPointerException x){
+			System.out.println("null");
+		}
+		System.out.println(sinNombre.getInDegree("B")+
+				"---"+sinNombre.getOutDegree("B"));
+		try{
+			wut = sinNombre.getSucs("B").toArray();
+			for(int i=0;i<wut.length;i++){
+				System.out.println(wut[i].toString());
+			}
+			}catch(java.lang.NullPointerException x){
+				System.out.println("null");
+			}
+		
 	}	
 
 }
