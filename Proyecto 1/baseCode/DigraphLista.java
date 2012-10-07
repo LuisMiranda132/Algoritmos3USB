@@ -35,10 +35,10 @@ public class DigraphLista extends Digraph {
     		return false;
     	}
         
-        i=0;
+        int j=0;
         try {
-        	while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoD)))
-        		i++;
+        	while(!(((Nodo) this.nodos.getArray()[j]).equals(noditoD)))
+        		j++;
         }
         catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
         	return false;
@@ -50,7 +50,7 @@ public class DigraphLista extends Digraph {
         	this.arcos.addFinal(nuevList.add(e));
         	return true;
         }
-        this.arcos.add(((Lista<Arco>) this.arcos.getArray()[i]).add(e),i);
+        ((Lista<Arco>) this.arcos.getArray()[i]).add(e);
         return true;        
     }
 
