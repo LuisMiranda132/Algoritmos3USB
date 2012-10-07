@@ -23,24 +23,34 @@ public class DigraphLista extends Digraph {
      */
     public  boolean add(Arco e){
         String src = e.getSrc();
-        Nodo nodito = new Nodo(src);
+        Nodo noditoS = new Nodo(src);
+        Nodo noditoD = new Nodo(e.getDst());
         int i = 0;
         
         try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(nodito)))
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoS)))
     			i++;
     	}
     	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
     		return false;
     	}
+        
+        i=0;
+        try {
+        	while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoD)))
+        		i++;
+        }
+        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        	return false;
+        }
     	
         Lista<Arco> nuevList = new MiLista<Arco>();
         if (this.arcos.getArray().length == 1) {
-//        	nuevList.add(e);
+        	nuevList.add(e);
         	this.arcos.addFinal(nuevList.add(e));
         	return true;
         }
-        this.arcos.add(nuevList.add(e),i);
+        this.arcos.add(((Lista<Arco>) this.arcos.getArray()[i]).add(e),i);
         return true;        
     }
 
