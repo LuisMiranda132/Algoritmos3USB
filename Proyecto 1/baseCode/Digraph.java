@@ -38,8 +38,8 @@ public abstract class Digraph {
      * Retorna un nuevo grafo que es una copia del grafo actual.
      * 
      */
-    public Object clone(){
-	throw new UnsupportedOperationException("Not supported yet.");
+    public Object clone(){	
+    	return new Nodo("bla");
     }
 
     /*

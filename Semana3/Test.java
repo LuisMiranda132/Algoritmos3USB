@@ -9,14 +9,14 @@ public class Test {
 	    return ;
 	}
 				 
-	Digraph d = new DigraphHash();
+	DigraphMatriz d = new DigraphMatriz();
 
 	Nodo ns[ ] = new Nodo[Integer.parseInt(args[0])];
 	Arco as[ ] = new Arco[Integer.parseInt(args[0])];
 
 	for (int i = 0; i < ns.length; i++) {
-	    ns[i] = new Nodo("Nodo"+i);
-	    d.add(ns[i]);
+	    ns[i] = new Nodo("Nodo"+i,"");
+	    System.out.println(d.add(ns[i]));
 	}
 
 	for (int i = 0; i < as.length-1; i++) {
@@ -29,7 +29,7 @@ public class Test {
 	System.out.println("Grafo es: \n" + d);
 
 	for (int i = 0; i < ns.length; i++) {
-	    ns[i] = new Nodo("Nodo"+i);
+	    ns[i] = new Nodo("Nodo"+i,"");
 	    d.add(ns[i]);
 	}
 
@@ -42,7 +42,7 @@ public class Test {
 
 	for (int i = 0; i < ns.length; i++) {
 	    String lab = ns[i].toString();
-	    System.out.println("Esta: " + d.contains(lab) + " " + d.get(lab));
+	    System.out.println("Esta: " + d.contains(lab) + " "); //+ d.get(lab));
 	}
 
 	for (int i = 0; i < as.length-1; i++) {

@@ -33,13 +33,14 @@ public class DigraphLista extends Digraph {
     	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
     		return false;
     	}
+    	
         Lista<Arco> nuevList = new MiLista<Arco>();
-        if (this.arcos.getArray().length == 0) {
-        	nuevList.add(e);
-        	this.arcos.addFinal(nuevList);
+        if (this.arcos.getArray().length == 1) {
+//        	nuevList.add(e);
+        	this.arcos.addFinal(nuevList.add(e));
         	return true;
         }
-        this.arcos.add(((Lista<Arco>) this.arcos.getArray()[i]).add(e), i);
+        this.arcos.add(nuevList.add(e),i);
         return true;        
     }
 
@@ -57,7 +58,7 @@ public class DigraphLista extends Digraph {
     	}
     	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
     		this.nodos.addFinal(n); 
-    		this.arcos.addFinal(null);
+    		this.arcos.addFinal(new MiLista<Arco>());
     		agregue = true;
     	}
     	

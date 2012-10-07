@@ -23,12 +23,10 @@ public class DigraphMatriz extends Digraph {
      */
     public  boolean add(Arco e){
     	int src = 0;
-    	Nodo dummy = (Nodo) this.nodos.getArray()[src];
     	try{
-    		while(!(e.getSrc().equalsIgnoreCase(dummy.toString()))
-    				){
+    		while(!(((Nodo)this.nodos.getArray()[src]).equals(new Nodo(e.getSrc())))){
+//    		while(!(e.getSrc().equalsIgnoreCase(dummy.toString()))){
     			src++;
-    			dummy = (Nodo) this.nodos.getArray()[src];
     		}
     	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
     		System.out.println("El origen del arco no existe");
@@ -36,15 +34,13 @@ public class DigraphMatriz extends Digraph {
     	}
     	
     	int dst = 0;
-    	dummy = (Nodo) this.nodos.getArray()[dst];
     	try{
-    		while(!(e.getDst().equalsIgnoreCase(dummy.toString()))
-    				){
+    		while(!(((Nodo)this.nodos.getArray()[dst]).equals(new Nodo(e.getDst())))){
+//    		while(!(e.getDst().equalsIgnoreCase(dummy.toString()))){
     			dst++;
-    			dummy = (Nodo) this.nodos.getArray()[dst];
     			}
     	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
-    		System.out.println("El origen del arco no existe");
+    		System.out.println("El destino del arco no existe");
     		return false;
     	}
     	if(this.matriz.esta(src, dst)){
@@ -97,20 +93,22 @@ public class DigraphMatriz extends Digraph {
     public  boolean contains(String src, String dst){
     	int i=0;
     	try{
-    		while(!(src.equalsIgnoreCase(this.nodos.getArray()[i].toString()))){
+    		while(!((Nodo)this.nodos.getArray()[i]).equals(new Nodo(src))){
+//    		while(!(src.equalsIgnoreCase(this.nodos.getArray()[i].toString()))){
     			i++;
     		}
     	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
-    		System.out.println("El arco de origen no existe");
+    		System.out.println("El nodo de origen no existe");
     		return false;
     	}
     	int j=0;
     	try{
-    		while(!(dst.equalsIgnoreCase(this.nodos.getArray()[j].toString()))){
+    		while(!((Nodo)this.nodos.getArray()[j]).equals(new Nodo(dst))){
+//    		while(!(dst.equalsIgnoreCase(this.nodos.getArray()[j].toString()))){
     			j++;
     		}
     	}catch(java.lang.ArrayIndexOutOfBoundsException bla){
-    		System.out.println("El arco de llegada no existe");
+    		System.out.println("El nodo de llegada no existe");
     		return false;
     	}
     	return this.matriz.esta(i, j);
@@ -122,7 +120,8 @@ public class DigraphMatriz extends Digraph {
     public boolean contains(String nod) {
     	int i=0;
     	try{
-    		while(!(nod.equalsIgnoreCase(this.nodos.getArray()[i].toString()))){
+    		while(!((Nodo)this.nodos.getArray()[i]).equals(new Nodo(nod))){
+//    		while(!(nod.equalsIgnoreCase(this.nodos.getArray()[i].toString()))){
     			i++;
     		}
     	}catch(java.lang.ArrayIndexOutOfBoundsException bla){

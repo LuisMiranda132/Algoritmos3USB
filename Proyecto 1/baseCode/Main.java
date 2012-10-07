@@ -134,7 +134,8 @@ public class Main {
 		matrix.add(2 ,5,0);
 		matrix.add(1, 4,0);
 		matrix.print();
-		
+*/		
+/*
 		DigraphMatriz sinNombre = new DigraphMatriz();
 		System.out.println(sinNombre.add(new Nodo("A")));
 		System.out.println(sinNombre.add(new Nodo("B")));
@@ -297,11 +298,10 @@ public class Main {
 			for(int i=0;i<wut.length;i++){
 				System.out.println(wut[i].toString());
 			}
-			}catch(java.lang.NullPointerException x){
+		}catch(java.lang.NullPointerException x){
 				System.out.println("null");
-			}
-		*/
-		
+
+*/		
 		System.out.println();
 		System.out.println("Inicio de la prueba de DigraphLista ");
 		System.out.println();
@@ -381,6 +381,8 @@ public class Main {
 		System.out.println(listitaNoditos.contains(new Arco("A","E")));
 		System.out.println(listitaNoditos.contains(new Arco("B","Y")));
 		*/
+
+		
 		
 	}	
 
