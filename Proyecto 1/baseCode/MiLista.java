@@ -79,7 +79,7 @@ public class MiLista<E> implements Lista<E>{
     		}
         
     		while ((aux != null) && (!encontre)) {
-    			encontre = (elemAux == element);
+    			encontre = (elemAux.equals(element));
     			aux = aux.obtenerSiguiente();
     			if (aux != null) {
     				elemAux = aux.obtenerCont();
@@ -108,14 +108,14 @@ public class MiLista<E> implements Lista<E>{
         	Caja<E> aux2 = lista.obtenerPrimero();
         	E elemAux = aux.obtenerCont();
         	E elemAux2 = aux2.obtenerCont();
-        	igual = (elemAux == elemAux2);
+        	igual = (elemAux.equals(elemAux2));
         	
         	while ((aux.obtenerSiguiente() != null) && (igual)) {
         		aux = aux.obtenerSiguiente();
         		aux2 = aux2.obtenerSiguiente();
         		elemAux = aux.obtenerCont();
         		elemAux2 = aux2.obtenerCont();
-        		igual = (elemAux == elemAux2);
+        		igual = (elemAux.equals(elemAux2));
          	}
     	}
     	else {
@@ -145,7 +145,7 @@ public class MiLista<E> implements Lista<E>{
     		Caja<E> sig = null;
     		E elemAux = aux.obtenerCont();
     		
-    		while ((aux != null) && (elemAux != element)) {
+    		while ((aux != null) && !(elemAux.equals(element))) {
     			ant = aux;
     			aux = aux.obtenerSiguiente();
     			elemAux = aux.obtenerCont();
@@ -200,7 +200,14 @@ public class MiLista<E> implements Lista<E>{
     	
     	return arreglin;
     }
-
+    
+    public void imprimirLista() {
+    	this.toArray();
+    	int i = 0;
+    	for(i=0;i<this.toArray().length;i++) {
+    		System.out.println(this.toArray()[i].toString());
+    	}
+    }
 }
 
 // End List.

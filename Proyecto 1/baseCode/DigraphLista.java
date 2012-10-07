@@ -45,15 +45,13 @@ public class DigraphLista extends Digraph {
     	}
     	
         Lista<Arco> nuevList = new MiLista<Arco>();
-    /*    if (this.arcos.getArray().length == 1) {
-        	nuevList.add(e);
-        	this.arcos.addFinal(nuevList.add(e));
-        	return true;
-        }*/
+        
+        /* Esta agregando repetidos los arcos revisar esto */
         if (((Lista<Arco>) this.arcos.getArray()[i]).contains(e))
         	return false;
         else {
         	((Lista<Arco>) this.arcos.getArray()[i]).add(e);
+        	//((Lista<Arco>) this.arcos.getArray()[i]).imprimirLista();
             return true;
         }
 
@@ -85,7 +83,10 @@ public class DigraphLista extends Digraph {
      * Elimina los nodos y aristas del grafo.
      */
     public  void clear(){
-    	if (this.nodos != null) {
+    	
+    	// Es valido aqui hacer lo que hice alla abajo por el garbage collector
+    	// o es demasiado *arrgh* pirata ?! 
+    	/*if (this.nodos != null) {
     		int i=(this.nodos.getArray().length - 1);
         	while (i>=0){
         		this.nodos.remove(i);
@@ -94,30 +95,45 @@ public class DigraphLista extends Digraph {
         	while (i>=0){
         		this.arcos.remove(i);
         	}
-    	}
+    	}*/
+    	this.nodos = new DynamicArray();
+    	this.arcos = new DynamicArray();
     }
 
     /*
      * Chequea si el grafo contiene una arista del nodo src a dst
      */
     public  boolean contains(String src, String dst){
-        Nodo nodito = new Nodo(src);
-        boolean agregue = false;
-        if (this.nodos == null)
-        	return agregue;
-        else if(!this.nodos.existe(nodito))
-        	return agregue;
-        else {
-        	int i=0;
-        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != nodito)
-        		i++;
-        	Arco aux = new Arco(src,dst);
-        	if (( (Lista<Arco>) this.arcos.getArray()[i]).contains(aux))
-        		return agregue;
-        	else{
-        		agregue = (( (Lista<Arco>) this.arcos.getArray()[i]).add(aux));
-        		return agregue;
-        	}
+        Nodo noditoS = new Nodo(src);
+        Nodo noditoD = new Nodo(dst);
+        int i=0;
+        int j=0;
+        
+        try {
+        	while(!(((Nodo) this.nodos.getArray()[j]).equals(noditoD)))
+        		j++;
+        }
+        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        	return false;
+        }
+        i=0;
+        try {
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoS)))
+    			i++;
+    	}
+    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    		return false;
+    	}
+        
+        Arco aux = new Arco(src,dst);
+        //((Lista<Arco>) this.arcos.getArray()[i]).imprimirLista();
+        if (!((Lista<Arco>) this.arcos.getArray()[i]).contains(aux)) {
+        	//System.out.println("lalala");
+        	return false;
+        }
+        else{
+        	//System.out.println("lelele");
+        	return true;
         }
     }
 
@@ -222,23 +238,38 @@ public class DigraphLista extends Digraph {
      * retorna true.
      */
     public  boolean remove(String src, String dst){
-    	Nodo aux = new Nodo(src);
-    	boolean elimine = false;
-    	if (this.nodos == null) 
-    		return elimine;
-    	else if(!this.nodos.existe(aux))
+    	Nodo noditoS = new Nodo(src);
+        Nodo noditoD = new Nodo(dst);
+        boolean elimine = false;
+        int i=0;
+        int j=0;
+        
+        try {
+        	while(!(((Nodo) this.nodos.getArray()[j]).equals(noditoD)))
+        		j++;
+        }
+        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
         	return elimine;
-        else {
-        	int i=0;
-        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
-        		i++;
-        	Arco nuevo = new Arco(src,dst);
-        	if (!( (Lista<Arco>) this.arcos.getArray()[i]).contains(nuevo))
-        		return elimine;
-        	else {
-        		elimine = ( (Lista<Arco>) this.arcos.getArray()[i]).remove(nuevo);
-        		return elimine;
-        	}
+        }
+        i=0;
+        try {
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoS)))
+    			i++;
+    	}
+    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    		return elimine;
+    	}
+    	
+    	Arco aux = new Arco(src,dst);
+        //((Lista<Arco>) this.arcos.getArray()[i]).imprimirLista();
+        if (!((Lista<Arco>) this.arcos.getArray()[i]).contains(aux)) {
+        	//System.out.println("lalala");
+        	return elimine;
+        }
+        else{
+        	//System.out.println("lelele");
+        	elimine = ((Lista<Arco>) this.arcos.getArray()[i]).remove(aux); 
+        	return elimine;
         }
     }
 
@@ -249,18 +280,21 @@ public class DigraphLista extends Digraph {
      */
     public  boolean remove(String nod){
     	Nodo aux = new Nodo(nod);
-    	if (this.nodos == null)
-    		return false;
-    	else if(!this.nodos.existe(aux)) 
-        	return false;
-        else {
-        	int i=0;
-        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
-        		i++;
-        	this.nodos.remove(i);
-        	this.arcos.remove(i);
-        	return true;
-        } 
+    	boolean elimine = false;
+    	int i=0;
+        
+        try {
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
+    			i++;
+    	}
+    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    		return elimine;
+    	}
+    	
+    	this.nodos.remove(i);
+    	this.arcos.remove(i);
+    	elimine = true;
+    	return elimine;
     }
 
 }

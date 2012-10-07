@@ -315,16 +315,18 @@ public class Main {
 		System.out.println(sinNombre.add(new Arco("A","D")));
 		System.out.println(sinNombre.add(new Arco("D","D")));
 		System.out.println(sinNombre.add(new Arco("B","B")));
-		/*
-		System.out.println("Contains\n"+sinNombre.contains("A", "D"));
+		
+		System.out.println("Contains ");
+		System.out.println(sinNombre.contains("A", "D"));
 		System.out.println(sinNombre.contains("D", "A"));
 		System.out.println(sinNombre.contains("B", "A"));
-		System.out.println(sinNombre.contains("A", "E"));
+		System.out.println(sinNombre.contains("A", "A"));
 		System.out.println(sinNombre.contains("E", "F"));
 		System.out.println(sinNombre.contains("E", "D"));
 		System.out.println(sinNombre.contains("B", "B"));
 		System.out.println(sinNombre.contains("D", "D"));
 		
+		System.out.println("Hice clear del grafo y reviso a ver si contiene cosas: ");
 		sinNombre.clear();
 		System.out.println();
 		System.out.println(sinNombre.contains("A", "D"));
@@ -332,7 +334,7 @@ public class Main {
 		System.out.println(sinNombre.contains("D", "D"));
 		System.out.println(sinNombre.contains("A", "B"));
 		
-		
+		System.out.println("Agrego nodos y arcos nuevos: ");
 		System.out.println(sinNombre.add(new Nodo("D")));
 		System.out.println(sinNombre.add(new Nodo("B")));
 		System.out.println(sinNombre.add(new Nodo("A")));
@@ -345,7 +347,7 @@ public class Main {
 		System.out.println(sinNombre.remove("D","B"));
 		System.out.println(sinNombre.remove("A","B"));
 		System.out.println(sinNombre.remove("A"));
-		
+		/*
 		sinNombre.clear();
 		System.out.println("Agregue de nuevo lo que tenia al principio: ");
 		System.out.println(sinNombre.add(new Nodo("A")));

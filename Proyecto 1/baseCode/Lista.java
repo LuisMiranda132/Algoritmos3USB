@@ -56,6 +56,11 @@ public interface Lista<E> {
      */
 
     public Object[] toArray();
+    
+    /**
+     * Imprime los contenidos de la lista en pantalla.
+     */
+    public void imprimirLista();
 
 }
 
