@@ -28,32 +28,36 @@ public class DigraphLista extends Digraph {
         int i = 0;
         
         try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoS)))
-    			i++;
-    	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
-    		return false;
-    	}
-        
-        i=0;
-        try {
         	while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoD)))
         		i++;
         }
         catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
         	return false;
         }
+        i=0;
+        try {
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoS)))
+    			i++;
+    	}
+    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    		return false;
+    	}
     	
         Lista<Arco> nuevList = new MiLista<Arco>();
-        if (this.arcos.getArray().length == 1) {
+    /*    if (this.arcos.getArray().length == 1) {
         	nuevList.add(e);
         	this.arcos.addFinal(nuevList.add(e));
         	return true;
+        }*/
+        if (((Lista<Arco>) this.arcos.getArray()[i]).contains(e))
+        	return false;
+        else {
+        	((Lista<Arco>) this.arcos.getArray()[i]).add(e);
+            return true;
         }
-        this.arcos.add(((Lista<Arco>) this.arcos.getArray()[i]).add(e),i);
-        return true;        
+                
     }
-
+    
     /*
      * Agrega el nodo n. Si el vertice ya existe, retorna false. Si
      * se agrega el nodo, retorna true.
