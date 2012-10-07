@@ -20,6 +20,23 @@ public class DynamicArray{
 		this.resizeArray(this.array, x);
 	}
 	
+	public boolean existe(Object x) {
+		int i = 0;
+		boolean e = false;
+		if (this.getArray().length == 0) 
+				return false;
+		else {
+		while((this.getArray()[i] != x) && (i < this.getArray().length)) {
+			i++;
+		}
+		
+		if (this.getArray()[i] == x)
+			e = true;
+		
+		return e;
+		}
+	}
+	
 	public void remove(int posicion){
 		Object[] dummy = new Object[this.array.length-1];
 		

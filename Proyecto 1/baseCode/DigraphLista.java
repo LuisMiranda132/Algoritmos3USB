@@ -4,14 +4,16 @@
  */
 public class DigraphLista extends Digraph {
 
-    private  Nodo nodos[];
-    private  Lista<Arco> arcs[];
+    private  DynamicArray nodos;
+    private  DynamicArray arcos;  //Lista<Arco>
 
     /*
      * @see Constructor para Digraph.
      */
     public DigraphLista() {
-	super();
+    	super();
+    	nodos = new DynamicArray();
+    	arcos = new DynamicArray();
     }
 
     /*
@@ -20,7 +22,25 @@ public class DigraphLista extends Digraph {
      * retorna false. Si se agrega la nueva arista, retorna true.
      */
     public  boolean add(Arco e){
-        throw new UnsupportedOperationException("Not supported yet.");
+        String src = e.getSrc();
+        Nodo nodito = new Nodo(src);
+        int i = 0;
+        
+        try {
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(nodito)))
+    			i++;
+    	}
+    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    		return false;
+    	}
+        Lista<Arco> nuevList = new MiLista<Arco>();
+        if (this.arcos.getArray().length == 0) {
+        	nuevList.add(e);
+        	this.arcos.addFinal(nuevList);
+        	return true;
+        }
+        this.arcos.add(((Lista<Arco>) this.arcos.getArray()[i]).add(e), i);
+        return true;        
     }
 
     /*
@@ -28,28 +48,69 @@ public class DigraphLista extends Digraph {
      * se agrega el nodo, retorna true.
      */
     public  boolean add(Nodo n){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	int i=0;
+    	boolean agregue = false;
+    
+    	try {
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(n)))
+    			i++;
+    	}
+    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    		this.nodos.addFinal(n); 
+    		this.arcos.addFinal(null);
+    		agregue = true;
+    	}
+    	
+    	return agregue;
+    	
     }
 
     /*
      * Elimina los nodos y aristas del grafo.
      */
     public  void clear(){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	if (this.nodos != null) {
+    		int i=(this.nodos.getArray().length - 1);
+        	while (i>=0){
+        		this.nodos.remove(i);
+        	}
+        	i=(this.arcos.getArray().length -1);
+        	while (i>=0){
+        		this.arcos.remove(i);
+        	}
+    	}
     }
 
     /*
      * Chequea si el grafo contiene una arista del nodo src a dst
      */
     public  boolean contains(String src, String dst){
-        throw new UnsupportedOperationException("Not supported yet.");
+        Nodo nodito = new Nodo(src);
+        boolean agregue = false;
+        if (this.nodos == null)
+        	return agregue;
+        else if(!this.nodos.existe(nodito))
+        	return agregue;
+        else {
+        	int i=0;
+        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != nodito)
+        		i++;
+        	Arco aux = new Arco(src,dst);
+        	if (( (Lista<Arco>) this.arcos.getArray()[i]).contains(aux))
+        		return agregue;
+        	else{
+        		agregue = (( (Lista<Arco>) this.arcos.getArray()[i]).add(aux));
+        		return agregue;
+        	}
+        }
     }
 
     /*
      * Chequea si el grafo contiene un nodo con id nod
      */
     public boolean contains(String nod) {
-	throw new UnsupportedOperationException("Not supported yet.");
+		Nodo aux = new Nodo(nod);
+		return this.nodos.existe(aux);
     }
 
     /*
@@ -57,7 +118,20 @@ public class DigraphLista extends Digraph {
      * src y dst. Si no existe dicha arista, retorna null.
      */
     public  Arco get(String src, String dst){
-        throw new UnsupportedOperationException("Not supported yet.");
+        Nodo aux = new Nodo(src);
+        if(!this.nodos.existe(aux))
+        	return null;
+        else {
+        	int i=0;
+        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+        		i++;
+        	Arco nuevo = new Arco(src,dst);
+        	if (!( (Lista<Arco>) this.arcos.getArray()[i]).contains(nuevo))
+        		return null;
+        	else {
+        		return nuevo;
+        	}
+        }
     }
 
     /*
@@ -72,14 +146,32 @@ public class DigraphLista extends Digraph {
      * retorna null.
      */
     public Nodo get(String nod){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	Nodo aux = new Nodo(nod);
+        if(!this.nodos.existe(aux)) 
+        	return null;
+        else {
+        	int i=0;
+        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+        		i++;
+        	return (Nodo) this.nodos.getArray()[i];
+        }
     }
 
     /* 
      * Retorna todos los nodos del grafo.
      */
     public  Lista<Nodo> getNodos(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (this.nodos == null)
+        	return null;
+        
+    	Lista<Nodo> lista = new MiLista<Nodo>();
+        int i=0;
+        
+        while(i < this.nodos.getArray().length) {
+        	lista.add((Nodo) this.nodos.getArray()[i]);
+        	i++;
+        }
+        return lista;
     }
 
     /*
@@ -95,7 +187,17 @@ public class DigraphLista extends Digraph {
      * origen. Si el vertice no existe, retorna null.
      */
     public  Lista<Arco> getOutArcos(String nodo){
-        throw new UnsupportedOperationException("Not supported yet.");
+        Nodo aux = new Nodo(nodo);
+        if (this.nodos == null)
+        	return null;
+        else if(!this.nodos.existe(aux)) 
+        	return null;
+        else {
+        	int i=0;
+        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+        		i++;
+        	return (Lista<Arco>) this.arcos.getArray()[i];
+        }
     }
 
     /*
@@ -104,7 +206,24 @@ public class DigraphLista extends Digraph {
      * retorna true.
      */
     public  boolean remove(String src, String dst){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	Nodo aux = new Nodo(src);
+    	boolean elimine = false;
+    	if (this.nodos == null) 
+    		return elimine;
+    	else if(!this.nodos.existe(aux))
+        	return elimine;
+        else {
+        	int i=0;
+        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+        		i++;
+        	Arco nuevo = new Arco(src,dst);
+        	if (!( (Lista<Arco>) this.arcos.getArray()[i]).contains(nuevo))
+        		return elimine;
+        	else {
+        		elimine = ( (Lista<Arco>) this.arcos.getArray()[i]).remove(nuevo);
+        		return elimine;
+        	}
+        }
     }
 
     /*
@@ -113,7 +232,19 @@ public class DigraphLista extends Digraph {
      * grafo cambia, retorna true.
      */
     public  boolean remove(String nod){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	Nodo aux = new Nodo(nod);
+    	if (this.nodos == null)
+    		return false;
+    	else if(!this.nodos.existe(aux)) 
+        	return false;
+        else {
+        	int i=0;
+        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+        		i++;
+        	this.nodos.remove(i);
+        	this.arcos.remove(i);
+        	return true;
+        } 
     }
 
 }

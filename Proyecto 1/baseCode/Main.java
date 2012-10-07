@@ -95,6 +95,9 @@ public class Main {
 		a = listaPrueba2.add(prueba1);
 //		System.out.println(a);
 		
+		
+		
+	/*	
 		System.out.println("Equals");
 		a = listaPrueba2.equals(listaPrueba);
 		System.out.println(a);
@@ -297,6 +300,87 @@ public class Main {
 			}catch(java.lang.NullPointerException x){
 				System.out.println("null");
 			}
+		*/
+		
+		System.out.println();
+		System.out.println("Inicio de la prueba de DigraphLista ");
+		System.out.println();
+		Digraph sinNombre = new DigraphLista();
+		System.out.println(sinNombre.add(new Nodo("A")));
+		System.out.println(sinNombre.add(new Nodo("B")));
+		System.out.println(sinNombre.add(new Nodo("A")));
+		System.out.println(sinNombre.add(new Arco("A","A")));
+		System.out.println(sinNombre.add(new Nodo("D")));
+		System.out.println(sinNombre.add(new Arco("B","B")));
+		System.out.println(sinNombre.add(new Arco("A","D")));
+		System.out.println(sinNombre.add(new Arco("D","D")));
+		System.out.println(sinNombre.add(new Arco("B","B")));
+		/*
+		System.out.println("Contains\n"+sinNombre.contains("A", "D"));
+		System.out.println(sinNombre.contains("D", "A"));
+		System.out.println(sinNombre.contains("B", "A"));
+		System.out.println(sinNombre.contains("A", "E"));
+		System.out.println(sinNombre.contains("E", "F"));
+		System.out.println(sinNombre.contains("E", "D"));
+		System.out.println(sinNombre.contains("B", "B"));
+		System.out.println(sinNombre.contains("D", "D"));
+		
+		sinNombre.clear();
+		System.out.println();
+		System.out.println(sinNombre.contains("A", "D"));
+		System.out.println(sinNombre.contains("B", "B"));
+		System.out.println(sinNombre.contains("D", "D"));
+		System.out.println(sinNombre.contains("A", "B"));
+		
+		
+		System.out.println(sinNombre.add(new Nodo("D")));
+		System.out.println(sinNombre.add(new Nodo("B")));
+		System.out.println(sinNombre.add(new Nodo("A")));
+		System.out.println(sinNombre.add(new Arco("A","D")));
+		System.out.println(sinNombre.add(new Arco("D","B")));
+		System.out.println(sinNombre.add(new Arco("B","A")));
+		
+		
+		System.out.println("Estoy eliminando: \n");
+		System.out.println(sinNombre.remove("D","B"));
+		System.out.println(sinNombre.remove("A","B"));
+		System.out.println(sinNombre.remove("A"));
+		
+		sinNombre.clear();
+		System.out.println("Agregue de nuevo lo que tenia al principio: ");
+		System.out.println(sinNombre.add(new Nodo("A")));
+		System.out.println(sinNombre.add(new Nodo("B")));
+		System.out.println(sinNombre.add(new Nodo("A")));
+		System.out.println(sinNombre.add(new Arco("A","A")));
+		System.out.println(sinNombre.add(new Nodo("D")));
+		System.out.println(sinNombre.add(new Arco("B","B")));
+		System.out.println(sinNombre.add(new Arco("A","D")));
+		System.out.println(sinNombre.add(new Arco("D","D")));
+		System.out.println(sinNombre.add(new Arco("B","B")));
+		
+		Lista<Nodo> listitaNoditos = new MiLista<Nodo>();
+		Lista<Arco> listitaArcos = new MiLista<Arco>();
+		
+		listitaArcos = sinNombre.getOutArcos("A");
+		listitaNoditos = sinNombre.getNodos();
+		*/
+		/*
+		System.out.println("Veremos si la lista de los nodos contiene todos los nodos (A,B,D) y si no contiene el E: ");
+		System.out.println(listitaNoditos.contains(new Nodo("A")));
+		System.out.println(listitaNoditos.contains(new Nodo("B")));
+		System.out.println(listitaNoditos.contains(new Nodo("D")));
+		System.out.println(listitaNoditos.contains(new Nodo("E")));
+		System.out.println();
+		
+		System.out.println("Veremos si la lista de arcos contiene todos los arcos, los ultimos 3 no pertenecen: ");
+		System.out.println(listitaNoditos.contains(new Arco("A","A")));
+		System.out.println(listitaNoditos.contains(new Arco("B","B")));
+		System.out.println(listitaNoditos.contains(new Arco("A","D")));
+		System.out.println(listitaNoditos.contains(new Arco("D","D")));
+		System.out.println(listitaNoditos.contains(new Arco("F","U")));
+		System.out.println(listitaNoditos.contains(new Arco("A","E")));
+		System.out.println(listitaNoditos.contains(new Arco("B","Y")));
+		*/
 		
 	}	
 
