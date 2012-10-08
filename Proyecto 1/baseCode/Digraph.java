@@ -1,4 +1,7 @@
 /**
+ * 
+ * @author Gabriela Limonta, Luis Miranda
+ * 
  * Clase abstracta que implemena un grafo dirigido. Las aristas son
  * instancias de la clase Arco.
  */
@@ -38,9 +41,7 @@ public abstract class Digraph {
      * Retorna un nuevo grafo que es una copia del grafo actual.
      * 
      */
-    public Object clone(){	
-    	return new Nodo("bla");
-    }
+    public abstract Object clone();
 
     /*
      * Chequa que el grafo contiene una arista (src, dst).

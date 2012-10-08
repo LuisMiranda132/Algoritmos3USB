@@ -1,4 +1,7 @@
-/*
+/**
+ * 
+ * @author Gabriela Limonta, Luis Miranda
+ * 
  * Implementa la clase abstracta Digraph utilizando dos tablas de
  * hash, una para vertices y una para arcos.
  */
@@ -284,6 +287,19 @@ public class DigraphMatriz extends Digraph {
     	this.numArcos -= arcosEliminar;
     	this.numVertices--;
     	return this.contains(nod);
+    }
+    
+    /*
+     * Retorna un nuevo grafo que es una copia del grafo actual.
+     * 
+     */
+    public Object clone(){
+    	DigraphMatriz nuevo = new DigraphMatriz();
+    	nuevo.matriz = this.matriz;
+    	nuevo.nodos = this.nodos;
+    	nuevo.numArcos = this.numArcos;
+    	nuevo.numVertices = this.numVertices;
+    	return nuevo;
     }
 
 }

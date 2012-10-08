@@ -1,4 +1,7 @@
 /**
+ * 
+ * @author Gabriela Limonta, Luis Miranda
+ * 
  * Clase que almacena la informacion de las aristas en el grafo.
  */
 

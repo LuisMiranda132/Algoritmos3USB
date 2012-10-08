@@ -1,4 +1,7 @@
-/*
+/**
+ * 
+ * @author Gabriela Limonta, Luis Miranda
+ * 
  * Implementa la clase abstracta Digraph utilizando dos tablas de
  * hash, una para vertices y una para arcos.
  */

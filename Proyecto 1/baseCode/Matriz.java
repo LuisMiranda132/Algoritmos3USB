@@ -22,7 +22,7 @@ public class Matriz {
 	}
 	
 	/*
-	 * Marca un "1" a la posicion (x,y) de la matriz
+	 * Agrega val a la posicion (x,y) de la matriz
 	 */
 	public void add(int x, int y, int val){
 		try{
@@ -86,6 +86,9 @@ public class Matriz {
 		}			
 	}
 	
+	/*
+	 * Chequea si en la posicion (x,y) esta el elemento 1
+	 */
 	public boolean esta(int x, int y){
 		try{
 			DynamicArray dummy = (DynamicArray)this.quad.getArray()[y];

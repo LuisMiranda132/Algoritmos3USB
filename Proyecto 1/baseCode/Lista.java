@@ -1,4 +1,7 @@
 /**
+ * 
+ * @author Gabriela Limonta, Luis Miranda
+ * 
  * Interfaz que define el comportamiento de una lista
  * 
  * Esta es una clase parametrizada con tipo (clase) E; i.e., la

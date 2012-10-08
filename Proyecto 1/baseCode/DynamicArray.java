@@ -1,25 +1,48 @@
+/**
+ * 
+ * @author Gabriela Limonta, Luis Miranda
+ * 
+ * Implementacion de arreglos dinamicos
+ * 
+ */
 
 public class DynamicArray{
 	
 	private Object[] array;
 	
+	/*
+	 * Constructor
+	 */
 	public DynamicArray(){
 		this.array = new Object[0];
 	}
 	
+	/*
+	 * Agrega un elemento al final del arreglo. El arreglo final es
+	 * es mayor que el de origen.
+	 */
 	public void addFinal(Object x){
 		this.resizeArray(this.array, this.array.length+1);
 		this.array[this.array.length -1] = x;
 	}
 	
+	/*
+	 * Agrega un elemento en la posicion "pos" del arreglo.
+	 */
 	public void add(Object x, int pos){
 		this.getArray()[pos] = x;
 	}
 
+	/*
+	 * Aumenta el arreglo
+	 */
 	public void crecer(int x){
 		this.resizeArray(this.array, x);
 	}
 	
+	/*
+	 * Chequea si el elemento "x" esta en el arreglo
+	 */
 	public boolean existe(Object x) {
 		int i = 0;
 		boolean e = false;
@@ -37,6 +60,9 @@ public class DynamicArray{
 		}
 	}
 	
+	/*
+	 * Elimina un elemento que este en cierta posicion
+	 */
 	public void remove(int posicion){
 		Object[] dummy = new Object[this.array.length-1];
 		
@@ -46,22 +72,27 @@ public class DynamicArray{
 		this.array = dummy;
 	}
 	
+	/*
+	 * Retorna el arreglo
+	 */
 	public Object[] getArray(){
 		return this.array;
 	}
 	
-	//private static Object
-	private void resizeArray(Object oldArray, int newSize){
+	/*
+	 * Se encarga de cambiarle el tamano al arreglo
+	 */
+	private void resizeArray(Object oldAr, int newSi){
 
-		int oldSize = java.lang.reflect.Array.getLength(oldArray);
+		int oldSi = java.lang.reflect.Array.getLength(oldAr);
 		
-		Class elementType = oldArray.getClass().getComponentType();
-		Object newArray = java.lang.reflect.Array.newInstance(elementType, newSize);		
+		Class elementType = oldAr.getClass().getComponentType();
+		Object newArray = java.lang.reflect.Array.newInstance(elementType, newSi);		
 			
-		int preserveLength = Math.min(oldSize, newSize);
+		int preserveLength = Math.min(oldSi, newSi);
 		
 		if(preserveLength > 0){
-			System.arraycopy(oldArray, 0, newArray, 0, preserveLength);
+			System.arraycopy(oldAr, 0, newArray, 0, preserveLength);
 		}
 
 		this.array = (Object[]) newArray;

@@ -300,12 +300,36 @@ public class Main {
 			}
 		}catch(java.lang.NullPointerException x){
 				System.out.println("null");
-
-*/		
+		}
+		
+		Digraph conNombre = (DigraphMatriz) sinNombre.clone();
+		
+		wut = sinNombre.getNodos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		wut = sinNombre.getArcos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		
+		conNombre.remove("C");
+		conNombre.remove("E", "F");
+		
+		wut = conNombre.getNodos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+		wut = conNombre.getArcos().toArray();
+		for(int i=0;i<wut.length;i++){
+			System.out.println(wut[i].toString());
+		}
+*/
+/*		
 		System.out.println();
 		System.out.println("Inicio de la prueba de DigraphLista ");
 		System.out.println();
-		Digraph sinNombre = new DigraphLista();
+		Digraph sinNombre = new DigraphMatriz();
 		System.out.println(sinNombre.add(new Nodo("A")));
 		System.out.println(sinNombre.add(new Nodo("B")));
 		System.out.println(sinNombre.add(new Nodo("A")));
@@ -343,7 +367,7 @@ public class Main {
 		System.out.println(sinNombre.add(new Arco("A","D")));
 		System.out.println(sinNombre.add(new Arco("D","B")));
 		System.out.println(sinNombre.add(new Arco("B","A")));
-		
+				
 		
 		System.out.println("Estoy eliminando: \n");
 		System.out.println(sinNombre.remove("D","B"));
@@ -362,11 +386,11 @@ public class Main {
 		System.out.println(sinNombre.add(new Arco("D","D")));
 		System.out.println(sinNombre.add(new Arco("B","B")));
 		
-		Lista<Nodo> listitaNoditos = new MiLista<Nodo>();
-		Lista<Arco> listitaArcos = new MiLista<Arco>();
+		MiLista<Nodo> listitaNoditos = new MiLista<Nodo>();
+		MiLista<Arco> listitaArcos = new MiLista<Arco>();
 		
-		listitaArcos = sinNombre.getOutArcos("A");
-		listitaNoditos = sinNombre.getNodos();
+		listitaArcos = (MiLista<Arco>) sinNombre.getOutArcos("A");
+		listitaNoditos = (MiLista<Nodo>) sinNombre.getNodos();
 		
 		listitaArcos.imprimirLista();
 		listitaNoditos.imprimirLista();
@@ -387,10 +411,33 @@ public class Main {
 		System.out.println(listitaNoditos.contains(new Arco("F","U")));
 		System.out.println(listitaNoditos.contains(new Arco("A","E")));
 		System.out.println(listitaNoditos.contains(new Arco("B","Y")));
-	
+*/
 
+		DigraphMatriz sinNombre = new DigraphMatriz();
+		int i = 0;
+		boolean dummy = sinNombre.add(new Nodo(""+i));
 		
+		while(dummy && i<2001){
+			i++;
+			System.out.println(i+" "+sinNombre.add(new Nodo(""+i)));
+		}
 		
+		System.out.println("Nodos");
+		Object[] wut = sinNombre.getNodos().toArray();
+		for(int j=0;j<wut.length;j++){
+			System.out.println(wut[j].toString());
+		}
+		
+		while(dummy && i != 1){
+			i--;
+			System.out.println(i+" "+sinNombre.add(new Arco(""+i,""+(i-1))));
+		}
+		
+		System.out.println("Arcos");
+		wut = sinNombre.getArcos().toArray();
+		for(int j=0;j<wut.length;j++){
+			System.out.println(wut[j].toString());
+		}
 	}	
 
 }

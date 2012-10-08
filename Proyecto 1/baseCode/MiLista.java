@@ -1,4 +1,6 @@
 /**
+ * @author Gabriela Limonta, Luis Miranda
+ * 
  * Clase que implementa la interfaz List
  * Esta es una clase parametrizada con tipo (clase) E; i.e., la
  * lista contiene elementos de tipo E.
