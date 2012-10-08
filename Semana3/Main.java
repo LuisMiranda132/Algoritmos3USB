@@ -8,16 +8,22 @@ public class Main {
     public Main() {
     }
 
-    public void cargarDatos(String fin) {
+    public static void cargarDatos(String fin) {
 	String linea = "";
         BufferedReader in = null;
 
         try {
             in = new BufferedReader(new FileReader(fin));
-
+            
+            while ((linea = in.readLine()) != null) {
+              System.out.println(linea);
+            }
+            
 
         } catch (Exception ioe) {
+          System.out.println();
         }
+        
     }
 
 
@@ -29,8 +35,11 @@ public class Main {
 	    in  = args[0];
 	    out = args[1];
 	}
+	
+	cargarDatos(in);
 
 	Digraph d = new DigraphHash();
+	
 
 	
 
