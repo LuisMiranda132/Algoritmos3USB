@@ -213,14 +213,16 @@ public class DigraphLista extends Digraph {
      */
     public Nodo get(String nod){
     	Nodo aux = new Nodo(nod);
-        if(!this.nodos.existe(aux)) 
-        	return null;
-        else {
-        	int i=0;
-        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+    	int i=0;
+        try {
+        	while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
         		i++;
-        	return (Nodo) this.nodos.getArray()[i];
-        }
+         }
+         catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+         	return null;
+         }
+        return (Nodo) this.nodos.getArray()[i];
+        
     }
 
     /* 
@@ -339,29 +341,21 @@ public class DigraphLista extends Digraph {
      * grafo cambia, retorna true.
      */
     public  boolean remove(String nod){
-    	System.out.println("al menos entre");
     	Nodo aux = new Nodo(nod);
     	boolean elimine = false;
     	int i=0;
         
         try {
-        	System.out.println("entre en try");
     		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux))){
-    			System.out.println("i: "+i);
     			i++;
     		}
     	}
     	catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
-    		System.out.println("no elimineeee");
     		return elimine;
     	}
-        System.out.println("voy a eliminar");
     	this.nodos.remove(i);
-    	System.out.println("ya quite los nodos");
     	this.arcos.remove(i);
-    	System.out.println("ya quite los arcos");
     	elimine = true;
-    	System.out.println("truuuuu");
     	return elimine;
     	
     }
