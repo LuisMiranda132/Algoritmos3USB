@@ -150,6 +150,7 @@ public class DigraphLista extends Digraph {
      * Retorna la arista del grafo que conecta a los vertices
      * src y dst. Si no existe dicha arista, retorna null.
      */
+
     @SuppressWarnings("unchecked")
 	public  Arco get(String src, String dst){
         Nodo auxS = new Nodo(src);
@@ -173,20 +174,19 @@ public class DigraphLista extends Digraph {
         	return null;
         }
         
-        Arco nuevArc = new Arco(src,dst);
-        
-        if (((Lista<Arco>) this.arcos.getArray()[i]).contains(nuevArc)) {
-        	return nuevArc;
-        }
+        Arco nuevo = new Arco(src,dst);
+        if (((Lista<Arco>) this.arcos.getArray()[i]).contains(nuevo))
+        	return nuevo;
         else {
         	return null;
         }
-        
-    }
+	}
+    
 
     /*
      *Retorna todas las aristas del grafo
      */
+
     @SuppressWarnings("unchecked")
 	public  Lista<Arco> getArcos(){
     	int i=0;
@@ -213,16 +213,14 @@ public class DigraphLista extends Digraph {
      */
     public Nodo get(String nod){
     	Nodo aux = new Nodo(nod);
-        int i=0;
-        
-        try {
-        	while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
-        		i++;
-        }
-        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        if(!this.nodos.existe(aux)) 
         	return null;
+        else {
+        	int i=0;
+        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+        		i++;
+        	return (Nodo) this.nodos.getArray()[i];
         }
-		return (Nodo) this.nodos.getArray()[i];
     }
 
     /* 
@@ -243,6 +241,7 @@ public class DigraphLista extends Digraph {
      * Retorna la lista de lados que tienen al vertice dado como
      * destino. Si el vertice no existe, retorna null.
      */
+
     @SuppressWarnings("unchecked")
 	public  Lista<Arco> getInArcos(String nodo){
     	Nodo aux = new Nodo(nodo);
@@ -347,9 +346,10 @@ public class DigraphLista extends Digraph {
         
         try {
         	System.out.println("entre en try");
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux))){
     			System.out.println("i: "+i);
     			i++;
+    		}
     	}
     	catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
     		System.out.println("no elimineeee");

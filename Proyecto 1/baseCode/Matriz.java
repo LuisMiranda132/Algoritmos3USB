@@ -24,13 +24,14 @@ public class Matriz {
 	/*
 	 * Agrega val a la posicion (x,y) de la matriz
 	 */
-	public void add(int x, int y, int val){
+	public boolean add(int x, int y, int val){
 		try{
 			DynamicArray dummy = (DynamicArray)this.quad.getArray()[y];
-			dummy.add(val,x);
+			dummy.add(val,x);			
 		}catch(java.lang.ArrayIndexOutOfBoundsException e){
-			System.out.println("Estas agregando fuera de la matriz");
+			return false;
 		}
+		return true;
 	}
 	
 	/*
@@ -94,7 +95,6 @@ public class Matriz {
 			DynamicArray dummy = (DynamicArray)this.quad.getArray()[y];
 			return dummy.getArray()[x].equals(1);
 		}catch(java.lang.ArrayIndexOutOfBoundsException e){
-			System.out.println("Estas revisando un campo que no esta en la matriz");
 			return false;
 		}
 	}

@@ -329,7 +329,7 @@ public class Main {
 		System.out.println();
 		System.out.println("Inicio de la prueba de DigraphLista ");
 		System.out.println();
-		Digraph sinNombre = new DigraphMatriz();
+		Digraph sinNombre = new DigraphLista();
 		System.out.println(sinNombre.add(new Nodo("A")));
 		System.out.println(sinNombre.add(new Nodo("B")));
 		System.out.println(sinNombre.add(new Nodo("A")));
@@ -373,7 +373,7 @@ public class Main {
 		System.out.println(sinNombre.remove("D","B"));
 		System.out.println(sinNombre.remove("A","B"));
 		System.out.println(sinNombre.remove("A"));
-		/*
+		
 		sinNombre.clear();
 		System.out.println("Agregue de nuevo lo que tenia al principio: ");
 		System.out.println(sinNombre.add(new Nodo("A")));
@@ -439,7 +439,8 @@ public class Main {
 		if (herp == null) {
 			System.out.println("Herp es null!");
 		}
-		*/
+		
+		
 		
 		
 		
