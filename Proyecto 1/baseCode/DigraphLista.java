@@ -51,7 +51,7 @@ public class DigraphLista extends Digraph {
         	return false;
         else {
         	((Lista<Arco>) this.arcos.getArray()[i]).add(e);
-        	((MiLista<Arco>) this.arcos.getArray()[i]).imprimirLista();
+        	//((MiLista<Arco>) this.arcos.getArray()[i]).imprimirLista();
             return true;
         }
 
@@ -83,19 +83,6 @@ public class DigraphLista extends Digraph {
      * Elimina los nodos y aristas del grafo.
      */
     public  void clear(){
-    	
-    	// Es valido aqui hacer lo que hice alla abajo por el garbage collector
-    	// o es demasiado *arrgh* pirata ?! 
-    	/*if (this.nodos != null) {
-    		int i=(this.nodos.getArray().length - 1);
-        	while (i>=0){
-        		this.nodos.remove(i);
-        	}
-        	i=(this.arcos.getArray().length -1);
-        	while (i>=0){
-        		this.arcos.remove(i);
-        	}
-    	}*/
     	
     	this.nodos = new DynamicArray();
     	this.arcos = new DynamicArray();
@@ -145,7 +132,16 @@ public class DigraphLista extends Digraph {
      */
     public boolean contains(String nod) {
 		Nodo aux = new Nodo(nod);
-		return this.nodos.existe(aux);
+        int i=0;
+        
+        try {
+        	while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
+        		i++;
+        }
+        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        	return false;
+        }
+		return true;
     }
 
     /*
@@ -196,10 +192,7 @@ public class DigraphLista extends Digraph {
      * Retorna todos los nodos del grafo.
      */
     public  Lista<Nodo> getNodos(){
-        if (this.nodos == null)
-        	return null;
-        
-    	Lista<Nodo> lista = new MiLista<Nodo>();
+        Lista<Nodo> lista = new MiLista<Nodo>();
         int i=0;
         
         while(i < this.nodos.getArray().length) {
@@ -222,17 +215,17 @@ public class DigraphLista extends Digraph {
      * origen. Si el vertice no existe, retorna null.
      */
     public  Lista<Arco> getOutArcos(String nodo){
-        Nodo aux = new Nodo(nodo);
-        if (this.nodos == null)
-        	return null;
-        else if(!this.nodos.existe(aux)) 
-        	return null;
-        else {
-        	int i=0;
-        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
-        		i++;
-        	return (Lista<Arco>) this.arcos.getArray()[i];
-        }
+    	Nodo aux = new Nodo(nodo);
+    	int i=0;
+        
+        try {
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
+    			i++;
+    	}
+    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    		return null;
+    	}
+        return (Lista<Arco>) this.arcos.getArray()[i];
     }
 
     /*

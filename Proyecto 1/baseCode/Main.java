@@ -326,6 +326,7 @@ public class Main {
 		System.out.println(sinNombre.contains("E", "D"));
 		System.out.println(sinNombre.contains("B", "B"));
 		System.out.println(sinNombre.contains("D", "D"));
+		System.out.println(sinNombre.contains("A"));
 		
 		System.out.println("Hice clear del grafo y reviso a ver si contiene cosas: ");
 		sinNombre.clear();
@@ -348,7 +349,7 @@ public class Main {
 		System.out.println(sinNombre.remove("D","B"));
 		System.out.println(sinNombre.remove("A","B"));
 		System.out.println(sinNombre.remove("A"));
-		/*
+		
 		sinNombre.clear();
 		System.out.println("Agregue de nuevo lo que tenia al principio: ");
 		System.out.println(sinNombre.add(new Nodo("A")));
@@ -366,8 +367,11 @@ public class Main {
 		
 		listitaArcos = sinNombre.getOutArcos("A");
 		listitaNoditos = sinNombre.getNodos();
-		*/
-		/*
+		
+		listitaArcos.imprimirLista();
+		listitaNoditos.imprimirLista();
+		
+		
 		System.out.println("Veremos si la lista de los nodos contiene todos los nodos (A,B,D) y si no contiene el E: ");
 		System.out.println(listitaNoditos.contains(new Nodo("A")));
 		System.out.println(listitaNoditos.contains(new Nodo("B")));
@@ -383,7 +387,7 @@ public class Main {
 		System.out.println(listitaNoditos.contains(new Arco("F","U")));
 		System.out.println(listitaNoditos.contains(new Arco("A","E")));
 		System.out.println(listitaNoditos.contains(new Arco("B","Y")));
-		*/
+	
 
 		
 		
