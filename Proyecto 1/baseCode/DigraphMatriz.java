@@ -83,8 +83,6 @@ public class DigraphMatriz extends Digraph {
     	this.numVertices =0;
     	this.numArcos=0;
     	this.matriz.add(0, 0,0);
-    	System.out.println(this.nodos.getArray().length+"\nDespues del clear");
-    	this.matriz.print();
     }
 
     /*

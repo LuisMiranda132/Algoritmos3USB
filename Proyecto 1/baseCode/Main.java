@@ -315,6 +315,7 @@ public class Main {
 		System.out.println(sinNombre.add(new Arco("A","D")));
 		System.out.println(sinNombre.add(new Arco("D","D")));
 		System.out.println(sinNombre.add(new Arco("B","B")));
+
 		
 		System.out.println("Contains ");
 		System.out.println(sinNombre.contains("A", "D"));

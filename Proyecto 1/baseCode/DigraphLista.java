@@ -51,7 +51,7 @@ public class DigraphLista extends Digraph {
         	return false;
         else {
         	((Lista<Arco>) this.arcos.getArray()[i]).add(e);
-        	//((Lista<Arco>) this.arcos.getArray()[i]).imprimirLista();
+        	((MiLista<Arco>) this.arcos.getArray()[i]).imprimirLista();
             return true;
         }
 
@@ -96,8 +96,11 @@ public class DigraphLista extends Digraph {
         		this.arcos.remove(i);
         	}
     	}*/
+    	
     	this.nodos = new DynamicArray();
     	this.arcos = new DynamicArray();
+    	this.numVertices =0;
+    	this.numArcos=0;
     }
 
     /*
