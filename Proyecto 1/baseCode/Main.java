@@ -380,13 +380,15 @@ public class Main {
 		System.out.println();
 		
 		System.out.println("Veremos si la lista de arcos contiene todos los arcos, los ultimos 3 no pertenecen: ");
-		System.out.println(listitaNoditos.contains(new Arco("A","A")));
-		System.out.println(listitaNoditos.contains(new Arco("B","B")));
-		System.out.println(listitaNoditos.contains(new Arco("A","D")));
-		System.out.println(listitaNoditos.contains(new Arco("D","D")));
-		System.out.println(listitaNoditos.contains(new Arco("F","U")));
-		System.out.println(listitaNoditos.contains(new Arco("A","E")));
-		System.out.println(listitaNoditos.contains(new Arco("B","Y")));
+		System.out.println(listitaArcos.contains(new Arco("A","A")));
+		System.out.println(listitaArcos.contains(new Arco("B","B")));
+		System.out.println(listitaArcos.contains(new Arco("A","D")));
+		System.out.println(listitaArcos.contains(new Arco("D","D")));
+		System.out.println(listitaArcos.contains(new Arco("F","U")));
+		System.out.println(listitaArcos.contains(new Arco("A","E")));
+		System.out.println(listitaArcos.contains(new Arco("B","Y")));
+		
+		
 	
 
 		
