@@ -152,27 +152,58 @@ public class DigraphLista extends Digraph {
      * src y dst. Si no existe dicha arista, retorna null.
      */
     public  Arco get(String src, String dst){
-        Nodo aux = new Nodo(src);
-        if(!this.nodos.existe(aux))
-        	return null;
-        else {
-        	int i=0;
-        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+        Nodo auxS = new Nodo(src);
+        Nodo auxD = new Nodo(dst);
+        int i=0;
+        
+        try {
+        	while(!(((Nodo) this.nodos.getArray()[i]).equals(auxD)))
         		i++;
-        	Arco nuevo = new Arco(src,dst);
-        	if (!( (Lista<Arco>) this.arcos.getArray()[i]).contains(nuevo))
-        		return null;
-        	else {
-        		return nuevo;
-        	}
         }
+        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        	return null;
+        }
+        
+        i=0;
+        try {
+        	while(!(((Nodo) this.nodos.getArray()[i]).equals(auxS)))
+        		i++;
+        }
+        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        	return null;
+        }
+        
+        Arco nuevArc = new Arco(src,dst);
+        
+        if (((Lista<Arco>) this.arcos.getArray()[i]).contains(nuevArc)) {
+        	return nuevArc;
+        }
+        else {
+        	return null;
+        }
+        
     }
 
     /*
      *Retorna todas las aristas del grafo
      */
     public  Lista<Arco> getArcos(){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	int i=0;
+        
+        Lista<Arco> listaSal = new MiLista<Arco>();
+        
+        while (i < this.nodos.getArray().length) {
+        	Lista<Arco> listaTemp = new MiLista<Arco>();
+        	listaTemp = ((Lista<Arco>) this.arcos.getArray()[i]);
+        	Caja<Arco> cajaAux = listaTemp.obtenerPrimero();
+        	while (cajaAux != null) {
+        		listaSal.add((Arco) cajaAux.obtenerCont());
+        		cajaAux = cajaAux.obtenerSiguiente();
+        	}
+        	i++;
+        }
+        
+        return listaSal;
     }
 
     /*
@@ -181,14 +212,16 @@ public class DigraphLista extends Digraph {
      */
     public Nodo get(String nod){
     	Nodo aux = new Nodo(nod);
-        if(!this.nodos.existe(aux)) 
-        	return null;
-        else {
-        	int i=0;
-        	while( i < this.nodos.getArray().length && this.nodos.getArray()[i] != aux)
+        int i=0;
+        
+        try {
+        	while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
         		i++;
-        	return (Nodo) this.nodos.getArray()[i];
         }
+        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        	return null;
+        }
+		return (Nodo) this.nodos.getArray()[i];
     }
 
     /* 
@@ -210,7 +243,34 @@ public class DigraphLista extends Digraph {
      * destino. Si el vertice no existe, retorna null.
      */
     public  Lista<Arco> getInArcos(String nodo){
-        throw new UnsupportedOperationException("Not supported yet.");
+    	Nodo aux = new Nodo(nodo);
+    	int i=0;
+        
+        try {
+    		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
+    			i++;
+    	}
+    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    		return null;
+    	}
+        
+        i=0;
+        Lista<Arco> listaSal = new MiLista<Arco>();
+        
+        while (i < this.nodos.getArray().length) {
+        	Lista<Arco> listaTemp = new MiLista<Arco>();
+        	listaTemp = ((Lista<Arco>) this.arcos.getArray()[i]);
+        	Caja<Arco> cajaAux = listaTemp.obtenerPrimero();
+        	while (cajaAux != null) {
+        		if (((Arco) cajaAux.obtenerCont()).getDst() == nodo)
+        			listaSal.add((Arco) cajaAux.obtenerCont());
+        		cajaAux = cajaAux.obtenerSiguiente();
+        	}
+        	i++;
+        }
+        
+        return listaSal;
+        
     }
 
     /*

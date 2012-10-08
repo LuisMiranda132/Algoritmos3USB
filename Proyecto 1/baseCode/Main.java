@@ -325,7 +325,7 @@ public class Main {
 			System.out.println(wut[i].toString());
 		}
 */
-/*		
+		
 		System.out.println();
 		System.out.println("Inicio de la prueba de DigraphLista ");
 		System.out.println();
@@ -392,6 +392,9 @@ public class Main {
 		listitaArcos = (MiLista<Arco>) sinNombre.getOutArcos("A");
 		listitaNoditos = (MiLista<Nodo>) sinNombre.getNodos();
 		
+		listitaArcos = (MiLista<Arco>) sinNombre.getInArcos("A");
+		listitaArcos = (MiLista<Arco>) sinNombre.getArcos();
+		
 		listitaArcos.imprimirLista();
 		listitaNoditos.imprimirLista();
 		
@@ -404,18 +407,38 @@ public class Main {
 		System.out.println();
 		
 		System.out.println("Veremos si la lista de arcos contiene todos los arcos, los ultimos 3 no pertenecen: ");
-		System.out.println(listitaNoditos.contains(new Arco("A","A")));
-		System.out.println(listitaNoditos.contains(new Arco("B","B")));
-		System.out.println(listitaNoditos.contains(new Arco("A","D")));
-		System.out.println(listitaNoditos.contains(new Arco("D","D")));
-		System.out.println(listitaNoditos.contains(new Arco("F","U")));
-		System.out.println(listitaNoditos.contains(new Arco("A","E")));
-		System.out.println(listitaNoditos.contains(new Arco("B","Y")));
-*/
 
-		DigraphMatriz sinNombre = new DigraphMatriz();
+
 		int i = 0;
 		boolean dummy = sinNombre.add(new Nodo(""+i));
+
+		System.out.println(listitaArcos.contains(new Arco("A","A")));
+		System.out.println(listitaArcos.contains(new Arco("B","B")));
+		System.out.println(listitaArcos.contains(new Arco("A","D")));
+		System.out.println(listitaArcos.contains(new Arco("D","D")));
+		System.out.println(listitaArcos.contains(new Arco("F","U")));
+		System.out.println(listitaArcos.contains(new Arco("A","E")));
+		System.out.println(listitaArcos.contains(new Arco("B","Y")));
+		
+		Arco herp;
+		Nodo derp;
+		
+		derp = sinNombre.get("A");
+		herp = sinNombre.get("A","A");
+		
+		System.out.println(herp.toString());
+		System.out.println(derp.toString());
+	
+		derp = sinNombre.get("F");
+		herp = sinNombre.get("F","U");
+		
+		if (derp == null) {
+			System.out.println("Derp es null!");
+		}
+		
+		if (herp == null) {
+			System.out.println("Herp es null!");
+		}
 		
 		while(dummy && i<2001){
 			i++;
