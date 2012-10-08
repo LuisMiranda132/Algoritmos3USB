@@ -368,6 +368,9 @@ public class Main {
 		listitaArcos = sinNombre.getOutArcos("A");
 		listitaNoditos = sinNombre.getNodos();
 		
+		listitaArcos = sinNombre.getInArcos("A");
+		listitaArcos = sinNombre.getArcos();
+		
 		listitaArcos.imprimirLista();
 		listitaNoditos.imprimirLista();
 		
@@ -388,9 +391,25 @@ public class Main {
 		System.out.println(listitaArcos.contains(new Arco("A","E")));
 		System.out.println(listitaArcos.contains(new Arco("B","Y")));
 		
+		Arco herp;
+		Nodo derp;
 		
+		derp = sinNombre.get("A");
+		herp = sinNombre.get("A","A");
+		
+		System.out.println(herp.toString());
+		System.out.println(derp.toString());
 	
-
+		derp = sinNombre.get("F");
+		herp = sinNombre.get("F","U");
+		
+		if (derp == null) {
+			System.out.println("Derp es null!");
+		}
+		
+		if (herp == null) {
+			System.out.println("Herp es null!");
+		}
 		
 		
 	}	
