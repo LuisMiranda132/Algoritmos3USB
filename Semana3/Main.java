@@ -15,13 +15,26 @@ public class Main {
         try {
             in = new BufferedReader(new FileReader(fin));
             
+            int numCasos = Integer.parseInt(in.readLine());
+            
             while ((linea = in.readLine()) != null) {
-              System.out.println(linea);
+              if(!(linea.equalsIgnoreCase(""))){
+//            	  System.out.println(linea);
+                  for(char c : linea.toCharArray()){
+                	  if(c == 'L'){
+                		  System.out.print(" ");
+                	  }
+                	  else{
+                		  System.out.print(c);
+                	  }
+                  }
+                  System.out.println();
+              }
             }
             
 
         } catch (Exception ioe) {
-          System.out.println();
+          System.out.println(ioe);
         }
         
     }
