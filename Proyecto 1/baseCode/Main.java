@@ -373,7 +373,7 @@ public class Main {
 		System.out.println(sinNombre.remove("D","B"));
 		System.out.println(sinNombre.remove("A","B"));
 		System.out.println(sinNombre.remove("A"));
-		
+		/*
 		sinNombre.clear();
 		System.out.println("Agregue de nuevo lo que tenia al principio: ");
 		System.out.println(sinNombre.add(new Nodo("A")));
@@ -439,7 +439,11 @@ public class Main {
 		if (herp == null) {
 			System.out.println("Herp es null!");
 		}
+		*/
 		
+		
+		
+		/*
 		while(dummy && i<2001){
 			i++;
 			System.out.println(i+" "+sinNombre.add(new Nodo(""+i)));
@@ -461,6 +465,7 @@ public class Main {
 		for(int j=0;j<wut.length;j++){
 			System.out.println(wut[j].toString());
 		}
+		*/
 	}	
 
 }

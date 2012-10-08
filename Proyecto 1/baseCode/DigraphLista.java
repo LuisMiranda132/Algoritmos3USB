@@ -8,7 +8,7 @@
 public class DigraphLista extends Digraph {
 
     private  DynamicArray nodos;
-    private  DynamicArray arcos;  //Lista<Arco>
+    private  DynamicArray arcos; 
 
     /*
      * @see Constructor para Digraph.
@@ -24,7 +24,8 @@ public class DigraphLista extends Digraph {
      * no existen o el grafo tiene una arista entre dichos vertices,
      * retorna false. Si se agrega la nueva arista, retorna true.
      */
-    public  boolean add(Arco e){
+    @SuppressWarnings("unchecked")
+	public  boolean add(Arco e){
         String src = e.getSrc();
         Nodo noditoS = new Nodo(src);
         Nodo noditoD = new Nodo(e.getDst());
@@ -47,14 +48,11 @@ public class DigraphLista extends Digraph {
     		return false;
     	}
     	
-        Lista<Arco> nuevList = new MiLista<Arco>();
         
-        /* Esta agregando repetidos los arcos revisar esto */
         if (((Lista<Arco>) this.arcos.getArray()[i]).contains(e))
         	return false;
         else {
         	((Lista<Arco>) this.arcos.getArray()[i]).add(e);
-        	//((MiLista<Arco>) this.arcos.getArray()[i]).imprimirLista();
             return true;
         }
 
@@ -96,7 +94,8 @@ public class DigraphLista extends Digraph {
     /*
      * Chequea si el grafo contiene una arista del nodo src a dst
      */
-    public  boolean contains(String src, String dst){
+    @SuppressWarnings("unchecked")
+	public  boolean contains(String src, String dst){
         Nodo noditoS = new Nodo(src);
         Nodo noditoD = new Nodo(dst);
         int i=0;
@@ -151,7 +150,8 @@ public class DigraphLista extends Digraph {
      * Retorna la arista del grafo que conecta a los vertices
      * src y dst. Si no existe dicha arista, retorna null.
      */
-    public  Arco get(String src, String dst){
+    @SuppressWarnings("unchecked")
+	public  Arco get(String src, String dst){
         Nodo auxS = new Nodo(src);
         Nodo auxD = new Nodo(dst);
         int i=0;
@@ -187,17 +187,18 @@ public class DigraphLista extends Digraph {
     /*
      *Retorna todas las aristas del grafo
      */
-    public  Lista<Arco> getArcos(){
+    @SuppressWarnings("unchecked")
+	public  Lista<Arco> getArcos(){
     	int i=0;
         
         Lista<Arco> listaSal = new MiLista<Arco>();
         
         while (i < this.nodos.getArray().length) {
         	Lista<Arco> listaTemp = new MiLista<Arco>();
-        	listaTemp = ((Lista<Arco>) this.arcos.getArray()[i]);
+        	listaTemp = (Lista<Arco>) this.arcos.getArray()[i];
         	Caja<Arco> cajaAux = listaTemp.obtenerPrimero();
         	while (cajaAux != null) {
-        		listaSal.add((Arco) cajaAux.obtenerCont());
+        		listaSal.add(cajaAux.obtenerCont());
         		cajaAux = cajaAux.obtenerSiguiente();
         	}
         	i++;
@@ -242,7 +243,8 @@ public class DigraphLista extends Digraph {
      * Retorna la lista de lados que tienen al vertice dado como
      * destino. Si el vertice no existe, retorna null.
      */
-    public  Lista<Arco> getInArcos(String nodo){
+    @SuppressWarnings("unchecked")
+	public  Lista<Arco> getInArcos(String nodo){
     	Nodo aux = new Nodo(nodo);
     	int i=0;
         
@@ -262,8 +264,8 @@ public class DigraphLista extends Digraph {
         	listaTemp = ((Lista<Arco>) this.arcos.getArray()[i]);
         	Caja<Arco> cajaAux = listaTemp.obtenerPrimero();
         	while (cajaAux != null) {
-        		if (((Arco) cajaAux.obtenerCont()).getDst() == nodo)
-        			listaSal.add((Arco) cajaAux.obtenerCont());
+        		if ((cajaAux.obtenerCont()).getDst() == nodo)
+        			listaSal.add(cajaAux.obtenerCont());
         		cajaAux = cajaAux.obtenerSiguiente();
         	}
         	i++;
@@ -277,7 +279,8 @@ public class DigraphLista extends Digraph {
      * Retorna la lista de lados que tienen al vertice dado como
      * origen. Si el vertice no existe, retorna null.
      */
-    public  Lista<Arco> getOutArcos(String nodo){
+    @SuppressWarnings("unchecked")
+	public  Lista<Arco> getOutArcos(String nodo){
     	Nodo aux = new Nodo(nodo);
     	int i=0;
         
@@ -296,7 +299,8 @@ public class DigraphLista extends Digraph {
      * dst. Si el grafo no cambia, retorna false. Si el grafo cambia,
      * retorna true.
      */
-    public  boolean remove(String src, String dst){
+    @SuppressWarnings("unchecked")
+	public  boolean remove(String src, String dst){
     	Nodo noditoS = new Nodo(src);
         Nodo noditoD = new Nodo(dst);
         boolean elimine = false;
@@ -320,13 +324,11 @@ public class DigraphLista extends Digraph {
     	}
     	
     	Arco aux = new Arco(src,dst);
-        //((Lista<Arco>) this.arcos.getArray()[i]).imprimirLista();
-        if (!((Lista<Arco>) this.arcos.getArray()[i]).contains(aux)) {
-        	//System.out.println("lalala");
-        	return elimine;
+    	
+    	if (!((Lista<Arco>) this.arcos.getArray()[i]).contains(aux)) {
+        return elimine;
         }
         else{
-        	//System.out.println("lelele");
         	elimine = ((Lista<Arco>) this.arcos.getArray()[i]).remove(aux); 
         	return elimine;
         }
@@ -338,22 +340,43 @@ public class DigraphLista extends Digraph {
      * grafo cambia, retorna true.
      */
     public  boolean remove(String nod){
+    	System.out.println("al menos entre");
     	Nodo aux = new Nodo(nod);
     	boolean elimine = false;
     	int i=0;
         
         try {
+        	System.out.println("entre en try");
     		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
+    			System.out.println("i: "+i);
     			i++;
     	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    	catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+    		System.out.println("no elimineeee");
     		return elimine;
     	}
-    	
+        System.out.println("voy a eliminar");
     	this.nodos.remove(i);
+    	System.out.println("ya quite los nodos");
     	this.arcos.remove(i);
+    	System.out.println("ya quite los arcos");
     	elimine = true;
+    	System.out.println("truuuuu");
     	return elimine;
+    	
+    }
+    
+    /*
+     * Retorna un nuevo grafo que es una copia del grafo actual.
+     * 
+     */
+    public Object clone() {
+    	DigraphLista nuevo = new DigraphLista();
+    	nuevo.nodos = this.nodos;
+    	nuevo.arcos = this.arcos;
+    	nuevo.numArcos = this.numArcos;
+    	nuevo.numVertices = this.numVertices;
+    	return nuevo;
     }
 
 }
