@@ -115,6 +115,11 @@ public class Main {
             	for(int i=0;i<grafo.getOutArcos("1,1").toArray().length;i++){
             		System.out.println(grafo.getOutArcos("1,1").toArray()[i]);
             	}
+            	
+            	for(int i=0;i<lista.toArray().length;i++){
+            		System.out.println(lista.toArray()[i]);
+            	}
+            	
             	theLista.add(grafo);
             	fila = 0; 
             	columna = 0;
@@ -164,7 +169,8 @@ public class Main {
     }
 
 
-    public static void main(String args[]) {
+    @SuppressWarnings("unchecked")
+	public static void main(String args[]) {
 	String in  = "file.in";
 	String out = "file.out";
 
@@ -177,9 +183,16 @@ public class Main {
 	
 	for(int i=0;i<theLista.toArray().length;i++){
 		Digraph dummy = (DigraphHash) theLista.toArray()[i];
+		System.out.println(i);
+		System.out.println(dummy.toString());
 		
-		System.out.print(dummy.toString()+"\n");
-		
+	}
+	for(int i=0;i<theNodos.toArray().length;i++){
+		Lista<Nodo> dummy = (Lista<Nodo>) theNodos.toArray()[i];
+		System.out.println(i);
+		for(int j=0;j<dummy.toArray().length;j++){
+			System.out.println(dummy.toArray()[j].toString());
+		}
 	}
 	
     }
