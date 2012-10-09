@@ -130,6 +130,38 @@ public class Main {
         }
         
     }
+    
+    public Lista<Integer> verificarAdyacencias(Digraph grafito,
+                                               Lista<Nodo> listita) {
+        Object [] arregloLista = listita.toArray();
+        Lista<Integer> listaAdy = new MiLista<Integer>();
+        int i=0;
+        
+        while (i < listita.toArray().length) {
+              int adyacencias = 0;
+              boolean [] arregloVerif = new boolean[listita.toArray().length];
+              adyacencias = contarAdyacencias(((Nodo)arregloLista[i]),
+                                               i,arregloVerif);
+              listaAdy.add(adyacencias);
+              i++;
+        }
+       
+        return listaAdy;
+    }
+    
+    public int contarAdyacencias(Nodo nodito,int pos, boolean[] arregloNod) {
+        int ady;
+        
+        if (arregloNod[pos] == true) {
+            ady = 0;
+            return ady;
+        }
+        else if (arregloNod[pos] == false) {
+            //Esto realmente no va aqui solo era para que compilara sin errores
+            return 0;
+        }
+        return 0;
+    }
 
 
     public static void main(String args[]) {
