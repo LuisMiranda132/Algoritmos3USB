@@ -112,8 +112,9 @@ public class Main {
             		}
             	}
             	
-            	for(int i=0;i<grafo.getOutArcos("1,1").toArray().length;i++){
-            		System.out.println(grafo.getOutArcos("1,1").toArray()[i]);
+            	for(int i=0;i<grafo.getOutArcos("3,2").toArray().length;i++){
+            	
+System.out.println(grafo.getOutArcos("3,2").toArray()[i]);
             	}
             	
             	for(int i=0;i<lista.toArray().length;i++){
@@ -136,17 +137,20 @@ public class Main {
         
     }
     
-    public Lista<Integer> verificarAdyacencias(Digraph grafito,
+    public static Lista<Integer> verificarAdyacencias(Digraph grafito,
                                                Lista<Nodo> listita) {
-        Object [] arregloLista = listita.toArray();
+        Object [] arregloLista = grafito.getNodos().toArray();
         Lista<Integer> listaAdy = new MiLista<Integer>();
         int i=0;
-        
+        System.out.println("verifi");
         while (i < listita.toArray().length) {
               int adyacencias = 0;
-              boolean [] arregloVerif = new boolean[listita.toArray().length];
+              boolean [] arregloVerif = new
+                            boolean[grafito.getNodos().toArray().length];
+                           
+System.out.println(((Nodo)arregloLista[i]).toString());
               adyacencias = contarAdyacencias(((Nodo)arregloLista[i]),
-                                               i,arregloVerif);
+                                               i,arregloVerif,grafito);
               listaAdy.add(adyacencias);
               i++;
         }
@@ -154,16 +158,30 @@ public class Main {
         return listaAdy;
     }
     
-    public int contarAdyacencias(Nodo nodito,int pos, boolean[] arregloNod) {
-        int ady;
+    public static int contarAdyacencias(Nodo nodito,int pos, 
+                                boolean[] arregloNod, Digraph grafi) {
+        int ady=0;
         
         if (arregloNod[pos] == true) {
             ady = 0;
             return ady;
         }
         else if (arregloNod[pos] == false) {
-            //Esto realmente no va aqui solo era para que compilara sin errores
-            return 0;
+            arregloNod[pos] = true;
+            for (int i=0;
+              i < grafi.getOutArcos(nodito.toString()).toArray().length;i++){
+                String temp =
+            ((Arco)grafi.getOutArcos(nodito.toString()).toArray()[i]).getDst();
+                Nodo nTemp = new Nodo(temp);
+                int j=0;
+                while (!(((Nodo)
+                        grafi.getNodos().toArray()[j]).equals(nTemp))) {
+                        j++;
+                }
+                ady += contarAdyacencias(nTemp,j,arregloNod,grafi);
+            }
+            ady++;
+            return ady;
         }
         return 0;
     }
@@ -194,6 +212,14 @@ public class Main {
 			System.out.println(dummy.toArray()[j].toString());
 		}
 	}
+	
+	Lista<Integer> listitaAdy = new MiLista<Integer>();
+	
+	listitaAdy = verificarAdyacencias(((Digraph) theLista.toArray()[0]),
+            ((Lista<Nodo>)theNodos.toArray()[0]));
+        
+        System.out.println("Estoy imprimiendo la lista de cantidad de aguas:");
+        listitaAdy.imprimirLista();
 	
     }
 }
