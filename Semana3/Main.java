@@ -7,8 +7,8 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class Main {
 
-    public Main() {
-    }
+	static Lista<Digraph> theLista = new MiLista<Digraph>(); 
+	static Lista<Lista<Nodo>> theNodos = new MiLista<Lista<Nodo>>();
 
     public static void cargarDatos(String fin) {
 	String linea = "";
@@ -25,9 +25,11 @@ public class Main {
             fila = 0;
             columna = 0;
             int numCasos = Integer.parseInt(in.readLine());
+            in.readLine();
             
             while ((linea = in.readLine()) != null) {
-              if(!(linea.equalsIgnoreCase(""))){
+            	try{
+            	while(!linea.equalsIgnoreCase("")){
             	  char p1 = '-',p2 = '-';
             	  
             	  columna = 0;
@@ -56,65 +58,75 @@ public class Main {
                   System.out.println();
                   maxColumna = Math.max(maxColumna, columna);
                   maxFila = Math.max(maxFila, fila);
-              }
-            }
-            System.out.println("Filas: "+maxFila+"\nColumnas: "+maxColumna);
-            System.out.println("Nodos: ");
-            for(int i=0;i<grafo.getNodos().toArray().length;i++){
-            	
-            	int x = -1;
-            	int y = 0;
-            	
-            	for(char c :grafo.getNodos().toArray()[i].toString().toCharArray()){
-            		int casilla = c - 48;
-            		
-            		if(c != ','){
-            			if(x == -1){
-            				x = casilla;
-            			}else{
-            				y = casilla;
-            			}
-            		}	
-            	
-            		if(grafo.contains((x-1)+","+(y-1))){
-            			grafo.add(new Arco((x+","+y),((x-1)+","+(y-1))));
-            		}
-            		if(grafo.contains((x-1)+","+(y))){
-        			grafo.add(new Arco((x+","+y),((x-1)+","+(y))));
-            		}
-            		if(grafo.contains((x-1)+","+(y+1))){
-            			grafo.add(new Arco((x+","+y),((x-1)+","+(y+1))));
-            		}
-    			
-            		if(grafo.contains((x+1)+","+(y-1))){
-            			grafo.add(new Arco((x+","+y),((x+1)+","+(y-1))));
-            		}
-            		if(grafo.contains((x+1)+","+(y+1))){
-            			grafo.add(new Arco((x+","+y),((x+1)+","+(y+1))));
-            		}    			
-            		if(grafo.contains((x+1)+","+(y))){
-            			grafo.add(new Arco((x+","+y),((x+1)+","+(y))));
-            		}    			
-            		if(grafo.contains((x)+","+(y-1))){
-            			grafo.add(new Arco((x+","+y),((x)+","+(y-1))));
-            		}
-            		if(grafo.contains((x)+","+(y+1))){
-            			grafo.add(new Arco((x+","+y),((x)+","+(y+1))));
-            		}
-    			
+                  
+                  linea = in.readLine();
+                  
             	}
-            }
+            	}catch(java.lang.NullPointerException e){
+            	}
+            
+            	System.out.println("Filas: "+maxFila+"\nColumnas: "+maxColumna);
+            	System.out.println("Nodos: ");
+            	for(int i=0;i<grafo.getNodos().toArray().length;i++){
             	
-            for(int i=0;i<grafo.getOutArcos("3,2").toArray().length;i++){
-            	System.out.println(grafo.getOutArcos("3,2").toArray()[i]);
+            		int x = -1;
+            		int y = -1;
+            	
+            		for(char c :grafo.getNodos().toArray()[i].toString().toCharArray()){
+            			int casilla = c - 48;
+            		
+            			if(c != ','){
+            				if(x == -1){
+            					x = casilla;
+            				}else{
+            					y = casilla;
+            				}
+            			}	
+            	
+            			if(grafo.contains((x-1)+","+(y-1))){
+            				grafo.add(new Arco((x+","+y),((x-1)+","+(y-1))));
+            			}
+            			if(grafo.contains((x-1)+","+(y))){
+            				grafo.add(new Arco((x+","+y),((x-1)+","+(y))));
+            			}
+            			if(grafo.contains((x-1)+","+(y+1))){
+            				grafo.add(new Arco((x+","+y),((x-1)+","+(y+1))));
+            			}
+            			
+            			if(grafo.contains((x+1)+","+(y-1))){
+            				grafo.add(new Arco((x+","+y),((x+1)+","+(y-1))));
+            			}
+            			if(grafo.contains((x+1)+","+(y+1))){
+            				grafo.add(new Arco((x+","+y),((x+1)+","+(y+1))));
+            			}    			
+            			if(grafo.contains((x+1)+","+(y))){
+            				grafo.add(new Arco((x+","+y),((x+1)+","+(y))));
+            			}    			
+            			if(grafo.contains((x)+","+(y-1))){
+            				grafo.add(new Arco((x+","+y),((x)+","+(y-1))));
+            			}
+            			if(grafo.contains((x)+","+(y+1))){
+            				grafo.add(new Arco((x+","+y),((x)+","+(y+1))));
+            			}
+            			
+            		}
+            	}
+            	
+            	for(int i=0;i<grafo.getOutArcos("1,1").toArray().length;i++){
+            		System.out.println(grafo.getOutArcos("1,1").toArray()[i]);
+            	}
+            	theLista.add(grafo);
+            	fila = 0; 
+            	columna = 0;
+            	maxColumna = 0; 
+            	maxFila = 0;
+            	numCasos--;
+            	grafo = new DigraphHash();
+            	theNodos.add(lista);
+            	lista = new MiLista<Nodo>();
             }
-           
         } catch (Exception ioe) {
           System.out.println(ioe);
-        }
-        
-        for(int i=0;i<lista.toArray().length;i++){
-        	System.out.println(lista.toArray()[i].toString());
         }
         
     }
@@ -130,11 +142,11 @@ public class Main {
 	}
 	
 	cargarDatos(in);
-
-	Digraph d = new DigraphHash();
 	
-
+	for(int i=0;i<theLista.toArray().length;i++){
+		Digraph dummy = (DigraphHash) theLista.toArray()[i];
+		System.out.println(dummy.toString());
+	}
 	
-
     }
 }
