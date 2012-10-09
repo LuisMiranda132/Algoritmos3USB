@@ -145,7 +145,9 @@ public class Main {
 	
 	for(int i=0;i<theLista.toArray().length;i++){
 		Digraph dummy = (DigraphHash) theLista.toArray()[i];
-		System.out.println(dummy.toString());
+		
+		System.out.print(dummy.toString()+"\n");
+		
 	}
 	
     }
