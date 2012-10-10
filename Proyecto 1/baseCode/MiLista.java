@@ -157,7 +157,8 @@ public class MiLista<E> implements Lista<E>{
      * Descripcion: Determina si la lista es vacia.
      * Parametros: N/A
      * Precondicion: true
-     * Postcondicion: retorna true si this.tam = 0, en caso contrario retorna false
+     * Postcondicion: retorna true si this.tam = 0, en caso contrario retorna 
+     * false
      */
     public boolean isEmpty(){
     	return (this.tam == 0);
@@ -224,7 +225,6 @@ public class MiLista<E> implements Lista<E>{
      *
      * @return an array of the elements from this {@code MiLista}.
      */
-
     public Object[] toArray() {
     	Object[] arreglin = new Object[this.tam];
     	E elemAct;
