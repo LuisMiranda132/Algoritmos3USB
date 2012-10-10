@@ -1,14 +1,13 @@
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class Main {
 
 	static Lista<Digraph> theLista = new MiLista<Digraph>(); 
 	static Lista<Lista<Nodo>> theNodos = new MiLista<Lista<Nodo>>();
+	static boolean[] siEstan;
+	static int ady=0;
 
     public static void cargarDatos(String fin) {
 	String linea = "";
@@ -113,8 +112,7 @@ public class Main {
             	}
             	
             	for(int i=0;i<grafo.getOutArcos("3,2").toArray().length;i++){
-            	
-System.out.println(grafo.getOutArcos("3,2").toArray()[i]);
+            		System.out.println(grafo.getOutArcos("3,2").toArray()[i]);
             	}
             	
             	for(int i=0;i<lista.toArray().length;i++){
@@ -136,54 +134,28 @@ System.out.println(grafo.getOutArcos("3,2").toArray()[i]);
         }
         
     }
-    
-    public static Lista<Integer> verificarAdyacencias(Digraph grafito,
-                                               Lista<Nodo> listita) {
-        Object [] arregloLista = grafito.getNodos().toArray();
-        Lista<Integer> listaAdy = new MiLista<Integer>();
-        int i=0;
-        System.out.println("verifi");
-        while (i < listita.toArray().length) {
-              int adyacencias = 0;
-              boolean [] arregloVerif = new
-                            boolean[grafito.getNodos().toArray().length];
-                           
-System.out.println(((Nodo)arregloLista[i]).toString());
-              adyacencias = contarAdyacencias(((Nodo)arregloLista[i]),
-                                               i,arregloVerif,grafito);
-              listaAdy.add(adyacencias);
-              i++;
-        }
-       
-        return listaAdy;
-    }
-    
-    public static int contarAdyacencias(Nodo nodito,int pos, 
-                                boolean[] arregloNod, Digraph grafi) {
-        int ady=0;
+ 
+    public static void contarAdyacencias(Nodo nodito, int pos){
+        int i = 0;
+        Digraph grafo = (DigraphHash) theLista.toArray()[pos];
+    	try{
+    		while(!nodito.toString().equalsIgnoreCase((grafo.getNodos().toArray()[i]).toString())){
+    			i++;
+    		}
         
-        if (arregloNod[pos] == true) {
-            ady = 0;
-            return ady;
-        }
-        else if (arregloNod[pos] == false) {
-            arregloNod[pos] = true;
-            for (int i=0;
-              i < grafi.getOutArcos(nodito.toString()).toArray().length;i++){
-                String temp =
-            ((Arco)grafi.getOutArcos(nodito.toString()).toArray()[i]).getDst();
-                Nodo nTemp = new Nodo(temp);
-                int j=0;
-                while (!(((Nodo)
-                        grafi.getNodos().toArray()[j]).equals(nTemp))) {
-                        j++;
-                }
-                ady += contarAdyacencias(nTemp,j,arregloNod,grafi);
-            }
-            ady++;
-            return ady;
-        }
-        return 0;
+    		if(!(siEstan[i])){
+    			siEstan[i] = true;
+    			ady++;
+       
+    			for(int j =0;j<grafo.getOutDegree(nodito.toString());j++){
+    				Arco dummy = (Arco) grafo.getOutArcos(nodito.toString()).toArray()[j];
+    				Nodo nodo = new Nodo(dummy.getDst());
+    				contarAdyacencias(nodo, pos);
+    			}
+        	}
+    	}catch(java.lang.ArrayIndexOutOfBoundsException e){
+    		System.out.println("El nodo "+nodito+" no pertenece al grafo");
+    	}
     }
 
 
@@ -193,33 +165,60 @@ System.out.println(((Nodo)arregloLista[i]).toString());
 	String out = "file.out";
 
 	if (args.length == 2) {
-	    in  = args[0];
+		in  = args[0];
 	    out = args[1];
 	}
 	
+	FileWriter sali = null;
+	
+	try {
+		sali = new FileWriter(out);
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	
+	BufferedWriter salida = new BufferedWriter(sali);
+	
 	cargarDatos(in);
-	
-	for(int i=0;i<theLista.toArray().length;i++){
-		Digraph dummy = (DigraphHash) theLista.toArray()[i];
-		System.out.println(i);
-		System.out.println(dummy.toString());
 		
-	}
-	for(int i=0;i<theNodos.toArray().length;i++){
-		Lista<Nodo> dummy = (Lista<Nodo>) theNodos.toArray()[i];
+	for(int i=0;i<theLista.toArray().length;i++){
+		
+		Digraph dummy = (DigraphHash) theLista.toArray()[i];
+		
+
+		siEstan = new boolean[dummy.getNodos().toArray().length];
+		
 		System.out.println(i);
-		for(int j=0;j<dummy.toArray().length;j++){
-			System.out.println(dummy.toArray()[j].toString());
+		System.out.println(dummy.toString()+"\n");
+		
+		Lista<Nodo> dummy2 = (Lista<Nodo>) theNodos.toArray()[i];
+		System.out.println(i);
+		
+		for(int j=0;j<dummy2.toArray().length;j++){
+				
+			System.out.println(dummy2.toArray()[j].toString());
+			contarAdyacencias((Nodo)dummy2.toArray()[j],i);
+			
+			System.out.println("\nTotal: "+ ady);
+			try {
+				salida.write(ady+"\n");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			ady = 0;
 		}
+		try {
+			salida.write("\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
 	
-	Lista<Integer> listitaAdy = new MiLista<Integer>();
-	
-	listitaAdy = verificarAdyacencias(((Digraph) theLista.toArray()[0]),
-            ((Lista<Nodo>)theNodos.toArray()[0]));
-        
-        System.out.println("Estoy imprimiendo la lista de cantidad de aguas:");
-        listitaAdy.imprimirLista();
-	
-    }
+	try {
+		salida.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+		
+    }	
 }
