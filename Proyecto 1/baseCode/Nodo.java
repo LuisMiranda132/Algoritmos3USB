@@ -9,13 +9,18 @@ public class Nodo {
 
     // id es unico
     private String id = null;
-
+    
     public Nodo(String i){
 	id = new String(i);
     }
 
+    
     /**
-     * Retorna una nueva arista que es copia de this.
+     * Funcion: clone
+     * Descripcion: Retorna una nueva arista que es copia de this.
+     * Parametros: N/A
+     * Precondición: true
+     * Postcondicion: retorna un nuevo nodo que es una copia de this.
      */
     @Override
     protected Object clone() {
@@ -23,7 +28,11 @@ public class Nodo {
     }
 
     /**
-     * Indica si la arista de entrada es igual a this.
+     * Funcion: equals
+     * Descripcion: Indica si el nodo de entrada es igual a this.
+     * Parametros: o nodo de entrada que se compara con this.
+     * Precondicion: true
+     * Postcondicion: o es un nodo /\  d.id = id
      */
     public boolean equals(Object o) {
 	Nodo d = (Nodo) o;
@@ -31,7 +40,11 @@ public class Nodo {
     }
 
     /**
-     * Retorna la representacion en String de la arista.
+     * Funcion: toString
+     * Descripcion: Retorna la representacion en String del nodo.
+     * Parametros: N/A
+     * Precondicion: true
+     * Postcondicion: retorna el string con el id del nodo this.
      */
     @Override
     public String toString() {

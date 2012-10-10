@@ -13,7 +13,11 @@ public class Arco {
     }
     
     /**
-     * Crea una arista entre los vertices src y dst.
+     * Funcion: Arco 
+     * Descripcion: Crea una arista entre los vertices src y dst.
+     * Parametros: src, dst strings a ser agregados al arco.
+     * Precondicion: true;
+     * Postondicion: this.src = src /\ this.dst = dst
      */
     public Arco(String src, String dst) {
     	this.src = src;
@@ -21,7 +25,11 @@ public class Arco {
     }
 
     /**
-     * Retorna una nueva arista que es copia de this.
+     * Funcion: clone
+     * Descripcion: Retorna una nueva arista que es copia de this.
+     * Parametros: N/A
+     * Precondicion: true
+     * Postcondicion: devuelve un nuevo arco que es una copia de this.
      */
     @Override
     protected Object clone() {
@@ -36,7 +44,11 @@ public class Arco {
     }
 
     /**
-     * Indica si la arista de entrada es igual a this.
+     * Funcion: equals
+     * Descripcion: Indica si la arista de entrada es igual a this.
+     * Parametros: o arista que compararemos a this
+     * Precondicion: true
+     * Postcondicion: o es un arco /\  d.dst = dst /\ d.src = src
      */
     public boolean equals(Object o) {
         Arco d = (Arco) o;
@@ -45,21 +57,33 @@ public class Arco {
     }
 
     /**
-     * Retorna el vertice src de la arista.
+     * Funcion: getSrc
+     * Descripcion: Retorna el vertice src de la arista.
+     * Parametros: N/A
+     * Precondicion: true
+     * Postcondicion: retorna this.src
      */
     public String getSrc() {
         return this.src;
     }
 
     /**
-     * Retorna el vertice dst de la arista.
+     * Funcion: getDst
+     * Descripcion: Retorna el vertice dst de la arista.
+     * Parametros: N/A
+     * Precondicion: true
+     * Postcondicion: retorna this.dst
      */
     public String getDst() {
         return this.dst;
     }
 
     /**
-     * Retorna la representacion en String de la arista.
+     * Funcion: toString
+     * Descripcion: Retorna la representacion en String de la arista.
+     * Parametros: N/A
+     * Precondicion: true
+     * Postcondicion: retorna el string con el vertice src y el vertice dst.
      */
     @Override
     public String toString() {
