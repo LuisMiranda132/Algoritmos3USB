@@ -61,5 +61,4 @@ public class Caja<E> {
 		imprimir = this.cont.toString();
 		return imprimir;   
 	}
-
 }

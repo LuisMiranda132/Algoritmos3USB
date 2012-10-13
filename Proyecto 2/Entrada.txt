@@ -1,0 +1,66 @@
+10
+6 4
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+ErdosP, ReisigW: Stuttering in petri nets
+SmithJ, HsuehZ: First oder derivates in structured programming
+SmithJ, HsuehZ.: Selfstabilizing data structures
+ChenX, ErdosP.: Cualquier vaina
+ChenX, Jose: Otra vaina
+SmithJ
+HsuehZ
+ChenX
+YoMama
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX
+3 2
+MartinG, ErdosP.: Newtonian forms of prime factor matrices 
+Pepe, MartinG: First oder derivates in structured programming
+ChenX, ErdosP.: Cualquier vaina
+Pepe
+ChenX

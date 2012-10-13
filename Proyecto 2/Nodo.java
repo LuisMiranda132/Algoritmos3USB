@@ -9,9 +9,10 @@ public class Nodo {
 
     // id es unico
     private String id = null;
+    private int erdosNum = 2147483647;
     
     public Nodo(String i){
-	id = new String(i);
+	id = new String(i);	
     }
 
     
@@ -51,6 +52,13 @@ public class Nodo {
 	return new String(id);
     }
 
+    public int getErdos(){
+    	return this.erdosNum;
+    }
+    
+    public void setErdos(int erdos){
+    	this.erdosNum = erdos;
+    }
 }
 
 // End Edge.java
