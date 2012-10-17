@@ -58,6 +58,7 @@ public class DigraphLista extends Digraph {
         	return false;
         else {
         	((Lista<Arco>) this.arcos.getArray()[i]).add(e);
+        	this.numArcos++;
             return true;
         }
 
@@ -84,6 +85,7 @@ public class DigraphLista extends Digraph {
     		this.nodos.addFinal(n); 
     		this.arcos.addFinal(new MiLista<Arco>());
     		agregue = true;
+    		this.numVertices++;
     	}
     	
     	return agregue;
