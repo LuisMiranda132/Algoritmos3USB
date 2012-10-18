@@ -32,6 +32,8 @@ public class DigraphMatriz extends Digraph {
     	else if (g instanceof DigraphLista) {
     		Lista<Nodo> listaNoditos = g.getNodos();
     		Lista<Arco> listaArcos = g.getArcos();
+    		this.matriz = new Matriz();
+    		this.nodos = new DynamicArray();
     		int i=0;
     		int j=0;
     		
