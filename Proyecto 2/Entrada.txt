@@ -1,5 +1,5 @@
 10
-6 4
+6 3
 MartinG, ErdosP.: Newtonian forms of prime factor matrices 
 ErdosP, ReisigW: Stuttering in petri nets
 SmithJ, HsuehZ: First oder derivates in structured programming
@@ -9,7 +9,6 @@ ChenX, Jose: Otra vaina
 SmithJ
 HsuehZ
 ChenX
-YoMama
 3 2
 MartinG, ErdosP.: Newtonian forms of prime factor matrices 
 Pepe, MartinG: First oder derivates in structured programming

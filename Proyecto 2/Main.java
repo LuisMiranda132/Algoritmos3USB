@@ -125,38 +125,74 @@ public class Main {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public static void buscarCamino() {
+	public static void buscarCamino(String la) {
 		int i=0;
 		Lista<String> listaPerAct;
 		Digraph digraphAct;
 		Nodo perAct;
 		
+		FileWriter sali = null;
+		
+		try {
+			sali = new FileWriter(new String(la));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		BufferedWriter salida = new BufferedWriter(sali);
+		
 		while (i<lista.getSize()) {
 			listaPerAct = ((Lista<String>) listaPer.toArray()[i]);
 			digraphAct = ((Digraph) lista.toArray()[i]);
+			try {
+				salida.write("\nEscenario"+(i+1)+"\n\n");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			System.out.println("Escenario"+(i+1));
 			int j=0;
 			while (j<listaPerAct.getSize()) {
 				perAct = digraphAct.get((String) listaPerAct.toArray()[j]);
+				try {
+					salida.write(perAct.toString()+": <");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				System.out.print(perAct.toString());
 				System.out.print(": <");
 				if (perAct.getErdos() < 2147483647) {
+					try {
+						salida.write(perAct.toString());
+						salida.write(", ");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 					System.out.print(perAct.toString());
 					System.out.print(", ");
-					caminoErdos(perAct,digraphAct);
+					caminoErdos(perAct,digraphAct,salida);
 					System.out.println();
 				}
 				else {
+					try {
+						salida.write("> \n");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 					System.out.println("> ");
 				}
 				j++;
 			}
 			i++;
 		}
+		try {
+			salida.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
-	public static void caminoErdos(Nodo perA, Digraph graf) {
+	public static void caminoErdos(Nodo perA, Digraph graf,BufferedWriter sal) {
 		Lista<Nodo> listAdy = graf.getSucs(perA.toString());
 		int i=0;
 		int min = 0;
@@ -170,14 +206,24 @@ public class Main {
 		}
 		
 		if (((Nodo) listAdy.toArray()[min]).getErdos() == 0) {
+			try {
+				sal.write(listAdy.toArray()[min].toString()+"> \n");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			System.out.print(listAdy.toArray()[min].toString());
 			System.out.println(">");
 		}
 		else {
 			System.out.print(listAdy.toArray()[min].toString());
 			System.out.print(", ");
+			try {
+				sal.write(listAdy.toArray()[min].toString()+", ");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			Nodo nuevAct = graf.get(((Nodo) listAdy.toArray()[min]).toString());
-			caminoErdos(nuevAct,graf);
+			caminoErdos(nuevAct,graf,sal);
 		}
 
 	}
@@ -202,7 +248,7 @@ public class Main {
 			BFS((Digraph)lista.toArray()[i]);
 		}
 		
-		buscarCamino();
+		buscarCamino(out);
 				
 	}
 }
