@@ -127,19 +127,19 @@ public class Main {
 	@SuppressWarnings("unchecked")
 	public static void buscarCamino() {
 		int i=0;
-		Lista<Nodo> listaPerAct;
+		Lista<String> listaPerAct;
 		Digraph digraphAct;
 		Nodo perAct;
 		
 		while (i<lista.getSize()) {
-			listaPerAct = ((Lista<Nodo>) listaPer.toArray()[i]);
+			listaPerAct = ((Lista<String>) listaPer.toArray()[i]);
 			digraphAct = ((Digraph) lista.toArray()[i]);
 			System.out.println("Escenario"+(i+1));
 			int j=0;
 			while (j<listaPerAct.getSize()) {
 				perAct = digraphAct.get((String) listaPerAct.toArray()[j]);
 				System.out.print(perAct.toString());
-				System.out.print(": < ");
+				System.out.print(": <");
 				if (perAct.getErdos() < 2147483647) {
 					System.out.print(perAct.toString());
 					System.out.print(", ");
@@ -170,8 +170,8 @@ public class Main {
 		}
 		
 		if (((Nodo) listAdy.toArray()[min]).getErdos() == 0) {
-			System.out.println("Soy Erdos!!! :D WIII ");
-			System.out.println(listAdy.toArray()[i].toString());
+			System.out.print(listAdy.toArray()[min].toString());
+			System.out.println(">");
 		}
 		else {
 			System.out.print(listAdy.toArray()[min].toString());

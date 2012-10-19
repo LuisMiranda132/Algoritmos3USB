@@ -134,7 +134,7 @@ public abstract class Digraph {
     	    	
     		for(int i=0;i<arcos.getSize();i++){
     			Arco dummy = caja.obtenerCont();
-    			sucs.add(new Nodo(dummy.getDst()));
+    			sucs.add(this.get(dummy.getDst()));
     			caja = caja.obtenerSiguiente();
     		}
     	}catch(java.lang.NullPointerException e){
