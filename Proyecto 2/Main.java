@@ -120,6 +120,68 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Funcion: buscarCamino
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public static void buscarCamino() {
+		int i=0;
+		Lista<Nodo> listaPerAct;
+		Digraph digraphAct;
+		Nodo perAct;
+		
+		while (i<lista.getSize()) {
+			listaPerAct = ((Lista<Nodo>) listaPer.toArray()[i]);
+			digraphAct = ((Digraph) lista.toArray()[i]);
+			System.out.println("Escenario"+(i+1));
+			int j=0;
+			while (j<listaPerAct.getSize()) {
+				perAct = digraphAct.get((String) listaPerAct.toArray()[j]);
+				System.out.print(perAct.toString());
+				System.out.print(": < ");
+				if (perAct.getErdos() < 2147483647) {
+					System.out.print(perAct.toString());
+					System.out.print(", ");
+					caminoErdos(perAct,digraphAct);
+					System.out.println();
+				}
+				else {
+					System.out.println("> ");
+				}
+				j++;
+			}
+			i++;
+		}
+		
+	}
+	
+	public static void caminoErdos(Nodo perA, Digraph graf) {
+		Lista<Nodo> listAdy = graf.getSucs(perA.toString());
+		int i=0;
+		int min = 0;
+		
+		while (i<listAdy.getSize()) {
+			if (((Nodo) listAdy.toArray()[i]).getErdos() < 
+					((Nodo) listAdy.toArray()[min]).getErdos()) {
+				min = i;
+			}
+			i++;
+		}
+		
+		if (((Nodo) listAdy.toArray()[min]).getErdos() == 0) {
+			System.out.println("Soy Erdos!!! :D WIII ");
+			System.out.println(listAdy.toArray()[i].toString());
+		}
+		else {
+			System.out.print(listAdy.toArray()[min].toString());
+			System.out.print(", ");
+			Nodo nuevAct = graf.get(((Nodo) listAdy.toArray()[min]).toString());
+			caminoErdos(nuevAct,graf);
+		}
+
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		String in = "file.in";
@@ -139,6 +201,8 @@ public class Main {
 			System.out.println();
 			BFS((Digraph)lista.toArray()[i]);
 		}
+		
+		buscarCamino();
 				
 	}
 }

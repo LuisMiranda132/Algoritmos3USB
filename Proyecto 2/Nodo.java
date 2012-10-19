@@ -14,6 +14,11 @@ public class Nodo {
     public Nodo(String i){
 	id = new String(i);	
     }
+    
+    public Nodo(String i, int erd) {
+    	id = new String(i);
+    	erdosNum = erd;
+    }
 
     
     /**
