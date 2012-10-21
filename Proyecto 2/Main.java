@@ -74,11 +74,15 @@ public class Main {
 		
 			for(int num = numCasos;num>0;num--){
 				linea = in.readLine();
-				int numArt = linea.toCharArray()[0]-48;
-				int numPer = linea.toCharArray()[2]-48;
-			
+				
+				String[] numeros = linea.split(" ");
+				
+				int numArt = Integer.parseInt(numeros[0]);
+				int numPer = Integer.parseInt(numeros[1]);
+				
 				for(int i=0;i<numArt;i++){
 					linea = in.readLine();
+					
 					String[] palabras = linea.split(" ");
 					
 					for(int j=0;j<palabras.length;j++){
@@ -106,10 +110,10 @@ public class Main {
 					// agrego los arcos al grafo
 					for(int k = 0;k<listaNodo.toArray().length;k++){
 						for(int l = 0;l<listaNodo.toArray().length;l++){
-							if(l != k){
+//							if(l != k){
 								grafo.add(new Arco((String) listaNodo.
 								 toArray()[k],(String) listaNodo.toArray()[l]));
-							}
+//							}
 						}
 					}
 					
