@@ -5,9 +5,9 @@ ErdosP, ReisigW: Stuttering in petri nets
 SmithJ, HsuehZ: First oder derivates in structured programming
 SmithJ, HsuehZ.: Selfstabilizing data structures
 ChenX, ErdosP.: Cualquier vaina
-ChenX, Jose: Otra vaina
+ChenX, ゆっき: Otra vaina
 SmithJ
-HsuehZ
+ゆっき
 ChenX
 3 2
 MartinG, ErdosP.: Newtonian forms of prime factor matrices 
