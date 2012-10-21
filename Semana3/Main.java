@@ -1,4 +1,9 @@
-
+/**
+ * @author Gabriela Limonta, Luis Miranda
+ * 
+ * Clase que implementa el Main del programa.
+ *
+ */
 import java.io.*;
 
 
@@ -34,13 +39,9 @@ public class Main {
             	  columna = 0;
             	  for(char c : linea.toCharArray()){
                 	  if(c == 'L'){
-                		  System.out.print(" ");
                 	  }else if(c == 'W'){
-                		  System.out.print(new Nodo(fila +","+columna).toString());
                 		  grafo.add(new Nodo(fila+","+columna));
-                		  System.out.print(" ");
                 	  }else{
-                		  System.out.print(c);
                 		  if(c != ' '){
                 			  if(p1 == '-'){
                 				  p1 = c;
@@ -54,7 +55,6 @@ public class Main {
                 	  columna++;
                   }
                   fila++;
-                  System.out.println();
                   maxColumna = Math.max(maxColumna, columna);
                   maxFila = Math.max(maxFila, fila);
                   
@@ -64,8 +64,6 @@ public class Main {
             	}catch(java.lang.NullPointerException e){
             	}
             
-            	System.out.println("Filas: "+maxFila+"\nColumnas: "+maxColumna);
-            	System.out.println("Nodos: ");
             	for(int i=0;i<grafo.getNodos().toArray().length;i++){
             	
             		int x = -1;
@@ -111,13 +109,6 @@ public class Main {
             		}
             	}
             	
-            	for(int i=0;i<grafo.getOutArcos("3,2").toArray().length;i++){
-            		System.out.println(grafo.getOutArcos("3,2").toArray()[i]);
-            	}
-            	
-            	for(int i=0;i<lista.toArray().length;i++){
-            		System.out.println(lista.toArray()[i]);
-            	}
             	
             	theLista.add(grafo);
             	fila = 0; 
@@ -188,18 +179,12 @@ public class Main {
 
 		siEstan = new boolean[dummy.getNodos().toArray().length];
 		
-		System.out.println(i);
-		System.out.println(dummy.toString()+"\n");
-		
 		Lista<Nodo> dummy2 = (Lista<Nodo>) theNodos.toArray()[i];
-		System.out.println(i);
 		
 		for(int j=0;j<dummy2.toArray().length;j++){
 				
-			System.out.println(dummy2.toArray()[j].toString());
 			contarAdyacencias((Nodo)dummy2.toArray()[j],i);
 			
-			System.out.println("\nTotal: "+ ady);
 			try {
 				salida.write(ady+"\n");
 			} catch (IOException e) {
