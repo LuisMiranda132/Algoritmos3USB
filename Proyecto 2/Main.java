@@ -21,12 +21,14 @@ public class Main {
 			
 			int i=0;
 			// buscamos el nodo ErdosP para marcarlo como visitado.
-			Lista<Nodo> dummy1 = grafo.getNodos();
+/*			Lista<Nodo> dummy1 = grafo.getNodos();
 			while(!"ErdosP".equalsIgnoreCase((dummy1.toArray()[i]).
 					toString())){
 				i++;
 			}
 			visitado[i] = true;
+*/
+			grafo.get("ErdosP").setVisitado(true);
 			
 			while(!cola.esVacia()){
 				
@@ -39,7 +41,7 @@ public class Main {
 					Lista<Arco> arcos = grafo.getInArcos(dummy.toString());
 					String src = ((Arco)arcos.toArray()[i]).getSrc();
 					
-					int j = 0;
+/*					int j = 0;
 					//buscamos el nodo el el grafo
 					Lista<Nodo> dummy2 = grafo.getNodos();
 					while(!src.equalsIgnoreCase(dummy2.toArray()[j].
@@ -49,8 +51,9 @@ public class Main {
 					
 					//si no esta visitado lo marcamos como tal y le asignamos 
 					//su numero de erdos.
-					if(!visitado[j]){
-						visitado[j]=true;
+*/
+					if(!grafo.get(src).getVisitado()){
+						grafo.get(src).setVisitado(true);
 						grafo.get(src).setErdos(Math.min(grafo.get(src).getErdos(),
 								grafo.get(dummy.toString()).getErdos()+1));
 						cola.encolar(grafo.get(src));
