@@ -168,7 +168,7 @@ public class Main {
 			
 			//imprimo en el archivo
 			try {
-				salida.write("\nEscenario"+(i+1)+"\n\n");
+				salida.write("Escenario "+(i+1)+"\n");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -184,10 +184,19 @@ public class Main {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				//Si la persona es Erdös el camino es solo el
+				if (perAct.getErdos() == 0) {
+					try {
+						salida.write(perAct.toString()+"> \n");
+					}
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 				
 				//Si la persona tiene un número de Erdös menor a 2147483647
 				//buscamos su camino hasta él
-				if (perAct.getErdos() < 2147483647) {
+				else if (perAct.getErdos() < 2147483647) {
 					try {
 						salida.write(perAct.toString());
 						salida.write(", ");
