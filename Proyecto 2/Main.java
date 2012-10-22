@@ -230,14 +230,27 @@ public class Main {
 		Lista<Nodo> listAdy = graf.getSucs(perA.toString());
 		int i=0;
 		int min = 0;
+		Nodo act = perA;
 		
-		//busco el nodo adyacente al actual con menor numero de Erdös
-		while (i<listAdy.getSize()) {
-			if (((Nodo) listAdy.toArray()[i]).getErdos() < 
-					((Nodo) listAdy.toArray()[min]).getErdos()) {
-				min = i;
+		while (act.getErdos() != 0) {
+			
+			listAdy = graf.getSucs(act.toString());
+			//busco el nodo adyacente al actual con menor numero de Erdös
+			while (i<listAdy.getSize()) {
+				if (((Nodo) listAdy.toArray()[i]).getErdos() < 
+						((Nodo) listAdy.toArray()[min]).getErdos()) {
+					min = i;
+				}
+				i++;
 			}
-			i++;
+
+			try {
+				sal.write(listAdy.toArray()[min].toString()+", ");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			act = graf.get(((Nodo) listAdy.toArray()[min]).toString());
 		}
 		
 		//Si este nodo tiene erdos=0 es porque es el mismo Erdös y terminamos
@@ -249,17 +262,6 @@ public class Main {
 				e.printStackTrace();
 			}
 			
-		}
-		//Si tiene un erdos>0 entonces cambiamos el nodo actual y llamamos
-		//a la funcion recursivamente.
-		else {
-			try {
-				sal.write(listAdy.toArray()[min].toString()+", ");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			Nodo nuevAct = graf.get(((Nodo) listAdy.toArray()[min]).toString());
-			caminoErdos(nuevAct,graf,sal);
 		}
 
 	}
