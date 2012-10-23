@@ -5,29 +5,28 @@ public class Main {
 	static Lista<Digraph> lista = new MiLista<Digraph>();
 	static Lista<Lista<String>> listaPer = new MiLista<Lista<String>>();
 	
+	
 	/**
-	 * Etiqueta los nodos de los grafos asignandoles
-	 * su numero de Erdös mediante BFS.
+	 * Funcion: BFS
+	 * Descripcion: Etiqueta cada nodo del grafo asignandole su numero de Erdös
+	 * Parametros: grafo: Grafo al que aplicaremos BFS
+	 * Precondicion: el grafo contiene a Erdös
+	 * Postcondicion: se ha etiquetado a cada nodo asignandole su número de 
+	 * Erdös correspondiente.
 	 */
 	public static void BFS(Digraph grafo){
 		Cola cola = new Cola(grafo.numVertices);
-		boolean[] visitado = new boolean[grafo.numVertices];
 		
+		//Solo etiquetaremos el grafo si este contiene a Erdos.
 		if(grafo.contains("ErdosP")){
 						
-			grafo.get("ErdosP").setErdos(0);
+			grafo.get("ErdosP").setErdos(0);  //asignamos erdos 0 a Erdös
 						
 			cola.encolar(grafo.get("ErdosP"));
 			
 			int i=0;
-			// buscamos el nodo ErdosP para marcarlo como visitado.
-/*			Lista<Nodo> dummy1 = grafo.getNodos();
-			while(!"ErdosP".equalsIgnoreCase((dummy1.toArray()[i]).
-					toString())){
-				i++;
-			}
-			visitado[i] = true;
-*/
+			
+			//Marcamos a Erdös como visitado.
 			grafo.get("ErdosP").setVisitado(true);
 			
 			while(!cola.esVacia()){
@@ -36,22 +35,17 @@ public class Main {
 				cola.desencolar();
 				
 				int degree = grafo.getOutDegree(dummy.toString());
+				
+				//Encolamos todos los nodos que tienen al nodo actual como nodo
+				//de llegada.
 				for(i=0;i<degree;i++){
 					
 					Lista<Arco> arcos = grafo.getInArcos(dummy.toString());
 					String src = ((Arco)arcos.toArray()[i]).getSrc();
-					
-/*					int j = 0;
-					//buscamos el nodo el el grafo
-					Lista<Nodo> dummy2 = grafo.getNodos();
-					while(!src.equalsIgnoreCase(dummy2.toArray()[j].
-							toString())){
-						j++;
-					}
-					
+	
 					//si no esta visitado lo marcamos como tal y le asignamos 
 					//su numero de erdos.
-*/
+
 					if(!grafo.get(src).getVisitado()){
 						grafo.get(src).setVisitado(true);
 						grafo.get(src).setErdos(Math.min(grafo.get(src).getErdos(),
@@ -64,15 +58,22 @@ public class Main {
 	}
 	
 	/**
-	 * Carga los datos del archivo fileIn a los grafos.
+	 * Funcion: cargarDatos
+	 * Descripcion: carga los datos del archivo para construir un grafo
+	 * con el cual buscaremos el camino hasta llegar a Erdös y se imprime esa
+	 * secuencia en el archivo de salida.
+	 * Parametros: fileIn: nombre del archivo de entrada, fileOut: nombre del
+	 * archivo de salida.
+	 * Precondicion: el archivo de entrada debe tener un formato valido
+	 * Postcondicion: se imprime en el archivo de salida la secuencia seguida 
+	 * para llegar a Erdös desde cada persona especificada en el archivo de 
+	 * entrada
 	 */
 	public static void cargarDatos(String fileIn, String fileOut){
 		String linea = "";
 		BufferedReader in = null;
 		Digraph grafo = new DigraphLista();
 		Lista<String> listaNodo = new MiLista<String>();
-		Lista<String> listaGente = new MiLista<String>();
-		
 		FileWriter sali = null;
 		
 		try {
@@ -86,21 +87,27 @@ public class Main {
 		try {
 			in = new BufferedReader(new FileReader(fileIn));
 			
+			//leemos en el archivo el numero de casos que tendremos.
 			int numCasos = Integer.parseInt(in.readLine());
-		
+			
 			for(int num = numCasos;num>0;num--){
 				linea = in.readLine();
 				
+				//leemos el numero de publicaciones y el numero de personas.
 				String[] numeros = linea.split(" ");
 				
 				int numArt = Integer.parseInt(numeros[0]);
 				int numPer = Integer.parseInt(numeros[1]);
 				
+				//leemos la informacion de los articulos.
 				for(int i=0;i<numArt;i++){
 					linea = in.readLine();
 					
+					//Almacenamos la linea actual que leemos
 					String[] palabras = linea.split(" ");
 					
+					//veo la informacion de la linea leida, si son autores se 
+					//guardan en la lista de nodos.
 					for(int j=0;j<palabras.length;j++){
 						if(palabras[j].toCharArray()[palabras[j].length()-1] 
 								== ',' || palabras[j].toCharArray()[palabras[j].
@@ -117,7 +124,7 @@ public class Main {
 						}
 					}
 				
-					//agrego los nodos al grafo
+					//agrego los nodos buscados anteriormente al grafo
 					for(int k = 0;k<listaNodo.toArray().length;k++){
 						Nodo dummy = new Nodo((String) listaNodo.toArray()[k]);
 						grafo.add(dummy);
@@ -126,212 +133,110 @@ public class Main {
 					// agrego los arcos al grafo
 					for(int k = 0;k<listaNodo.toArray().length;k++){
 						for(int l = 0;l<listaNodo.toArray().length;l++){
-//							if(l != k){
-								grafo.add(new Arco((String) listaNodo.
-								 toArray()[k],(String) listaNodo.toArray()[l]));
-//							}
+							grafo.add(new Arco((String) listaNodo.
+							 toArray()[k],(String) listaNodo.toArray()[l]));
 						}
 					}
 					
+					//limpio la informacion de la lista de nodos para la 
+					//proxima iteracion
 					listaNodo.clear();
 				}			
 
+				//Etiqueto el grafo creado con BFS para asignar Erdös
 				BFS(grafo);
-
 				
+				/* Aqui procederemos a buscar el camino del grafo actual desde
+				 * cada una de las personas que se piden en el archivo hasta 
+				 * llegar a Erdös y se imprimiran en el archivo.
+				 */
 				
-				
+				//Imprimo el escenario en el que estamos
 				try {
-					salida.write
-					("Escenario "+(numCasos - num +1)+"\n");
+					salida.write("Escenario "+(numCasos - num +1)+"\n");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 								
-				//agrego los nombres de las personas a mi lista
+				//Leo el archivo y voy revisando para cada persona su camino 
+				//hasta Erdös
 				for(int i=0;i<numPer;i++){
 					linea= in.readLine();
 										
 					Nodo perAct = grafo.get(linea);
 					
-					//imprimo en el archivo
+					//imprimo en el archivo la persona actual de la que busco
+					//el camino
 
-						try {
-							salida.write
-//							System.out.print
-							(perAct.toString()+": <");
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						if(perAct.getErdos()< 2147483647){
-							while (perAct.getErdos() != 0){
+					try {
+						salida.write(perAct.toString()+": <");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					//si la persona tiene un numero de erdos valido buscamos 
+					//su camino.
+					if(perAct.getErdos()< 2147483647){
+						while (perAct.getErdos() != 0){
 						
-								try {
-									salida.write
-//									System.out.print
-									(perAct.toString());
-									salida.write
-//									System.out.print
-									(", ");
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
+							//imprimimos el nodo actual en el archivo.
+							try {
+								salida.write(perAct.toString()+", ");
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 
-								
-								Lista<Nodo> dummyLista = grafo.getSucs(perAct.toString());
+							//creamos una lista con los sucesores del nodo.
+							Lista<Nodo> dummyLista = grafo.getSucs(perAct.toString());
 													
-								int k =0;
-								while(perAct.getErdos() <=
-								((Nodo)dummyLista.toArray()[k]).getErdos()){
-									k++;
-								}
+							int k =0;
 							
-								perAct = (Nodo) dummyLista.toArray()[k];
-
+							//buscamos un sucesor con erdos menor al de la 
+							//persona actual
+							while(perAct.getErdos() <=
+							((Nodo)dummyLista.toArray()[k]).getErdos()){
+								k++;
 							}
 							
-							try {
+							// este nodo sera nuestro nuevo actual.
+							perAct = (Nodo) dummyLista.toArray()[k];
+
+						}
+							
+						/* Cuando finalizamos es porque llegamos a Erdös por 
+						 * lo que imprimimos su nombre en el archivo y termina
+						 * la busqueda del camino
+						 */
+						try {
 							salida.write
-//							System.out.print
 							(perAct.toString()+"> \n");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-							
+						
+						/* Si no tiene un numero valido es porque esta persona
+						 * no tiene un camino hasta Erdös. Por lo que imprimimos
+						 * una secuencia vacia en el archivo.
+						 */
 						}else{
 							
 							try {
-								salida.write
-//								System.out.print
-								("> \n");
+								salida.write("> \n");
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 							
-						}
-//						j++;
-//					}
-//					i++;
-//				}
-				
-					
-					
+						}					
 				}
 				
-			
-				//agrego a mis listas el grafo actual y la lista de gente actual
-/*				lista.add(grafo);
-				listaPer.add(listaGente);
-				listaGente = new MiLista<String>();
-*/				grafo = new DigraphLista();
+				//asignamos un grafo vacio a grafo para la proxima iteracion 
+				grafo = new DigraphLista();
 			}
 			
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		
-		try {
-			salida.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	/**
-	 * Busca el camino para llegar a Erdös de 
-	 * cada nodo dentro del grafo y luego escribe
-	 * sus resultados en el archivo nomArch
-	 */
-	@SuppressWarnings("unchecked")
-	public static void buscarCamino(String nomArch, String nomNodo, 
-						Digraph digraphAct, int i) {
-		Nodo perAct;
-		
-		FileWriter sali = null;
-		
-		try {
-			sali = new FileWriter(new String(nomArch));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		BufferedWriter salida = new BufferedWriter(sali);
-		
-		//vamos moviendonos por la lista de lista de personas y la lista
-		//de grafos para recopilar la informacion que hay que imprimir
-//		while (i<lista.getSize()) {
-//			listaPerAct = ((Lista<String>) listaPer.toArray()[i]);
-//			digraphAct = ((Digraph) lista.toArray()[i]);
-		
-		try {
-			salida.write
-			("Escenario "+i+"\n");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-		perAct = digraphAct.get(nomNodo);
-		
-			//imprimo en el archivo
-
-				try {
-					salida.write
-//					System.out.print
-					(perAct.toString()+": <");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if(perAct.getErdos()< 2147483647){
-					while (perAct.getErdos() != 0){
-				
-						try {
-							salida.write
-//							System.out.print
-							(perAct.toString());
-							salida.write
-//							System.out.print
-							(", ");
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-
-						
-						Lista<Nodo> dummyLista = digraphAct.getSucs(perAct.toString());
-											
-						int k =0;
-						while(perAct.getErdos() <=
-						((Nodo)dummyLista.toArray()[k]).getErdos()){
-							k++;
-						}
-					
-						perAct = (Nodo) dummyLista.toArray()[k];
-
-					}
-					
-					try {
-					salida.write
-//					System.out.print
-					(perAct.toString()+"> \n");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-					
-				}else{
-					
-					try {
-						salida.write
-//						System.out.print
-						("> \n");
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					
-				}
-//				j++;
-//			}
-//			i++;
-//		}
 		try {
 			salida.close();
 		} catch (IOException e) {
@@ -350,10 +255,6 @@ public class Main {
 		}
 		
 		cargarDatos(in, out);
-		
-//		for(int i=0;i<lista.getSize();i++){
-//			BFS((Digraph)lista.toArray()[i]);
-//		}
 		
 				
 	}
