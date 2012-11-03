@@ -9,18 +9,11 @@ public class Nodo {
 
     // id es unico
     private String id = null;
-    private int erdosNum = 2147483647;
     private boolean visitado = false;
     
     public Nodo(String i){
 	id = new String(i);	
     }
-    
-    public Nodo(String i, int erd) {
-    	id = new String(i);
-    	erdosNum = erd;
-    }
-
     
     /**
      * Funcion: clone
@@ -57,15 +50,6 @@ public class Nodo {
     public String toString() {
 	return new String(id);
     }
-
-    public int getErdos(){
-    	return this.erdosNum;
-    }
-    
-    public void setErdos(int erdos){
-    	this.erdosNum = erdos;
-    }
-
     public void setVisitado(boolean visit){
     	this.visitado = visit;
     }

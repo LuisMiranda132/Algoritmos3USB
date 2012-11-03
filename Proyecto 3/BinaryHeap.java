@@ -37,11 +37,11 @@ public class BinaryHeap<T extends Comparable<T>>{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void agregar(Arco o){
+	public void agregar(Palabrita p){
 		if (this.size == this.data.getArray().length){
 			this.data.crecer(2*this.size);
 		}
-			this.data.add(o, this.size);
+			this.data.add(p, this.size);
 //			this.data.getArray()[this.size] = o;
 			this.size++;
 			

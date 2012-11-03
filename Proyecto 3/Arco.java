@@ -5,21 +5,20 @@
  * Clase que almacena la informacion de las aristas en el grafo.
  */
 
-import java.lang.Comparable;
 
-public class Arco implements Comparable<Arco>  {
+public class Arco {
 
     private String src = null;
     private String dst = null;
-    private int costo = 0;
-
+    private BinaryHeap<Palabrita> palabras;
+	
     private Arco() {
     }
 
-    public Arco(String src, String dst, int cost) {
+    public Arco(String src, String dst, BinaryHeap<Palabrita> pal) {
     	this.src = src;
     	this.dst = dst;
-    	this.costo = cost;
+    	this.palabras = pal;
     }
     
     /**
@@ -41,7 +40,8 @@ public class Arco implements Comparable<Arco>  {
      * Precondicion: true
      * Postcondicion: devuelve un nuevo arco que es una copia de this.
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected Object clone() {
 	Arco ed = new Arco();
 
@@ -49,7 +49,7 @@ public class Arco implements Comparable<Arco>  {
 	// no solo asignar las referencias
 	ed.src = new String(src);
 	ed.dst = new String(dst);
-	ed.costo = this.costo;
+	ed.palabras = (BinaryHeap<Palabrita>) this.palabras.clone();
 
 	return ed;
     }
@@ -89,34 +89,19 @@ public class Arco implements Comparable<Arco>  {
         return this.dst;
     }
 
-    public int getCosto(){
-    	return this.costo;
+    public BinaryHeap<Palabrita> getPal(){
+    	return this.palabras;
     }
     
-    public void setCosot(int valor){
-    	this.costo = valor;
+    public void setPal(BinaryHeap<Palabrita> pal){
+    	this.palabras = pal;
     }
     
-    /**
-     * Funcion: toString
-     * Descripcion: Retorna la representacion en String de la arista.
-     * Parametros: N/A
-     * Precondicion: true
-     * Postcondicion: retorna el string con el vertice src y el vertice dst.
-     */
+    
     @Override
     public String toString() {
-	return "("+src + ", " + dst+"): "+costo;
+	return "("+src + ", " + dst+"): "+palabras.toString();
     }
-
-	public int compareTo(Arco o) {
-		if(this.costo > o.costo){
-			return 1;
-		}else if (this.costo < o.costo){
-			return -1;
-		}
-		return 0;
-	}
 
 }
 
