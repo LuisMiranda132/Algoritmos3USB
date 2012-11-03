@@ -105,5 +105,12 @@ public class DynamicArray{
 		this.array = (Object[]) newArray;
 	}
 
+	public Object clone(){
+		DynamicArray dummy = new DynamicArray();
+		for(Object o: this.array){
+			dummy.addFinal(o);
+		}
+		return dummy;
+	}
 	
 }

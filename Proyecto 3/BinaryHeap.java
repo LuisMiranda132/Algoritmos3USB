@@ -4,7 +4,7 @@ public class BinaryHeap<T extends Comparable<T>>{
 	private DynamicArray data;
 	private int size;
 	
-	public BinaryHeap(int tam){
+	public BinaryHeap(){
 		this.data = new DynamicArray();
 		this.data.crecer(1);
 		size = 0;
@@ -117,6 +117,13 @@ public class BinaryHeap<T extends Comparable<T>>{
 //		for(int i=0;i<this.size;i++){
 			dummy = dummy + "\n" + o.toString();
 		}
+		return dummy;
+	}
+	
+	public Object clone(){
+		BinaryHeap<T> dummy = new BinaryHeap<T>();
+		dummy.data = (DynamicArray)this.data.clone();
+		dummy.size = this.size;
 		return dummy;
 	}
 
