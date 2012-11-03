@@ -94,6 +94,7 @@ public class DynamicArray{
 		
 		Class elementType = oldAr.getClass().getComponentType();
 		Object newArray = Array.newInstance(elementType, newSi);		
+
 			
 		int preserveLength = Math.min(oldSi, newSi);
 		
