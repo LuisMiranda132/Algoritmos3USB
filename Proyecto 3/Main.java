@@ -24,6 +24,52 @@ public class Main {
 		return null;
 	}
 	
+	public static void pruebaListaOrdenada() {
+		Lista<Nodo> lisNod = new MiLista<Nodo>();
+		
+		System.out.println("creando noditos");
+		/*
+		System.out.println(lisNod.addOrdenado(new Nodo("Hola")));
+		System.out.println(lisNod.addOrdenado(new Nodo("soy")));
+		System.out.println(lisNod.addOrdenado(new Nodo("un")));
+		System.out.println(lisNod.addOrdenado(new Nodo("nuevo")));
+		System.out.println(lisNod.addOrdenado(new Nodo("nodo")));
+		*/
+	}
+	
+	public static int Dijkstra(Digraph g, Nodo n, Nodo d) {
+		BinaryHeap<Nodo> abiertos = new BinaryHeap<Nodo>();
+		int i = 0;
+		int letAcumul = 0;
+		
+		abiertos.agregar(n);
+		
+		while (!abiertos.esVacio()){
+			Nodo actual = (Nodo) abiertos.getMin();
+			abiertos.removeMin();
+			actual.setVisitado(true);
+			Lista<Arco> adyacentes = g.getOutArcos(actual.toString());
+			while (i < adyacentes.toArray().length) {
+				Nodo ady = g.get(((Arco) adyacentes.toArray()[i]).getDst());
+				if (!ady.getVisitado()) {
+					Palabrita nuevPal = (Palabrita) ((Arco) adyacentes.
+							toArray()[i]).getPal().getMin();
+					letAcumul += nuevPal.getNumLet();
+					
+					if (ady.equals(d)){
+						return letAcumul;
+					}
+					
+					abiertos.agregar(ady);
+				}
+				i++;
+			}
+		}
+		
+		
+		return letAcumul;
+	}
+	
 	public static void main(String[] args) {
 
 		Arco prueba1 = new Arco("Arke2","B");

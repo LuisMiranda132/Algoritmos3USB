@@ -169,7 +169,7 @@ public class DigraphLista extends Digraph {
         }
         
         Arco nuevo = new Arco(src,dst);
-        nuevo = new Arco(src, dst, nuevo.getPal());
+        //nuevo = new Arco(src, dst, nuevo.getPal());
         if (this.contains(src,dst))
         	return nuevo;
         else {

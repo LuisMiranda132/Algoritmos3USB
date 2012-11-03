@@ -57,6 +57,42 @@ public class MiLista<E> implements Lista<E>{
     	this.tam ++;
     	return loLogre;
     }
+    
+    public boolean addOrdenado(E element) {
+    	boolean loLogre = false;
+    	Caja<E> nueva = new Caja<E>(element,null);
+    	Caja<E> ant = null;
+    	Caja<E> aux = this.primero;
+    	
+    	if (tam == 0) {
+    		this.primero = nueva;
+    		this.ultimo = nueva;
+    		loLogre = true;
+    	}
+    	else if (tam != 0) {
+    		if (element instanceof Nodo) {
+    			while (aux != null && 
+    				((Nodo) aux.obtenerCont()).compareTo((Nodo)element) > 0 ){
+    				ant = aux;
+    				aux = aux.obtenerSiguiente();
+    			}
+    		}
+    		else if (element instanceof Arco) {
+    			while (aux != null && 
+        				((Arco) aux.obtenerCont()).compareTo((Arco)element) > 0 ){
+        				ant = aux;
+        				aux = aux.obtenerSiguiente();
+        			}
+    		}
+    		ant.cambiarSiguiente(nueva);
+    		nueva.cambiarSiguiente(aux);
+    		loLogre = true;
+    	}
+    	
+    	this.tam++;
+    	return loLogre;
+    	
+    }
 
     /**
      * Funcion: clear

@@ -57,6 +57,26 @@ public class BinaryHeap<T extends Comparable<T>>{
 			}		
 		}
 	
+	@SuppressWarnings("unchecked")
+	public void agregar(Nodo p){
+		if (this.size == this.data.getArray().length){
+			this.data.crecer(2*this.size);
+		}
+			this.data.add(p, this.size);
+//			this.data.getArray()[this.size] = o;
+			this.size++;
+			
+			int i = this.size-1;
+			if(this.getPosPadre(i)<0){
+				return;
+			}
+			
+			while(((T)this.data.get(i)).compareTo((T) this.data.get(this.getPosPadre(i)))== -1){
+//			while(((T)this.data.getArray()[i]).compareTo((T) this.data.getArray()[this.getPosPadre(i)])==-1){
+				this.cambiar(i,this.getPosPadre(i));
+				i = this.getPosPadre(i);
+			}		
+		}
 	
 	public void removeMin(){
 		if(this.esVacio()){

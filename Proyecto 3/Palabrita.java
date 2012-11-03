@@ -30,5 +30,13 @@ public class Palabrita implements Comparable<Palabrita>  {
 		public String toString() {
 			return this.numLetras + " " + this.palab;
 		}
+		
+		public String getPalab() {
+			return this.palab;
+		}
+		
+		public int getNumLet() {
+			return this.numLetras;
+		}
 	
 	}
