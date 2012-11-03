@@ -26,5 +26,9 @@ public class Palabrita implements Comparable<Palabrita>  {
 			}
 			return 0;
 		}
+		
+		public String toString() {
+			return this.numLetras + " " + this.palab;
+		}
 	
 	}
