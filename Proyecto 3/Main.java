@@ -3,16 +3,22 @@ import java.util.Random;
 public class Main {
 
 	public static void main(String[] args) {
-		BinaryHeap heap = new BinaryHeap(200);
+		BinaryHeap<Arco> heap = new BinaryHeap<Arco>(200);
 		
 		Random num = new Random(); 
 
-		for(int i=0; i<200;i++){
+		for(int i=0; i<9999;i++){
 			heap.agregar(new Arco("B","B", num.nextInt(1000)));
 		}
 		
-		for(int i=0; i<200;i++){
-			System.out.println(heap.getMin().toString());
+		System.out.println(heap.getMin());
+		heap.agregar(new Arco("A","A", -1));
+		System.out.println(heap.getMin());
+		heap.removeMin();
+		System.out.println(heap.getMin());
+		
+	for(int i=0; i<10000;i++){
+			System.out.println(i + ": " + heap.getMin().toString());
 			heap.removeMin();
 		}
 		
