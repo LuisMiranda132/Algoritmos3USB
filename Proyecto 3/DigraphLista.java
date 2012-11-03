@@ -27,30 +27,25 @@ public class DigraphLista extends Digraph {
     @SuppressWarnings("unchecked")
 	public  boolean add(Arco e){
         String src = e.getSrc();
+        boolean sali = false;
         Nodo noditoS = new Nodo(src);
         Nodo noditoD = new Nodo(e.getDst());
         int i = 0;
         
-        int j=0;
-        try {
-        	while(!(((Nodo) this.nodos.getArray()[j]).equals(noditoD)))
-        		j++;
+        sali = this.contains(noditoD.toString());
+        if (!sali) {
+        	return sali;
         }
-        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
-        	return false;
-        }
-        i=0;
-        try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoS)))
-    			i++;
-    	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
-    		return false;
-    	}
-    	
         
-        if (((Lista<Arco>) this.arcos.getArray()[i]).contains(e))
+        sali = this.contains(noditoS.toString());
+        if (!sali) {
+        	return sali;
+        }
+        
+        
+        if (this.contains(e.getSrc(), e.getDst())) {
         	return false;
+        }
         else {
         	((Lista<Arco>) this.arcos.getArray()[i]).add(e);
             this.numArcos++;
@@ -64,14 +59,13 @@ public class DigraphLista extends Digraph {
      * se agrega el nodo, retorna true.
      */
     public  boolean add(Nodo n){
-    	int i=0;
+    	boolean esta;
     	boolean agregue = false;
-    
-    	try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(n)))
-    			i++;
-    	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    	
+    	esta = this.contains(n.toString());
+    	
+    	
+    	if (!esta) {
     		this.nodos.addFinal(n); 
     		this.arcos.addFinal(new MiLista<Arco>());
     		this.numVertices++;
@@ -99,33 +93,37 @@ public class DigraphLista extends Digraph {
 	public  boolean contains(String src, String dst){
         Nodo noditoS = new Nodo(src);
         Nodo noditoD = new Nodo(dst);
+        boolean sali = false;
         int i=0;
-        int j=0;
         
-        try {
-        	while(!(((Nodo) this.nodos.getArray()[j]).equals(noditoD)))
-        		j++;
+        while(i < this.nodos.getArray().length && !sali) {
+        	if (((Nodo) this.nodos.getArray()[i]).equals(noditoD)) {
+        		sali = true;
+        	}
+        	i++;
         }
-        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
-        	return false;
+        if (!sali) {
+        	return sali;
         }
+        
         i=0;
-        try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoS)))
-    			i++;
-    	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
-    		return false;
-    	}
+        sali = false;
+        
+        while(i < this.nodos.getArray().length && !sali) {
+        	if (((Nodo) this.nodos.getArray()[i]).equals(noditoS)) {
+        		sali = true;
+        	}
+        	i++;
+        }
+        if (!sali) {
+        	return sali;
+        }
         
         Arco aux = new Arco(src,dst);
-        //((Lista<Arco>) this.arcos.getArray()[i]).imprimirLista();
         if (!((Lista<Arco>) this.arcos.getArray()[i]).contains(aux)) {
-        	//System.out.println("lalala");
         	return false;
         }
         else{
-        	//System.out.println("lelele");
         	return true;
         }
     }
@@ -135,16 +133,17 @@ public class DigraphLista extends Digraph {
      */
     public boolean contains(String nod) {
 		Nodo aux = new Nodo(nod);
-        int i=0;
+        boolean sali = false;
+		int i=0;
         
-        try {
-        	while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
-        		i++;
+        while(i < this.nodos.getArray().length && !sali) {
+        	if (((Nodo) this.nodos.getArray()[i]).equals(aux)) {
+        		sali = true;
+        	}
+        	i++;
         }
-        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
-        	return false;
-        }
-		return true;
+        
+        return sali;
     }
 
     /*
@@ -156,27 +155,22 @@ public class DigraphLista extends Digraph {
 	public  Arco get(String src, String dst){
         Nodo auxS = new Nodo(src);
         Nodo auxD = new Nodo(dst);
-        int i=0;
+        boolean sali;
         
-        try {
-        	while(!(((Nodo) this.nodos.getArray()[i]).equals(auxD)))
-        		i++;
-        }
-        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        sali = this.contains(auxD.toString());
+        
+        if (!sali)
         	return null;
-        }
         
-        i=0;
-        try {
-        	while(!(((Nodo) this.nodos.getArray()[i]).equals(auxS)))
-        		i++;
-        }
-        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+        sali = this.contains(auxS.toString());
+        
+        if (!sali) {
         	return null;
         }
         
         Arco nuevo = new Arco(src,dst);
-        if (((Lista<Arco>) this.arcos.getArray()[i]).contains(nuevo))
+        nuevo = new Arco(src, dst, nuevo.getPal());
+        if (this.contains(src,dst))
         	return nuevo;
         else {
         	return null;
@@ -214,14 +208,19 @@ public class DigraphLista extends Digraph {
      */
     public Nodo get(String nod){
     	Nodo aux = new Nodo(nod);
+    	boolean sali = false;
     	int i=0;
-        try {
-        	while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
-        		i++;
-         }
-         catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
-         	return null;
-         }
+    	
+    	while(i < this.nodos.getArray().length && !sali) {
+        	if (((Nodo) this.nodos.getArray()[i]).equals(aux)) {
+        		sali = true;
+        	}
+        	i++;
+        }
+    	
+    	if (!sali)
+    		return null;
+    	
         return (Nodo) this.nodos.getArray()[i];
         
     }
@@ -248,18 +247,16 @@ public class DigraphLista extends Digraph {
     @SuppressWarnings("unchecked")
 	public  Lista<Arco> getInArcos(String nodo){
     	Nodo aux = new Nodo(nodo);
+    	Lista<Arco> listaSal = new MiLista<Arco>();
     	int i=0;
+        boolean exist = false;
+    	
+        exist = this.contains(aux.toString());
         
-        try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
-    			i++;
-    	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
-    		return null;
-    	}
+        if (!exist)
+        	return null;
         
         i=0;
-        Lista<Arco> listaSal = new MiLista<Arco>();
         
         while (i < this.nodos.getArray().length) {
         	Lista<Arco> listaTemp = new MiLista<Arco>();
@@ -287,15 +284,19 @@ public class DigraphLista extends Digraph {
     @SuppressWarnings("unchecked")
 	public  Lista<Arco> getOutArcos(String nodo){
     	Nodo aux = new Nodo(nodo);
+    	boolean sali = false;
     	int i=0;
-        
-        try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux)))
-    			i++;
-    	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
+    	
+    	while(i < this.nodos.getArray().length && !sali) {
+        	if (((Nodo) this.nodos.getArray()[i]).equals(aux)) {
+        		sali = true;
+        	}
+        	i++;
+        }
+    	
+    	if (!sali)
     		return null;
-    	}
+        
         return (Lista<Arco>) this.arcos.getArray()[i];
     }
 
@@ -309,24 +310,33 @@ public class DigraphLista extends Digraph {
     	Nodo noditoS = new Nodo(src);
         Nodo noditoD = new Nodo(dst);
         boolean elimine = false;
+        boolean sali = false;
         int i=0;
-        int j=0;
         
-        try {
-        	while(!(((Nodo) this.nodos.getArray()[j]).equals(noditoD)))
-        		j++;
+        
+        while(i < this.nodos.getArray().length && !sali) {
+        	if (((Nodo) this.nodos.getArray()[i]).equals(noditoD)) {
+        		sali = true;
+        	}
+        	i++;
         }
-        catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
-        	return elimine;
-        }
+    	
+    	if (!sali)
+    		return false;
+        
         i=0;
-        try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(noditoS)))
-    			i++;
-    	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException blah) {
-    		return elimine;
-    	}
+        sali = false;
+        
+        while(i < this.nodos.getArray().length && !sali) {
+        	if (((Nodo) this.nodos.getArray()[i]).equals(noditoS)) {
+        		sali = true;
+        	}
+        	i++;
+        }
+    	
+    	if (!sali)
+    		return false;
+        
     	
     	Arco aux = new Arco(src,dst);
     	
@@ -347,16 +357,20 @@ public class DigraphLista extends Digraph {
     public  boolean remove(String nod){
     	Nodo aux = new Nodo(nod);
     	boolean elimine = false;
+    	boolean sali = false;
     	int i=0;
         
-        try {
-    		while(!(((Nodo) this.nodos.getArray()[i]).equals(aux))){
-    			i++;
-    		}
-    	}
-    	catch(java.lang.ArrayIndexOutOfBoundsException bleh) {
+    	while(i < this.nodos.getArray().length && !sali) {
+        	if (((Nodo) this.nodos.getArray()[i]).equals(aux)) {
+        		sali = true;
+        	}
+        	i++;
+        }
+    	
+    	if (!sali)
     		return elimine;
-    	}
+    	
+        
     	this.nodos.remove(i);
     	this.arcos.remove(i);
     	elimine = true;
