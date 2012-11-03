@@ -5,7 +5,9 @@
  * Clase que almacena la informacion de las aristas en el grafo.
  */
 
-public class Nodo {
+import java.lang.Comparable;
+
+public class Nodo implements Comparable<Nodo>{
 
     // id es unico
     private String id = null;
@@ -56,6 +58,16 @@ public class Nodo {
 
 	public boolean getVisitado(){
 		return this.visitado;
+	}
+	
+	/*
+	 * Devuelve un numero negativo si this va primero que n
+	 * Devuelve un numero positivo si n va primero que this
+	 * si son iguales devuelve 0
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(Nodo n){
+		return this.id.compareTo(n.id);
 	}
 	
 }

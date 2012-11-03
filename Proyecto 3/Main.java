@@ -1,31 +1,69 @@
 import java.util.Random;
+import java.io.*;
 
 public class Main {
 
+	static Digraph grafo; 
+	
+	public static BufferedReader obtenerGrafo(BufferedReader inFile, 
+											  int numLinea){
+		try{
+			for(int i = 0;i<numLinea;i++){
+				String[] linea = inFile.readLine().split(" ");
+				if(!grafo.contains(linea[0])){
+					grafo.add(new Nodo(linea[0]));
+				}else if(!grafo.contains(linea[1])){
+					grafo.add(new Nodo(linea[1]));
+				}
+				grafo.add(new Arco(linea[0],linea[1],new Palabrita(linea[2])));
+			}
+			return inFile;
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public static void main(String[] args) {
-		BinaryHeap<Palabrita> heap = new BinaryHeap<Palabrita>();
 		
-		Random num = new Random(); 
+	String in = "file.in";
+	String out = "file.out";
+	
+	if(args.length == 2){
+		in = args[0];
+		out = args[0];
+	}
+	
+	String linea = "";
+	BufferedReader inFile = null;
 
-		for(int i=0; i<9999;i++){
-			heap.agregar(new Palabrita("nana",4));
+	try{
+		inFile = new BufferedReader(new FileReader(in));
+		
+		grafo = new DigraphLista();
+		
+		int numLinea = Integer.parseInt(inFile.readLine());
+		
+		if(numLinea == 0){
+			System.exit(1);
 		}
 		
-		System.out.println(heap.getMin());
-		heap.agregar(new Palabrita("bu",2));
-		System.out.println(heap.getMin());
-		heap.removeMin();
-		System.out.println(heap.getMin());
+		linea = inFile.readLine();
 		
-	for(int i=0; i<10000;i++){
-			System.out.println(i + ": " + heap.getMin().toString());
-			heap.removeMin();
-		}
+		String[] iniFin = linea.split(" ");
+		String partida = iniFin[0];
+		String llegada = iniFin[1];
 		
+		System.out.println("partida: "+partida+"\n"+"llegada: "+llegada);
 		
+		inFile = obtenerGrafo(inFile, numLinea);
 		
-		
-		
+	
+	}catch(IOException e){
+		e.printStackTrace();
+	}
+	
+
 	}
 
 }

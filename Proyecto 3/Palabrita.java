@@ -13,9 +13,9 @@ public class Palabrita implements Comparable<Palabrita>  {
 		protected int numLetras;
 	
 	
-		public Palabrita(String nPal, int let) {
+		public Palabrita(String nPal) {
 			this.palab = nPal;
-			this.numLetras = let;
+			this.numLetras = nPal.length();
 		}
 		
 		public int compareTo(Palabrita p) {

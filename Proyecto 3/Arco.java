@@ -10,15 +10,15 @@ public class Arco {
 
     private String src = null;
     private String dst = null;
-    private BinaryHeap<Palabrita> palabras;
+    private BinaryHeap<Palabrita> palabras = new BinaryHeap<Palabrita>();
 	
     private Arco() {
     }
 
-    public Arco(String src, String dst, BinaryHeap<Palabrita> pal) {
+    public Arco(String src, String dst, Palabrita palabra){
     	this.src = src;
     	this.dst = dst;
-    	this.palabras = pal;
+    	this.palabras.agregar(palabra);
     }
     
     /**
