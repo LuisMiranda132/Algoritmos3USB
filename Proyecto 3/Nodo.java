@@ -66,6 +66,7 @@ public class Nodo implements Comparable<Nodo>{
 	 * si son iguales devuelve 0
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
+	@Override
 	public int compareTo(Nodo n){
 		return this.id.compareTo(n.id);
 	}

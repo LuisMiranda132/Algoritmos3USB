@@ -25,6 +25,10 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
+
+		Arco prueba1 = new Arco("Arke2","B");
+		Arco prueba2 = new Arco("Arke1","B");
+		System.out.println(prueba1.compareTo(prueba2));
 		
 	String in = "file.in";
 	String out = "file.out";

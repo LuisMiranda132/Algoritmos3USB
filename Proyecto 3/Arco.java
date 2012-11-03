@@ -5,8 +5,9 @@
  * Clase que almacena la informacion de las aristas en el grafo.
  */
 
+import java.lang.Comparable;
 
-public class Arco {
+public class Arco implements Comparable<Arco> {
 
     private String src = null;
     private String dst = null;
@@ -102,6 +103,14 @@ public class Arco {
     public String toString() {
 	return "("+src + ", " + dst+"): "+palabras.toString();
     }
+
+	@Override
+	public int compareTo(Arco o) {
+		if(this.src.compareTo(o.src) == 0){
+			return this.dst.compareTo(o.dst);
+		}
+		return this.src.compareTo(o.src);
+	}
 
 }
 
