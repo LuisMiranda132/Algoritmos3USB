@@ -32,6 +32,13 @@ public class DigraphLista extends Digraph {
         Nodo noditoD = new Nodo(e.getDst());
         int i = 0;
         
+        Object[] nodos = this.nodos.getArray();
+        while(i<nodos.length&&(((Nodo)nodos[i]).compareTo(noditoS)!=0)){
+        	i++;
+        }
+        
+        if(i==nodos.length)return false;
+        
         sali = this.contains(noditoD.toString());
         if (!sali) {
         	return sali;
@@ -47,7 +54,7 @@ public class DigraphLista extends Digraph {
         	return false;
         }
         else {
-        	((Lista<Arco>) this.arcos.getArray()[i]).add(e);
+        	((MiLista<Arco>) this.arcos.getArray()[i]).addOrdenado(e);
             this.numArcos++;
         	return true;
         }
@@ -207,7 +214,9 @@ public class DigraphLista extends Digraph {
      * retorna null.
      */
     public Nodo get(String nod){
-    	Nodo aux = new Nodo(nod);
+    	MiLista<Nodo> lista = (MiLista<Nodo>) this.getNodos();
+    	return (Nodo) lista.binarySearch(new Nodo(nod));
+/*    	Nodo aux = new Nodo(nod);
     	boolean sali = false;
     	int i=0;
     	
@@ -222,18 +231,18 @@ public class DigraphLista extends Digraph {
     		return null;
     	
         return (Nodo) this.nodos.getArray()[i];
-        
+*/        
     }
 
     /* 
      * Retorna todos los nodos del grafo.
      */
     public  Lista<Nodo> getNodos(){
-        Lista<Nodo> lista = new MiLista<Nodo>();
+        MiLista<Nodo> lista = new MiLista<Nodo>();
         int i=0;
         
         while(i < this.nodos.getArray().length) {
-        	lista.add((Nodo) this.nodos.getArray()[i]);
+        	lista.addOrdenado((Nodo) this.nodos.getArray()[i]);
         	i++;
         }
         return lista;
@@ -296,7 +305,7 @@ public class DigraphLista extends Digraph {
     	
     	if (!sali)
     		return null;
-        
+        i--;
         return (Lista<Arco>) this.arcos.getArray()[i];
     }
 

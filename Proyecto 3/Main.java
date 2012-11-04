@@ -98,6 +98,12 @@ public class Main {
 		
 		return letAcumul;
 	}
+
+	public static void Bijkstra(String src, String dst){
+		MiLista<Arco> lista =  (MiLista<Arco>) grafo.getOutArcos(src);
+		System.out.println("\nBijkstra");
+		lista.imprimirLista();
+	}
 	
 	public static void main(String[] args) {
 
@@ -135,13 +141,16 @@ public class Main {
 		
 		System.out.println("partida: "+partida+"\n"+"llegada: "+llegada);
 		
-		inFile = obtenerGrafo(inFile, numLinea);
+		inFile = obtenerGrafo(inFile, numLinea);		
+		
 		
 		Lista<Arco> prueba = grafo.getArcos();
 		
 		for(Object o : prueba.toArray()){
 			System.out.println(o.toString());
 		}
+		
+		Bijkstra(partida, llegada);
 				
 		grafo = new DigraphLista();
 		linea = "";

@@ -12,6 +12,7 @@ public class Nodo implements Comparable<Nodo>{
     // id es unico
     private String id = null;
     private boolean visitado = false;
+    private int costo = Integer.MAX_VALUE;
     
     public Nodo(String i){
 	id = new String(i);	
@@ -58,6 +59,14 @@ public class Nodo implements Comparable<Nodo>{
 
 	public boolean getVisitado(){
 		return this.visitado;
+	}
+	
+	public int getCosto(){
+		return this.costo;
+	}
+	
+	public void setCosto(int cost){
+		this.costo = cost;
 	}
 	
 	/*
