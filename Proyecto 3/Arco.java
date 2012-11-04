@@ -15,6 +15,13 @@ public class Arco implements Comparable<Arco> {
 	
     private Arco() {
     }
+    
+    @SuppressWarnings("unchecked")
+	public Arco(String src, String dst, BinaryHeap<Palabrita> palabras){
+    	this.src = src;
+    	this.dst = dst;
+    	this.palabras = (BinaryHeap<Palabrita>) palabras.clone();
+    }
 
     public Arco(String src, String dst, Palabrita palabra){
     	this.src = src;

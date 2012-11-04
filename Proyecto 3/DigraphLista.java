@@ -119,6 +119,7 @@ public class DigraphLista extends Digraph {
         	return sali;
         }
         
+        i--;
         Arco aux = new Arco(src,dst);
         if (!((Lista<Arco>) this.arcos.getArray()[i]).contains(aux)) {
         	return false;
@@ -151,7 +152,6 @@ public class DigraphLista extends Digraph {
      * src y dst. Si no existe dicha arista, retorna null.
      */
 
-    @SuppressWarnings("unchecked")
 	public  Arco get(String src, String dst){
         Nodo auxS = new Nodo(src);
         Nodo auxD = new Nodo(dst);
@@ -169,7 +169,7 @@ public class DigraphLista extends Digraph {
         }
         
         Arco nuevo = new Arco(src,dst);
-        //nuevo = new Arco(src, dst, nuevo.getPal());
+        nuevo = new Arco(src, dst, nuevo.getPal());
         if (this.contains(src,dst))
         	return nuevo;
         else {
@@ -186,14 +186,14 @@ public class DigraphLista extends Digraph {
 	public  Lista<Arco> getArcos(){
     	int i=0;
         
-        Lista<Arco> listaSal = new MiLista<Arco>();
+        MiLista<Arco> listaSal = new MiLista<Arco>();
         
         while (i < this.nodos.getArray().length) {
         	Lista<Arco> listaTemp = new MiLista<Arco>();
         	listaTemp = (Lista<Arco>) this.arcos.getArray()[i];
         	Caja<Arco> cajaAux = listaTemp.obtenerPrimero();
         	while (cajaAux != null) {
-        		listaSal.add(cajaAux.obtenerCont());
+        		listaSal.addOrdenado(cajaAux.obtenerCont());
         		cajaAux = cajaAux.obtenerSiguiente();
         	}
         	i++;

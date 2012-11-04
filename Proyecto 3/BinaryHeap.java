@@ -133,9 +133,9 @@ public class BinaryHeap<T extends Comparable<T>>{
 	@Override
 	public String toString(){
 		String dummy = "";
-		for(Object o:this.data.getArray()){
+		for(int i=0;i<this.size;i++){
 //		for(int i=0;i<this.size;i++){
-			dummy = dummy + "\n" + o.toString();
+			dummy = dummy + "\n" + this.data.getArray()[i].toString();
 		}
 		return dummy;
 	}

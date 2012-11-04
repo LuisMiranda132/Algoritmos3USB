@@ -10,12 +10,39 @@ public class Main {
 		try{
 			for(int i = 0;i<numLinea;i++){
 				String[] linea = inFile.readLine().split(" ");
-				if(!grafo.contains(linea[0])){
-					grafo.add(new Nodo(linea[0]));
-				}else if(!grafo.contains(linea[1])){
-					grafo.add(new Nodo(linea[1]));
+//				if(grafo.contains(linea[0]) && grafo.contains(linea[1])){
+				MiLista<Arco> lista = (MiLista<Arco>) grafo.getArcos();
+				Arco arco = null;
+				if(!lista.isEmpty())
+					arco = (Arco) lista.binarySearch(new Arco(linea[0],linea[1]));
+				if(arco != null){
+						
+						arco.getPal().agregar(new Palabrita(linea[2]));
+						arco = (Arco) lista.binarySearch(new Arco(linea[1],linea[0]));
+						arco.getPal().agregar(new Palabrita(linea[2]));
+					
+					
+/*					Manera indigena, NO BORRAR POR QUE FUNCIONA
+					for(Object o: grafo.getArcos().toArray()){
+						if(((Arco)o).getSrc().equalsIgnoreCase(linea[0])&&((Arco)o).getDst().equalsIgnoreCase(linea[1])||
+							(((Arco)o).getSrc().equalsIgnoreCase(linea[1])&&(((Arco)o).getDst().equalsIgnoreCase(linea[0])))){
+							((Arco)o).getPal().agregar(new Palabrita(linea[2]));
+							j++;
+						}
+						if(j==2)break;
+
+					}
+*/
+				}else{
+					if(!grafo.contains(linea[0])){
+						grafo.add(new Nodo(linea[0]));
+					}
+					if(!grafo.contains(linea[1])){
+						grafo.add(new Nodo(linea[1]));
+					}
+					grafo.add(new Arco(linea[0],linea[1],new Palabrita(linea[2])));
+					grafo.add(new Arco(linea[1],linea[0],new Palabrita(linea[2])));
 				}
-				grafo.add(new Arco(linea[0],linea[1],new Palabrita(linea[2])));
 			}
 			return inFile;
 		}catch(IOException e){
@@ -25,16 +52,18 @@ public class Main {
 	}
 	
 	public static void pruebaListaOrdenada() {
-		Lista<Nodo> lisNod = new MiLista<Nodo>();
+		MiLista<Nodo> lisNod = new MiLista<Nodo>();
 		
 		System.out.println("creando noditos");
-		/*
-		System.out.println(lisNod.addOrdenado(new Nodo("Hola")));
+		
 		System.out.println(lisNod.addOrdenado(new Nodo("soy")));
+		System.out.println(lisNod.addOrdenado(new Nodo("Hola")));
 		System.out.println(lisNod.addOrdenado(new Nodo("un")));
-		System.out.println(lisNod.addOrdenado(new Nodo("nuevo")));
+		System.out.println(lisNod.addOrdenado(new Nodo("perol")));
 		System.out.println(lisNod.addOrdenado(new Nodo("nodo")));
-		*/
+		
+		lisNod.imprimirLista();
+		
 	}
 	
 	public static int Dijkstra(Digraph g, Nodo n, Nodo d) {
@@ -72,9 +101,6 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		Arco prueba1 = new Arco("Arke2","B");
-		Arco prueba2 = new Arco("Arke1","B");
-		System.out.println(prueba1.compareTo(prueba2));
 		
 	String in = "file.in";
 	String out = "file.out";
@@ -92,7 +118,10 @@ public class Main {
 		
 		grafo = new DigraphLista();
 		
-		int numLinea = Integer.parseInt(inFile.readLine());
+		while(true){
+		
+		int numLinea;
+		System.out.println( numLinea = Integer.parseInt(inFile.readLine()));
 		
 		if(numLinea == 0){
 			System.exit(1);
@@ -108,6 +137,16 @@ public class Main {
 		
 		inFile = obtenerGrafo(inFile, numLinea);
 		
+		Lista<Arco> prueba = grafo.getArcos();
+		
+		for(Object o : prueba.toArray()){
+			System.out.println(o.toString());
+		}
+				
+		grafo = new DigraphLista();
+		linea = "";
+		System.out.println();
+		}		
 	
 	}catch(IOException e){
 		e.printStackTrace();
