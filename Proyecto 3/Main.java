@@ -51,21 +51,6 @@ public class Main {
 		return null;
 	}
 	
-	public static void pruebaListaOrdenada() {
-		MiLista<Nodo> lisNod = new MiLista<Nodo>();
-		
-		System.out.println("creando noditos");
-		
-		System.out.println(lisNod.addOrdenado(new Nodo("soy")));
-		System.out.println(lisNod.addOrdenado(new Nodo("Hola")));
-		System.out.println(lisNod.addOrdenado(new Nodo("un")));
-		System.out.println(lisNod.addOrdenado(new Nodo("perol")));
-		System.out.println(lisNod.addOrdenado(new Nodo("nodo")));
-		
-		lisNod.imprimirLista();
-		
-	}
-	
 	@SuppressWarnings("unchecked")
 	public static String Dijkstra(String n, Nodo d) {
 		BinaryHeap<Nodo> abiertos = new BinaryHeap<Nodo>();
@@ -78,12 +63,15 @@ public class Main {
 		abiertos.agregar(nod);
 				
 		while (!abiertos.esVacio()){
-			System.out.println(abiertos.toString());
+//			System.out.println(abiertos.toString());
 			
 			Nodo actual = (Nodo) abiertos.getMin();
 			abiertos.removeMin();
 			
-			System.out.println("Actual: "+actual.toString()+"("+actual.getAnterior()+") "+actual.getCosto()+" : " + actual.getVisitado());
+			if(actual.equals(d))
+				return Integer.toString(actual.getCosto());
+			
+//			System.out.println("Actual: "+actual.toString()+"("+actual.getAnterior()+") "+actual.getCosto()+" : " + actual.getVisitado());
 			
 			actual.setVisitado(true);
 			int costoActual = actual.getCosto();
@@ -101,7 +89,7 @@ public class Main {
 					dummy = dummy.getAntNodo();
 				}
 				
-				System.out.println("\n"+ady.toString()+"("+ady.getAnterior()+")"+ ": " + visitado);
+//				System.out.println("\n"+ady.toString()+"("+ady.getAnterior()+")"+ ": " + visitado);
 				
 //				if(!ady.getVisitado()){
 				if(!visitado){
@@ -112,7 +100,7 @@ public class Main {
 					while(!heapCosto.esVacio()){
 						Palabrita minPal = (Palabrita) heapCosto.getMin();
 
-						System.out.println("\t"+minPal.toString());
+//						System.out.println("\t"+minPal.toString());
 						
 						i++;
 						
@@ -134,10 +122,10 @@ public class Main {
 							clone.setArco((Arco)o);
 							clone.setVisitado(true);
 							
-							System.out.println("\n"+clone.toString()+"("+clone.getAnterior()+")"+ ": " + clone.getCosto());
+//							System.out.println("\n"+clone.toString()+"("+clone.getAnterior()+")"+ ": " + clone.getCosto());
 							
-							if(i==1&&clone.equals(d))
-								return Integer.toString(clone.getCosto());
+//							if(i==1&&clone.equals(d))
+//								return Integer.toString(clone.getCosto());
 						
 							abiertos.agregar(clone);
 							
