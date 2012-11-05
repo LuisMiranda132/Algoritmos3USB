@@ -13,6 +13,9 @@ public class Nodo implements Comparable<Nodo>{
     private String id = null;
     private boolean visitado = false;
     private int costo = Integer.MAX_VALUE;
+    private Nodo antNodo = null;
+    private char anterior = '@';
+    private Arco antArco = null;
     
     public Nodo(String i){
 	id = new String(i);	
@@ -27,7 +30,12 @@ public class Nodo implements Comparable<Nodo>{
      */
     @Override
     protected Object clone() {
-	return new Nodo(this.id);
+    	Nodo dummy = new Nodo(this.id);
+    	dummy.setAnterior(this.anterior);
+    	dummy.setAntNodo(this.antNodo);
+    	dummy.setArco(this.antArco);
+    	dummy.setCosto(this.costo);
+    	return dummy;
     }
 
     /**
@@ -67,6 +75,30 @@ public class Nodo implements Comparable<Nodo>{
 	
 	public void setCosto(int cost){
 		this.costo = cost;
+	}
+	
+	public void setAnterior(char ant){
+		this.anterior = ant;
+	}
+	
+	public char getAnterior(){
+		return this.anterior;
+	}
+	
+	public void setAntNodo(Nodo ant){
+		this.antNodo = ant;
+	}
+	
+	public Nodo getAntNodo(){
+		return this.antNodo;
+	}
+	
+	public void setArco(Arco ant){
+		this.antArco = ant;
+	}
+	
+	public Arco getAntArco(){
+		return this.antArco;
 	}
 	
 	/*

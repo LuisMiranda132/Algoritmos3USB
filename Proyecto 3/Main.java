@@ -1,4 +1,4 @@
-import java.util.Random;
+
 import java.io.*;
 
 public class Main {
@@ -66,43 +66,125 @@ public class Main {
 		
 	}
 	
-	public static int Dijkstra(Digraph g, Nodo n, Nodo d) {
+	@SuppressWarnings("unchecked")
+	public static String Dijkstra(String n, Nodo d) {
 		BinaryHeap<Nodo> abiertos = new BinaryHeap<Nodo>();
 		int i = 0;
 		int letAcumul = 0;
 		
-		abiertos.agregar(n);
+		Nodo nod = grafo.get(n);
+		
+		if(nod.compareTo(d)==0)return "0";
+		
+		nod.setCosto(0);
+		abiertos.agregar(nod);
 		
 		while (!abiertos.esVacio()){
+			System.out.println(abiertos.toString());
+			
 			Nodo actual = (Nodo) abiertos.getMin();
 			abiertos.removeMin();
 			actual.setVisitado(true);
-			Lista<Arco> adyacentes = g.getOutArcos(actual.toString());
-			while (i < adyacentes.toArray().length) {
-				Nodo ady = g.get(((Arco) adyacentes.toArray()[i]).getDst());
-				if (!ady.getVisitado()) {
-					Palabrita nuevPal = (Palabrita) ((Arco) adyacentes.
-							toArray()[i]).getPal().getMin();
-					letAcumul += nuevPal.getNumLet();
 					
-					if (ady.equals(d)){
-						return letAcumul;
+			System.out.println("Actual: "+actual.toString()+"("+actual.getAnterior()+") "+actual.getCosto()+" : " + actual.getVisitado());
+			
+			Lista<Arco> adyacentes = grafo.getOutArcos(actual.toString());
+			for(Object o: adyacentes.toArray()) {
+				Nodo ady = grafo.get(((Arco) o).getDst());
+				
+				System.out.println("\n"+ady.toString()+"("+ady.getAnterior()+")"+ ": " + ady.getVisitado());
+				
+				if(!ady.getVisitado()){
+					
+					ady.setArco((Arco)o);
+					ady.setAntNodo(actual);
+				
+					BinaryHeap<Palabrita> heapCosto = 
+						(BinaryHeap<Palabrita>) ((Arco)o).getPal().clone();
+				
+					Palabrita minPalabra = (Palabrita) heapCosto.getMin() ;
+					
+					System.out.println("\t"+minPalabra.toString());
+					
+/*					while(!heapCosto.esVacio()&&
+							minPalabra.getPalab().charAt(0)==actual.getAnterior()){
+						heapCosto.removeMin();
+						minPalabra = (Palabrita) heapCosto.getMin();
+						System.out.println("\t"+minPalabra.toString());
+
 					}
+*/					
+					if(actual.getAnterior() != minPalabra.getPalab().charAt(0)){
+
+						int costoMin = Math.min(ady.getCosto(), 
+							actual.getCosto()+minPalabra.getNumLet());
+
+						ady.setAnterior(minPalabra.getPalab().charAt(0));
+						ady.setCosto(costoMin);
 					
-					abiertos.agregar(ady);
+						System.out.println("\t"+ady.toString()+"("+ady.getAnterior()+") "+ady.getCosto()+ " : " + ady.getVisitado()+"\n");
+						if(ady.compareTo(d) == 0)return Integer.toString(ady.getCosto());
+					
+						abiertos.agregar(ady);
+					}else{
+//						ady.getAntArco().getPal().removeMin();
+//						actual.setVisitado(false);
+//						Nodo copiaActual = (Nodo) actual.clone();
+						actual.setVisitado(false);
+						actual.setAnterior('@');
+						actual.getAntArco().getPal().removeMin();
+
+						actual.setCosto(Integer.MAX_VALUE);
+						actual.getAntNodo().setVisitado(false);
+						
+						abiertos.agregar(actual.getAntNodo());
+						break;
+					}
+				
 				}
-				i++;
 			}
 		}
 		
-		
-		return letAcumul;
+		return "impossivel";
+	}
+	public static Arco arcoSearch(MiLista<Arco> lista, String arco){
+		Object[] array = lista.toArray();
+		int min = 0, max = array.length, mid = 0;
+    	boolean encontre = false;
+    	
+    	while(!encontre && min <= max){
+    		mid = (min + max)/2;
+    		if(mid >= array.length)break;
+    		
+    		if(((Arco)array[mid]).getSrc().compareTo(arco) == 0){
+    			encontre = true;
+    		}else if(((Arco)array[mid]).getSrc().compareTo(arco) < 0){
+    			max = mid -1;
+    		}else{
+    			min = mid + 1;
+    		}
+    		
+    	}
+    	
+    	if(encontre){
+    		return (Arco)array[mid];
+    	}
+    	return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void Bijkstra(String src, String dst){
 		MiLista<Arco> lista =  (MiLista<Arco>) grafo.getOutArcos(src);
 		System.out.println("\nBijkstra");
 		lista.imprimirLista();
+		
+		for(Object o:lista.toArray()){
+			Arco arco = (Arco) o;
+			BinaryHeap<Palabrita> heap = (BinaryHeap<Palabrita>) arco.getPal().clone();
+			heap.getMin();
+			heap.removeMin();
+			System.out.println("\n"+arco.toString()+"\n"+ heap.toString());
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -126,8 +208,8 @@ public class Main {
 		
 		while(true){
 		
-		int numLinea;
-		System.out.println( numLinea = Integer.parseInt(inFile.readLine()));
+		int numLinea = Integer.parseInt(inFile.readLine());
+//		System.out.println( numLinea );
 		
 		if(numLinea == 0){
 			System.exit(1);
@@ -139,22 +221,22 @@ public class Main {
 		String partida = iniFin[0];
 		String llegada = iniFin[1];
 		
-		System.out.println("partida: "+partida+"\n"+"llegada: "+llegada);
+//		System.out.println("partida: "+partida+"\n"+"llegada: "+llegada);
 		
 		inFile = obtenerGrafo(inFile, numLinea);		
 		
 		
 		Lista<Arco> prueba = grafo.getArcos();
 		
-		for(Object o : prueba.toArray()){
+/*		for(Object o : prueba.toArray()){
 			System.out.println(o.toString());
 		}
-		
-		Bijkstra(partida, llegada);
+*/		
+		System.out.println(Dijkstra(partida, new Nodo(llegada)));
 				
 		grafo = new DigraphLista();
 		linea = "";
-		System.out.println();
+//		System.out.println();
 		}		
 	
 	}catch(IOException e){
