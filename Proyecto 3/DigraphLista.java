@@ -33,7 +33,7 @@ public class DigraphLista extends Digraph {
         int i = 0;
         
         Object[] nodos = this.nodos.getArray();
-        while(i<nodos.length&&(((Nodo)nodos[i]).compareTo(noditoS)!=0)){
+        while(i<nodos.length&&(!((Nodo)nodos[i]).toString().equalsIgnoreCase(noditoS.toString()))){
         	i++;
         }
         
@@ -214,9 +214,9 @@ public class DigraphLista extends Digraph {
      * retorna null.
      */
     public Nodo get(String nod){
-    	MiLista<Nodo> lista = (MiLista<Nodo>) this.getNodos();
-    	return (Nodo) lista.binarySearch(new Nodo(nod));
-/*    	Nodo aux = new Nodo(nod);
+//    	MiLista<Nodo> lista = (MiLista<Nodo>) this.getNodos();
+//    	return (Nodo) lista.binarySearch(new Nodo(nod));
+    	Nodo aux = new Nodo(nod);
     	boolean sali = false;
     	int i=0;
     	
@@ -230,8 +230,10 @@ public class DigraphLista extends Digraph {
     	if (!sali)
     		return null;
     	
+    	i--;
+    	
         return (Nodo) this.nodos.getArray()[i];
-*/        
+        
     }
 
     /* 

@@ -33,7 +33,7 @@ public class Nodo implements Comparable<Nodo>{
     	Nodo dummy = new Nodo(this.id);
     	dummy.setAnterior(this.anterior);
     	dummy.setAntNodo(this.antNodo);
-    	dummy.setArco(this.antArco);
+    	if(this.antArco != null)dummy.setArco((Arco)this.antArco.clone());
     	dummy.setCosto(this.costo);
     	return dummy;
     }
@@ -109,7 +109,13 @@ public class Nodo implements Comparable<Nodo>{
 	 */
 	@Override
 	public int compareTo(Nodo n){
-		return this.id.compareTo(n.id);
+			if(this.costo == n.costo){
+				return 0;
+			}else if(this.costo < n.costo){
+				return -1;
+			}
+			return 1;
+	//		return this.id.compareTo(n.id);
 	}
 	
 }

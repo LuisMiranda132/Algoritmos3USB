@@ -16,7 +16,6 @@ public class BinaryHeap<T extends Comparable<T>>{
 	
 	public Object getMin(){
 		if(this.esVacio()){
-			System.out.println("Heap esta vacio");
 			return null;
 		}else{
 			return this.data.get(0);

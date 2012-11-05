@@ -69,82 +69,88 @@ public class Main {
 	@SuppressWarnings("unchecked")
 	public static String Dijkstra(String n, Nodo d) {
 		BinaryHeap<Nodo> abiertos = new BinaryHeap<Nodo>();
-		int i = 0;
-		int letAcumul = 0;
 		
 		Nodo nod = grafo.get(n);
 		
-		if(nod.compareTo(d)==0)return "0";
+		if(nod.equals(d))return "0";
 		
 		nod.setCosto(0);
 		abiertos.agregar(nod);
-		
+				
 		while (!abiertos.esVacio()){
 			System.out.println(abiertos.toString());
 			
 			Nodo actual = (Nodo) abiertos.getMin();
 			abiertos.removeMin();
-			actual.setVisitado(true);
-					
+			
 			System.out.println("Actual: "+actual.toString()+"("+actual.getAnterior()+") "+actual.getCosto()+" : " + actual.getVisitado());
 			
+			actual.setVisitado(true);
+			int costoActual = actual.getCosto();
+			
 			Lista<Arco> adyacentes = grafo.getOutArcos(actual.toString());
-			for(Object o: adyacentes.toArray()) {
-				Nodo ady = grafo.get(((Arco) o).getDst());
+			
+			for(Object o:adyacentes.toArray()){
+				Nodo ady = grafo.get(((Arco)o).getDst());
 				
-				System.out.println("\n"+ady.toString()+"("+ady.getAnterior()+")"+ ": " + ady.getVisitado());
+				boolean visitado = false;
+				Nodo dummy = actual.getAntNodo();
 				
-				if(!ady.getVisitado()){
-					
-					ady.setArco((Arco)o);
-					ady.setAntNodo(actual);
+				while(!visitado&&dummy!=null){
+					visitado = dummy.equals(ady);
+					dummy = dummy.getAntNodo();
+				}
 				
+				System.out.println("\n"+ady.toString()+"("+ady.getAnterior()+")"+ ": " + visitado);
+				
+//				if(!ady.getVisitado()){
+				if(!visitado){
 					BinaryHeap<Palabrita> heapCosto = 
 						(BinaryHeap<Palabrita>) ((Arco)o).getPal().clone();
-				
-					Palabrita minPalabra = (Palabrita) heapCosto.getMin() ;
+					int i=0;
 					
-					System.out.println("\t"+minPalabra.toString());
-					
-/*					while(!heapCosto.esVacio()&&
-							minPalabra.getPalab().charAt(0)==actual.getAnterior()){
-						heapCosto.removeMin();
-						minPalabra = (Palabrita) heapCosto.getMin();
-						System.out.println("\t"+minPalabra.toString());
+					while(!heapCosto.esVacio()){
+						Palabrita minPal = (Palabrita) heapCosto.getMin();
 
-					}
-*/					
-					if(actual.getAnterior() != minPalabra.getPalab().charAt(0)){
-
-						int costoMin = Math.min(ady.getCosto(), 
-							actual.getCosto()+minPalabra.getNumLet());
-
-						ady.setAnterior(minPalabra.getPalab().charAt(0));
-						ady.setCosto(costoMin);
-					
-						System.out.println("\t"+ady.toString()+"("+ady.getAnterior()+") "+ady.getCosto()+ " : " + ady.getVisitado()+"\n");
-						if(ady.compareTo(d) == 0)return Integer.toString(ady.getCosto());
-					
-						abiertos.agregar(ady);
-					}else{
-//						ady.getAntArco().getPal().removeMin();
-//						actual.setVisitado(false);
-//						Nodo copiaActual = (Nodo) actual.clone();
-						actual.setVisitado(false);
-						actual.setAnterior('@');
-						actual.getAntArco().getPal().removeMin();
-
-						actual.setCosto(Integer.MAX_VALUE);
-						actual.getAntNodo().setVisitado(false);
+						System.out.println("\t"+minPal.toString());
 						
-						abiertos.agregar(actual.getAntNodo());
-						break;
+						i++;
+						
+						if(minPal.getPalab().charAt(0)!=actual.getAnterior()){
+
+							int costoMin;	
+//							if(ady.getCosto()==Integer.MIN_VALUE){
+//								costoMin = actual.getCosto()+minPal.getNumLet();
+//							}else{
+							Nodo clone = (Nodo) ady.clone();
+							costoMin = Math.min(clone.getCosto(), 
+								costoActual+minPal.getNumLet());
+//							}
+
+							clone.setAnterior(minPal.getPalab().charAt(0));
+							clone.setCosto(costoMin);
+						
+							clone.setAntNodo(actual);
+							clone.setArco((Arco)o);
+							clone.setVisitado(true);
+							
+							System.out.println("\n"+clone.toString()+"("+clone.getAnterior()+")"+ ": " + clone.getCosto());
+							
+							if(i==1&&clone.equals(d))
+								return Integer.toString(clone.getCosto());
+						
+							abiertos.agregar(clone);
+							
+						}
+
+						heapCosto.removeMin();
 					}
-				
+
 				}
+				
 			}
 		}
-		
+
 		return "impossivel";
 	}
 	public static Arco arcoSearch(MiLista<Arco> lista, String arco){
