@@ -268,6 +268,10 @@ public class MiLista<E> implements Lista<E>{
     	Object[] arreglin = new Object[this.tam];
     	E elemAct;
     	Caja<E> aux = this.primero;
+    	
+    	if (aux == null)
+    		return arreglin;
+    	
     	elemAct = aux.obtenerCont();
     	int i = 0;
     	
