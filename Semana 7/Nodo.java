@@ -12,6 +12,11 @@ public class Nodo implements Comparable<Nodo>{
     // id es unico
     private String id = null;
     private boolean visitado = false;
+    private boolean origen = false;
+    private boolean destino = false;
+    private int costAcum = Integer.MAX_VALUE;
+    private Nodo ancestro = null;
+    private String funcion = null;
     
     public Nodo(String i){
 	id = new String(i);	
@@ -50,14 +55,90 @@ public class Nodo implements Comparable<Nodo>{
      */
     @Override
     public String toString() {
-	return new String(id);
+	return this.id;
     }
+    
+    /*
+     * asigna el valor al campo visitado
+     */
     public void setVisitado(boolean visit){
     	this.visitado = visit;
     }
 
+    /*
+     * obtiene el valor del campo visitado
+     */
 	public boolean getVisitado(){
 		return this.visitado;
+	}
+	
+	/*
+	 * obtiene el valor del campo origen
+	 */
+	public boolean esSrc() {
+		return this.origen;
+	}
+	
+	/*
+	 * obtiene el valor del campo destino
+	 */
+	public boolean esDst() {
+		return this.destino;
+	}
+	
+	/*
+	 * asigna true al campo que indica que es fuente
+	 */
+	public void setSrc() {
+		this.origen = true;
+	}
+	/*
+	 * asigna true al campo que indica que es destino
+	 */
+	public void setDst() {
+		this.destino = true;
+	}
+	
+	/*
+	 * retorna el costo acumulado
+	 */
+	public int getCost() {
+		return this.costAcum;
+	}
+	
+	/*
+	 * asigna el costo acumulado
+	 */
+	public void setCost(int c) {
+		this.costAcum = c;
+	}
+	
+	/*
+	 * retorna el ancestro
+	 */
+	public Nodo getAncestro() {
+		return this.ancestro;
+	}
+	
+	/*
+	 * asigna el ancestro
+	 */
+	public void setAncestro(Nodo a) {
+		this.ancestro = a;
+	}
+	
+	/* 
+	 * devuelve la funcion mediante la cual se llego a este nodo
+	 */
+	public String getFuncion() {
+		return this.funcion;
+	}
+	
+	/* 
+	 * asigna la funcion mediante la cual se llego a este nodo
+	 */
+	public void setFuncion(String f) {
+		this.funcion = f;
 	}
 	
 	/*
