@@ -9,54 +9,26 @@ public class Main {
 												int numLinea) {
 		try {
 			for(int i=0;i<numLinea;i++) {
-				String[] primer = inFile.readLine().split(": ");
+				String[] primer = inFile.readLine().split(": \\(");
 				System.out.println(primer[0]);
 				Nodo nuevFunc = new Nodo(primer[0]);
 				nuevFunc.setFuncion(true);
 				grafo.add(nuevFunc);
 				
-				
-				String[] segundo = primer[1].split(", ");
-				System.out.println(segundo[0]);
-				System.out.println(segundo[1]);
-				/*String dom = segundo[0].replace("(", "");
-				dom = dom.replace(")", "");
-				String[] dominio = dom.split(", ");
-				for(int j=0;j<dominio.length;j++) {
-					grafo.add(new Nodo(dominio[j]));
-					grafo.add(new Arco(dominio[j],primer[0]));
-				}
-				System.out.println(segundo[1]);
-				String[] tercero = segundo[1].split(" ");
-				System.out.println(tercero[0]);
-				System.out.println(tercero[1]);
-				String rang = tercero[0].replace("(", "");
-				rang = rang.replace(")", "");
-				String[] rango = rang.split(", ");
-				for(int k=0;k<dominio.length;k++) {
-					grafo.add(new Nodo(dominio[k]));
-					grafo.add(new Arco(primer[0],dominio[k]));
-				}
-				
-				Nodo nuevito = grafo.get(primer[0]);
-				System.out.println(nuevito.toString());
-				nuevito.setCosto(Integer.parseInt(tercero[1]));
-				*/
-				/*
-				String[] segundo = primer[1].split("), (");
+				String[] segundo = primer[1].split("\\), \\(");
 				String[] dominio = segundo[0].split(", ");
 				for(int j=0;j<dominio.length;j++) {
 					grafo.add(new Nodo(dominio[j]));
 					grafo.add(new Arco(dominio[j],primer[0]));
 				}
-				String[] tercero = segundo[1].split(") ");
+				String[] tercero = segundo[1].split("\\) ");
 				String[] rango = tercero[0].split(", ");
 				for(int k=0;k<rango.length;k++) {
 					grafo.add(new Nodo(rango[k]));
 					grafo.add(new Arco(primer[0],rango[k]));
 				}
 				grafo.get(primer[0]).setCosto(Integer.parseInt(tercero[1]));
-				*/
+				
 			}
 			return inFile;
 			
@@ -106,7 +78,8 @@ public class Main {
 			System.exit(1);
 		}
 		
-		inFile = obtenerGrafo(inFile, numLinea);		
+		inFile = obtenerGrafo(inFile, numLinea);
+		System.out.println(grafo.toString());
 	
 	}catch(IOException e){
 		e.printStackTrace();
