@@ -1,20 +1,23 @@
-
 import java.io.*;
+import java.util.Random;
 
 public class Main {
 
-	static Digraph grafo; 
+	static Digraph grafo = new DigraphLista(); 
 	
 	public static BufferedReader obtenerGrafo(BufferedReader inFile,
 												int numLinea) {
 		try {
 			for(int i=0;i<numLinea;i++) {
+
 				String[] primer = inFile.readLine().split(": \\(");
 				System.out.println(primer[0]);
 				Nodo nuevFunc = new Nodo(primer[0]);
+				System.out.println("\n"+nuevFunc+"\n");
 				nuevFunc.setFuncion(true);
 				grafo.add(nuevFunc);
 				
+
 				String[] segundo = primer[1].split("\\), \\(");
 				String[] dominio = segundo[0].split(", ");
 				for(int j=0;j<dominio.length;j++) {
@@ -39,12 +42,100 @@ public class Main {
 		return null;
 	}
 	
+	public static class RandomStringGenerator {
+		public final static short TYPE_MIXED_CASE = 0;
+		public final static short TYPE_UPPER_ONLY = 1;
+		public final static short TYPE_LOWER_ONLY = 2;
+		public final static Random rnd = new Random();
+		
+		static final char[] alphas = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+				         			  'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+		
+		/**
+		 * Generate a random string of characters at the specified length.  The first argument (type) is a constant 
+		 * TYPE_MIXED_CASE, TYPE_UPPER_ONLY, TYPE_LOWER_ONLY.  This is followed by length.  That is followed by whether or not
+		 * the first character should be capitalized (regardless of lower only).  It is of course silly to use initial caps
+		 * with TYPE_UPPER_ONLY.  
+		 * 
+		 * @param type
+		 * @param length
+		 * @param initialCaps
+		 * @return
+		 */
+		public static String generateRandomString(short type,int length, boolean initialCaps) {
+			int min = type == TYPE_LOWER_ONLY ? 26 : 0;
+			int max = type == TYPE_UPPER_ONLY ? 26 : alphas.length;
+			String generated = "";
+			for (int i = 0; i < length; i++) {			
+				int random = rnd.nextInt(max - min) + min;
+				generated += alphas[random];
+			}
+			generated = initialCaps ? (""+generated.charAt(0)).toUpperCase() + generated.substring(1) : generated;
+			return generated;
+			
+			
+		}
+		/**
+		 * Generate a random string of characters at the specified length without the option of initial caps.  See the other method in this class.
+		 * @param type
+		 * @param length
+		 * @return
+		 */
+		public static String generateRandomString(short type,int length) {
+			return generateRandomString(type, length, false);
+		}
+	}
+		
+	public static void prueba(){
+		Random generador = new Random();
+		
+		String ant = RandomStringGenerator.generateRandomString(RandomStringGenerator.TYPE_MIXED_CASE, 5);
+		
+		Nodo prueba = new Nodo(ant); 
+		grafo.add(prueba);
+		String string = RandomStringGenerator.generateRandomString(RandomStringGenerator.TYPE_MIXED_CASE, 5);
+		grafo.add(new Nodo(string));
+		for(int i = 0; i<200;i++){
+			String string1 = RandomStringGenerator.generateRandomString(RandomStringGenerator.TYPE_MIXED_CASE, 5);
+			grafo.add(new Nodo(string1));
+			ant = string1;
+			
+			
+		}
+		
+		grafo.add(new Arco(string, ant));
+		grafo.add(new Arco(ant, string));
+		
+		grafo.getNodos().imprimirLista();
+		System.out.println("\n"+"\n");
+		grafo.getArcos().imprimirLista();
+		
+		System.out.println("\n"+ant+"\n");
+		
+		grafo.getOutArcos(string).imprimirLista();
+		grafo.getInArcos(ant).imprimirLista();
 
+		System.out.println("\n"+"\n");
+		grafo.remove(ant, string);
+		grafo.getOutArcos(string).imprimirLista();
+		grafo.getInArcos(ant).imprimirLista();
+		
+		System.out.println("\n"+"\n");
+		grafo.getArcos().imprimirLista();
+		System.out.println("\n"+"\n");
+		
+		grafo.remove(prueba.toString());
+		
+		grafo.getNodos().imprimirLista();
+		
+		System.out.println(grafo.contains(prueba.toString()));
+	}
 	
 	public static void main(String[] args) {
 
+		prueba();
 		
-	String in = "file.in";
+/*	String in = "file.in";
 	String out = "file.out";
 	
 	if(args.length == 2){
@@ -91,7 +182,7 @@ public class Main {
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
-
+*/
 	}
 
 }

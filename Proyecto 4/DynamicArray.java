@@ -11,6 +11,7 @@ import java.lang.reflect.Array;
 public class DynamicArray{
 	
 	private Object[] array;
+	private int posicion = 0;
 	
 	/*
 	 * Constructor
@@ -35,6 +36,59 @@ public class DynamicArray{
 		this.getArray()[pos] = x;
 	}
 
+	public void removeOrdMov(int pos){
+				
+//		for(int j = this.posicion; j >= pos ;j--){
+		for(int j = pos+1; j<this.posicion ;j++){
+			this.add(this.get(j), j-1);
+		}
+		
+		this.posicion--;
+	}
+	
+	public void addOrdMov(Object o,int pos){
+		
+		if(this.posicion+1 == this.getArray().length){
+			this.crecer(2*this.getArray().length);
+		}
+		
+		for(int j = this.posicion; j >= pos ;j--){
+			this.add(this.get(j), j+1);
+		}
+		
+		this.posicion++;
+		this.add(o, pos);
+	}
+	
+	public int addOrd(Object x){
+		String cajita = x.toString();
+		int i = 0;
+		
+		if(this.get(0)==null){
+			this.add(x, 0);
+			this.posicion++;
+		}else{
+		
+			while(this.get(i)!=null&&i<this.getArray().length&&cajita.compareTo(this.get(i).toString())>0){
+				i++;
+			}
+			
+			if(this.posicion+1 == this.getArray().length){
+				this.crecer(2*this.getArray().length);
+			}
+			
+			for(int j = this.posicion; j >= i ;j--){
+				this.add(this.get(j), j+1);
+			}
+			
+			this.add(x, i);
+			this.posicion++;
+		
+		}
+		return i;
+		
+	}
+	
 	/*
 	 * Aumenta el arreglo
 	 */
@@ -113,4 +167,57 @@ public class DynamicArray{
 		return dummy;
 	}
 	
+	public int binarySearchPos(Object element){
+    	Object[] array = this.array;
+    	int min = 0, max = this.posicion, mid = 0;
+    	boolean encontre = false;
+    	
+    	while(!encontre && min <= max){
+    		mid = (min + max)/2;
+    		if(mid >= this.posicion)break;
+
+    		if(array[mid].toString().compareTo(element.toString()) == 0){
+    			encontre = true;
+    		}else if(array[mid].toString().compareTo(element.toString()) > 0){
+    			max = mid -1;
+    		}else{
+    			min = mid + 1;
+    		}
+    		
+    	}
+    	
+    	if(encontre){
+    		return mid;
+    	}
+    	return -1;
+    }
+	
+	public Object binarySearch(Object element){
+    	Object[] array = this.array;
+    	int min = 0, max = this.posicion, mid = 0;
+    	boolean encontre = false;
+    	
+    	while(!encontre && min <= max){
+    		mid = (min + max)/2;
+    		if(mid >= this.posicion)break;
+
+    		if(array[mid].toString().compareTo(element.toString()) == 0){
+    			encontre = true;
+    		}else if(array[mid].toString().compareTo(element.toString()) > 0){
+    			max = mid -1;
+    		}else{
+    			min = mid + 1;
+    		}
+    		
+    	}
+    	
+    	if(encontre){
+    		return array[mid];
+    	}
+    	return null;
+    }
+	
+	public int getPosicion(){
+		return this.posicion;
+	}
 }

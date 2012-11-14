@@ -300,7 +300,7 @@ public class MiLista<E> implements Lista<E>{
     	this.toArray();
     	int i = 0;
     	for(i=0;i<this.toArray().length;i++) {
-    		System.out.println(this.toArray()[i].toString());
+    		System.out.println(i +": "+this.toArray()[i].toString());
     	}
     }
     
@@ -336,6 +336,36 @@ public class MiLista<E> implements Lista<E>{
     		return array[mid];
     	}
     	return null;
+    }
+
+    public Object linearSearch(E element){
+    	if (this.tam == 0) {
+    		return null;
+    	}
+    	else {
+    		boolean encontre = false;
+    		Caja<E> aux = this.obtenerPrimero();
+    		E elemAux;
+    		if (aux == null) {
+    			return false;
+    		}
+    		else {
+    			elemAux = aux.obtenerCont();
+    		}
+        
+    		while ((aux != null) && (!encontre)) {
+    			encontre = (elemAux.equals(element));
+
+    			if(encontre)return elemAux;
+
+    			aux = aux.obtenerSiguiente();
+    			if (aux != null) {
+    				elemAux = aux.obtenerCont();
+    			}
+    		}
+    	   	
+    		return null;
+    	}
     }
 }
 

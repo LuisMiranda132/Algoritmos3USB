@@ -61,6 +61,7 @@ public class Nodo implements Comparable<Nodo>{
     public String toString() {
 	return new String(id);
     }
+    
     public void setVisitado(boolean visit){
     	this.visitado = visit;
     }

@@ -1,3 +1,8 @@
+/**
+ * 
+ * @author Gabriela Limonta, Luis Miranda
+ * 
+ */
 
 import java.io.*;
 
@@ -5,35 +10,45 @@ public class Main {
 
 	static Digraph grafo; 
 	
-	public static BufferedReader obtenerGrafo(BufferedReader inFile, 
+	/*
+	 * obtenerGrafo se encarga de cargar el archivo en el grafo
+	 */
+	public static BufferedReader obtenerGrafo(BufferedReader inFile,
 											  int numLinea){
 		try{
 			for(int i = 0;i<numLinea;i++){
-				String[] linea = inFile.readLine().split(" ");
-//				if(grafo.contains(linea[0]) && grafo.contains(linea[1])){
+
+				String dummy = inFile.readLine();
+				
+				String[] linea = dummy.split(" ");
+
 				MiLista<Arco> lista = (MiLista<Arco>) grafo.getArcos();
 				Arco arco = null;
+				
+				/* 
+				 * Se busca a ver si el arco ya esta en el grafo, si ya esta
+				 * se procede a agregar el el valor de la palabra como en 
+				 * formato "Palabrita" dentro de un heap que esta en el arco
+				 * 	
+				 */
+			
 				if(!lista.isEmpty())
-					arco = (Arco) lista.binarySearch(new Arco(linea[0],linea[1]));
+					arco = (Arco) lista.binarySearch(
+												new Arco(linea[0],linea[1]));
+				
 				if(arco != null){
 						
 						arco.getPal().agregar(new Palabrita(linea[2]));
-						arco = (Arco) lista.binarySearch(new Arco(linea[1],linea[0]));
+						arco = (Arco) lista.binarySearch(
+												new Arco(linea[1],linea[0]));
 						arco.getPal().agregar(new Palabrita(linea[2]));
 					
-					
-/*					Manera indigena, NO BORRAR POR QUE FUNCIONA
-					for(Object o: grafo.getArcos().toArray()){
-						if(((Arco)o).getSrc().equalsIgnoreCase(linea[0])&&((Arco)o).getDst().equalsIgnoreCase(linea[1])||
-							(((Arco)o).getSrc().equalsIgnoreCase(linea[1])&&(((Arco)o).getDst().equalsIgnoreCase(linea[0])))){
-							((Arco)o).getPal().agregar(new Palabrita(linea[2]));
-							j++;
-						}
-						if(j==2)break;
-
-					}
-*/
 				}else{
+					/*
+					 * Si no se consigue se procede a revisars si ya estan 
+					 * creados los nodos, si no estan se crean, y se agrega un 
+					 * arco desde 0
+					 */
 					if(!grafo.contains(linea[0])){
 						grafo.add(new Nodo(linea[0]));
 					}
@@ -51,13 +66,19 @@ public class Main {
 		return null;
 	}
 	
+	/*
+	 * Dijkstra es una modificacion del algoritmo de Dijkstra que se adapta a 
+	 * solucionar el problema
+	 */
 	@SuppressWarnings("unchecked")
 	public static String Dijkstra(String n, Nodo d) {
+		
 		BinaryHeap<Nodo> abiertos = new BinaryHeap<Nodo>();
 		
 		Nodo nod = grafo.get(n);
 		
-		if(nod.equals(d))return "0";
+		// Si el idioma de partida es igual al de llegada, imprimo 0
+		if(nod.equals(d))return "0\n";
 		
 		nod.setCosto(0);
 		abiertos.agregar(nod);
@@ -67,9 +88,10 @@ public class Main {
 			
 			Nodo actual = (Nodo) abiertos.getMin();
 			abiertos.removeMin();
-			
+
+			// Se revisa si ya se llego al idioma que estas buscando
 			if(actual.equals(d))
-				return Integer.toString(actual.getCosto());
+				return Integer.toString(actual.getCosto())+"\n";
 			
 //			System.out.println("Actual: "+actual.toString()+"("+actual.getAnterior()+") "+actual.getCosto()+" : " + actual.getVisitado());
 			
@@ -84,6 +106,10 @@ public class Main {
 				boolean visitado = false;
 				Nodo dummy = actual.getAntNodo();
 				
+				/*
+				 * Se busca entre los nodos que ya recorri si se encuentra el
+				 * nodo el ady, para no empilar de mas
+				 */
 				while(!visitado&&dummy!=null){
 					visitado = dummy.equals(ady);
 					dummy = dummy.getAntNodo();
@@ -91,12 +117,19 @@ public class Main {
 				
 //				System.out.println("\n"+ady.toString()+"("+ady.getAnterior()+")"+ ": " + visitado);
 				
-//				if(!ady.getVisitado()){
 				if(!visitado){
+					/*
+					 * Se usa un clon del heap que esta en el arco para no da~ar
+					 * el grafo
+					 */
 					BinaryHeap<Palabrita> heapCosto = 
 						(BinaryHeap<Palabrita>) ((Arco)o).getPal().clone();
 					int i=0;
 					
+					/*
+					 * Aqui se itera entre todas las posibilidades de caminos 
+					 * se pueden tomar
+					 */
 					while(!heapCosto.esVacio()){
 						Palabrita minPal = (Palabrita) heapCosto.getMin();
 
@@ -104,16 +137,21 @@ public class Main {
 						
 						i++;
 						
+						/*
+						 * Solo se empilan las que cumplen con la condicion de 
+						 * la primera letra
+						 */
+						
 						if(minPal.getPalab().charAt(0)!=actual.getAnterior()){
 
 							int costoMin;	
-//							if(ady.getCosto()==Integer.MIN_VALUE){
-//								costoMin = actual.getCosto()+minPal.getNumLet();
-//							}else{
+
+							/*
+							 * Se usa un clon para no da~ar el grafo
+							 */
 							Nodo clone = (Nodo) ady.clone();
 							costoMin = Math.min(clone.getCosto(), 
 								costoActual+minPal.getNumLet());
-//							}
 
 							clone.setAnterior(minPal.getPalab().charAt(0));
 							clone.setCosto(costoMin);
@@ -123,10 +161,7 @@ public class Main {
 							clone.setVisitado(true);
 							
 //							System.out.println("\n"+clone.toString()+"("+clone.getAnterior()+")"+ ": " + clone.getCosto());
-							
-//							if(i==1&&clone.equals(d))
-//								return Integer.toString(clone.getCosto());
-						
+													
 							abiertos.agregar(clone);
 							
 						}
@@ -138,47 +173,11 @@ public class Main {
 				
 			}
 		}
-
-		return "impossivel";
-	}
-	public static Arco arcoSearch(MiLista<Arco> lista, String arco){
-		Object[] array = lista.toArray();
-		int min = 0, max = array.length, mid = 0;
-    	boolean encontre = false;
-    	
-    	while(!encontre && min <= max){
-    		mid = (min + max)/2;
-    		if(mid >= array.length)break;
-    		
-    		if(((Arco)array[mid]).getSrc().compareTo(arco) == 0){
-    			encontre = true;
-    		}else if(((Arco)array[mid]).getSrc().compareTo(arco) < 0){
-    			max = mid -1;
-    		}else{
-    			min = mid + 1;
-    		}
-    		
-    	}
-    	
-    	if(encontre){
-    		return (Arco)array[mid];
-    	}
-    	return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void Bijkstra(String src, String dst){
-		MiLista<Arco> lista =  (MiLista<Arco>) grafo.getOutArcos(src);
-		System.out.println("\nBijkstra");
-		lista.imprimirLista();
-		
-		for(Object o:lista.toArray()){
-			Arco arco = (Arco) o;
-			BinaryHeap<Palabrita> heap = (BinaryHeap<Palabrita>) arco.getPal().clone();
-			heap.getMin();
-			heap.removeMin();
-			System.out.println("\n"+arco.toString()+"\n"+ heap.toString());
-		}
+		/*
+		 * Si llega a este punto significa que no se puede llegar al idioma
+		 * deseado
+		 */
+		return "impossivel\n";
 	}
 	
 	public static void main(String[] args) {
@@ -189,23 +188,30 @@ public class Main {
 	
 	if(args.length == 2){
 		in = args[0];
-		out = args[0];
+		out = args[1];
 	}
 	
 	String linea = "";
 	BufferedReader inFile = null;
-
+	
 	try{
 		inFile = new BufferedReader(new FileReader(in));
 		
+		FileWriter outFi = new FileWriter(out);
+		BufferedWriter outFile = new BufferedWriter(outFi);
+		
 		grafo = new DigraphLista();
 		
+		/*
+		 * Se tiene un ciclo que termina una vez que consigue un 0 en el archivo
+		 * de entrada
+		 */
 		while(true){
 		
 		int numLinea = Integer.parseInt(inFile.readLine());
-//		System.out.println( numLinea );
 		
 		if(numLinea == 0){
+			outFile.close();
 			System.exit(1);
 		}
 		
@@ -215,24 +221,14 @@ public class Main {
 		String partida = iniFin[0];
 		String llegada = iniFin[1];
 		
-//		System.out.println("partida: "+partida+"\n"+"llegada: "+llegada);
-		
 		inFile = obtenerGrafo(inFile, numLinea);		
 		
-		
-		Lista<Arco> prueba = grafo.getArcos();
-		
-/*		for(Object o : prueba.toArray()){
-			System.out.println(o.toString());
-		}
-*/		
-		System.out.println(Dijkstra(partida, new Nodo(llegada)));
+		outFile.write(Dijkstra(partida, new Nodo(llegada)));
 				
 		grafo = new DigraphLista();
 		linea = "";
-//		System.out.println();
 		}		
-	
+		
 	}catch(IOException e){
 		e.printStackTrace();
 	}

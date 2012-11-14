@@ -97,10 +97,24 @@ public class Arco implements Comparable<Arco> {
         return this.dst;
     }
 
+    /**
+     * Funcion: getDst
+     * Descripcion: Retorna el heap de Palabrita
+     * Parametros: N/A
+     * Precondicion: true
+     * Postcondicion: retorna this.palabra
+     */
     public BinaryHeap<Palabrita> getPal(){
     	return this.palabras;
     }
     
+    /**
+     * Funcion: setPal
+     * Descripcion: Agrega un heap al arco
+     * Parametros: N/A
+     * Precondicion: truee
+     * Postcondicion: true
+     */
     public void setPal(BinaryHeap<Palabrita> pal){
     	this.palabras = pal;
     }

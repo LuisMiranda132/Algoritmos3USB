@@ -304,6 +304,14 @@ public class MiLista<E> implements Lista<E>{
     	}
     }
     
+    /**
+     * Funcion: binarySearch
+     * Descripcion: Implementacion del algoritmo de busqueda binaria
+     * Parametros: N/A
+     * Precondicion: lista no este vacia
+     * Postcondicion: si el elemento esta, retorna el elemento, si no retorna 
+     * 				  null
+     */
     public Object binarySearch(E element){
     	Object[] array = this.toArray();
     	int min = 0, max = array.length, mid = 0;

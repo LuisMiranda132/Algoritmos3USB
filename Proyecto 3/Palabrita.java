@@ -12,11 +12,14 @@ public class Palabrita implements Comparable<Palabrita>  {
 		protected String palab;
 		protected int numLetras;
 	
-	
+		/*
+		 * Constructor
+		 */
 		public Palabrita(String nPal) {
 			this.palab = nPal;
 			this.numLetras = nPal.length();
 		}
+		
 		
 		public int compareTo(Palabrita p) {
 			if(this.numLetras > p.numLetras){
@@ -31,10 +34,24 @@ public class Palabrita implements Comparable<Palabrita>  {
 			return this.numLetras + " " + this.palab;
 		}
 		
+		/**
+	     * Funcion: getPalab
+	     * Descripcion: Retorna el vertice src de la arista.
+	     * Parametros: N/A
+	     * Precondicion: true
+	     * Postcondicion: retorna this.palab
+	     */
 		public String getPalab() {
 			return this.palab;
 		}
 		
+		/**
+	     * Funcion: getNumLet
+	     * Descripcion: Retorna el num asignado a la palabra.
+	     * Parametros: N/A
+	     * Precondicion: true
+	     * Postcondicion: retorna this.let
+	     */
 		public int getNumLet() {
 			return this.numLetras;
 		}

@@ -1,9 +1,17 @@
-
+/**
+ * 
+ * @author Gabriela Limonta, Luis Miranda
+ * 
+ * Implementacion de heap binario
+ */
 public class BinaryHeap<T extends Comparable<T>>{
 
 	private DynamicArray data;
 	private int size;
 	
+	/*
+	 * constructor
+	 */
 	public BinaryHeap(){
 		this.data = new DynamicArray();
 		this.data.crecer(1);
@@ -19,19 +27,18 @@ public class BinaryHeap<T extends Comparable<T>>{
 			return null;
 		}else{
 			return this.data.get(0);
-//			return this.data.getArray()[0];
 		}	
 	}
 	
-	public int getPosPadre(int pos){
+	private int getPosPadre(int pos){
 		return (pos - 1)/2;
 	}
 	
-	public int getPosHijoDer(int pos){
+	private int getPosHijoDer(int pos){
 		return (pos*2) + 2;
 	}
 	
-	public int getPosHijoIzq(int pos){
+	private int getPosHijoIzq(int pos){
 		return (pos*2) + 1;
 	}
 	
@@ -41,7 +48,6 @@ public class BinaryHeap<T extends Comparable<T>>{
 			this.data.crecer(2*this.size);
 		}
 			this.data.add(p, this.size);
-//			this.data.getArray()[this.size] = o;
 			this.size++;
 			
 			int i = this.size-1;
@@ -49,8 +55,8 @@ public class BinaryHeap<T extends Comparable<T>>{
 				return;
 			}
 			
-			while(((T)this.data.get(i)).compareTo((T) this.data.get(this.getPosPadre(i)))== -1){
-//			while(((T)this.data.getArray()[i]).compareTo((T) this.data.getArray()[this.getPosPadre(i)])==-1){
+			while(((T)this.data.get(i)).compareTo((T) this.data.get(
+													this.getPosPadre(i)))== -1){
 				this.cambiar(i,this.getPosPadre(i));
 				i = this.getPosPadre(i);
 			}		
@@ -62,7 +68,6 @@ public class BinaryHeap<T extends Comparable<T>>{
 			this.data.crecer(2*this.size);
 		}
 			this.data.add(p, this.size);
-//			this.data.getArray()[this.size] = o;
 			this.size++;
 			
 			int i = this.size-1;
@@ -70,8 +75,8 @@ public class BinaryHeap<T extends Comparable<T>>{
 				return;
 			}
 			
-			while(((T)this.data.get(i)).compareTo((T) this.data.get(this.getPosPadre(i)))== -1){
-//			while(((T)this.data.getArray()[i]).compareTo((T) this.data.getArray()[this.getPosPadre(i)])==-1){
+			while(((T)this.data.get(i)).compareTo((T) this.data.get(
+													this.getPosPadre(i)))== -1){
 				this.cambiar(i,this.getPosPadre(i));
 				i = this.getPosPadre(i);
 			}		
@@ -84,7 +89,6 @@ public class BinaryHeap<T extends Comparable<T>>{
 			this.size--;
 			
 			this.data.add(this.data.get(this.size), 0);
-//			this.data.getArray()[0] = this.data.getArray()[this.size];
 			
 			this.reordenar(0);
 		}
@@ -92,7 +96,7 @@ public class BinaryHeap<T extends Comparable<T>>{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void reordenar(int actual){
+	private void reordenar(int actual){
 		int hijoDer = this.getPosHijoDer(actual);
 		int hijoIzq = this.getPosHijoIzq(actual);
 		int min;
@@ -103,8 +107,8 @@ public class BinaryHeap<T extends Comparable<T>>{
 				min = hijoIzq;
 			}
 		}else{
-			if(((T)this.data.get(hijoIzq)).compareTo((T) this.data.get(hijoDer)) == 1){
-//			if(((T)this.data.getArray()[hijoIzq]).compareTo((T) this.data.getArray()[hijoDer]) == 1){
+			if(((T)this.data.get(hijoIzq)).compareTo((T) this.data.get(
+																hijoDer)) == 1){
 				min = hijoDer;
 			}else{
 				min = hijoIzq;
@@ -112,28 +116,21 @@ public class BinaryHeap<T extends Comparable<T>>{
 		}
 		
 		if(((T)this.data.get(actual)).compareTo((T)this.data.get(min)) == 1){
-//		if(((T)this.data.getArray()[actual]).compareTo((T) this.data.getArray()[min]) == 1){
 			this.cambiar(actual, min);
 			this.reordenar(min);
 		}
 	}
 	
-	public void cambiar(int a, int b){
+	private void cambiar(int a, int b){
 		Object dummy = this.data.get(a);
 		this.data.add(this.data.get(b), a);
 		this.data.add(dummy, b);
-		/*
-		Object dummy = this.data.getArray()[a];
-		this.data.getArray()[a] = this.data.getArray()[b];
-		this.data.getArray()[b] = dummy;
-		*/
 	}
 	
 	@Override
 	public String toString(){
 		String dummy = "";
 		for(int i=0;i<this.size;i++){
-//		for(int i=0;i<this.size;i++){
 			dummy = dummy + "\n" + this.data.getArray()[i].toString();
 		}
 		return dummy;
