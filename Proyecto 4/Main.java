@@ -131,11 +131,75 @@ public class Main {
 		System.out.println(grafo.contains(prueba.toString()));
 	}
 	
+	public static Dominio obtenerComposicion(String[] Entrada, String[] Salida) {
+		
+		Lista<String> inic = new MiLista<String>();
+		
+		for(int i=0;i<Entrada.length;i++) {
+			inic.add(Entrada[i]);
+		}
+		
+		Lista<String> func = new MiLista<String>();
+		Dominio inicial = new Dominio(inic,func,Integer.MAX_VALUE);
+		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
+		abiertos.agregar(inicial);
+		
+		while (!abiertos.esVacio()) {
+			Dominio actual = (Dominio) abiertos.getMin();
+			
+			Lista<String> listaDom = actual.getCont();
+			
+			/* aqui falta un condicional que revise si el rango está
+			 * conenido en el dominio que no se hacerlo. 
+			 */			
+			
+			for(int k=0;k<listaDom.getSize();k++) {
+				Lista<Nodo> sucesores = grafo.getSucs(((String)listaDom.toArray()[k]));
+				for (int j=0;j<sucesores.getSize();j++) {
+					if (!((Nodo) sucesores.toArray()[j]).getVisitado()) {
+						Lista<Nodo> predecesores = 
+							grafo.getPreds(sucesores.toArray()[j].toString());
+						int i=0;
+						boolean noIgual = false;
+						while (i<predecesores.getSize() && !noIgual) {
+							if (!listaDom.contains(predecesores.toArray()[i].toString())) {
+								noIgual = true;
+							}
+						}
+						
+						if (!noIgual) {
+							((Nodo)sucesores.toArray()[j]).setVisitado(true);
+							Lista<Nodo> sucs2 = grafo.getSucs((
+									(Nodo)sucesores.toArray()[j]).toString());
+							int nuevCost = actual.getCosto() + 
+									((Nodo) sucesores.toArray()[j]).getCosto();
+							Dominio nuevo = new Dominio(listaDom,
+									actual.getFunciones(),nuevCost);
+							nuevo.agregarFuncion(((Nodo) 
+									sucesores.toArray()[j]).toString());
+							for(k=0;k<sucs2.getSize();k++) {
+								nuevo.agregarCont(((Nodo) 
+										sucs2.toArray()[k]).toString());
+							}
+							abiertos.agregar(nuevo);
+							return (Dominio) abiertos.getMin();
+						}
+						return (Dominio) abiertos.getMin();
+					}
+					return (Dominio) abiertos.getMin();
+				}
+			}
+			return (Dominio) abiertos.getMin();
+		}
+		return (Dominio) abiertos.getMin();
+		
+	}
+	
 	public static void main(String[] args) {
 
-		prueba();
+//		prueba();
 		
-/*	String in = "file.in";
+	String in = "file.in";
 	String out = "file.out";
 	
 	if(args.length == 2){
@@ -182,7 +246,7 @@ public class Main {
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
-*/
+
 	}
 
 }
