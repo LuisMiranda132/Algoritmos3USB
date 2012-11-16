@@ -149,11 +149,21 @@ public class Main {
 			
 			Lista<String> listaDom = actual.getCont();
 			
-			/* aqui falta un condicional que revise si el rango está
-			 * conenido en el dominio que no se hacerlo. 
-			 */			
+			int k=0;
+			boolean sali = false;
 			
-			for(int k=0;k<listaDom.getSize();k++) {
+			while(k<Salida.length && !sali) {
+				if (!listaDom.contains(Salida[k])) {
+					sali = true;
+				}
+				k++;
+			}
+			
+			if (!sali) {
+				return actual;
+			}
+			
+			for(k=0;k<listaDom.getSize();k++) {
 				Lista<Nodo> sucesores = grafo.getSucs(((String)listaDom.toArray()[k]));
 				for (int j=0;j<sucesores.getSize();j++) {
 					if (!((Nodo) sucesores.toArray()[j]).getVisitado()) {
@@ -182,17 +192,32 @@ public class Main {
 										sucs2.toArray()[k]).toString());
 							}
 							abiertos.agregar(nuevo);
-							return (Dominio) abiertos.getMin();
+							
 						}
-						return (Dominio) abiertos.getMin();
 					}
-					return (Dominio) abiertos.getMin();
 				}
 			}
-			return (Dominio) abiertos.getMin();
 		}
-		return (Dominio) abiertos.getMin();
+		return null;
 		
+	}
+	
+	public static void buscarComposiciones(int numComp, BufferedReader inFile) {
+		try {
+			for(int i=0;i<numComp;i++) {
+				String[] primer = inFile.readLine().split("\\), \\(");
+				String[] segundo = primer[0].split("\\(");
+				String[] tercer = primer[1].split("\\)");
+				String[] entrada = segundo[1].split(", ");
+				String[] salida = tercer[0].split(", ");
+				
+				Dominio dom = obtenerComposicion(entrada,salida);
+				
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -235,7 +260,16 @@ public class Main {
 		
 		inFile = obtenerGrafo(inFile, numLinea);
 		System.out.println(grafo.toString());
-	
+		
+		int numComp = Integer.parseInt(inFile.readLine());
+		System.out.println(numComp);
+		
+		if(numComp == 0){
+			System.exit(1);
+		}
+		
+		buscarComposiciones(numComp,inFile);
+		
 	}catch(IOException e){
 		e.printStackTrace();
 	}
