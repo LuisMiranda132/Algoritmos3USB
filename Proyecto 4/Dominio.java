@@ -1,12 +1,73 @@
 
 public class Dominio implements Comparable<Dominio> {
-	private Lista<String> contenido;
-	private Lista<String> funcionesAbiertas;
-	private Lista<String> funcionesRecorridas;
+
+//	private Lista<String> contenido;
+//	private Lista<String> funciones;
+	private DynamicArray contenido;
+	private DynamicArray funcionesAbiertas;
+	private DynamicArray funcionesRecorridas;
 	private int costo;
 	
-	public Dominio(Lista<String> cont, Lista<String> funcA,
-			Lista<String> funcR, int c) {
+	public Dominio(){
+		this.contenido = new DynamicArray();
+		this.funcionesAbiertas = new DynamicArray();
+		this.funcionesRecorridas = new DynamicArray();
+		
+		this.costo = 0;
+		this.contenido.crecer(2);
+		this.funcionesAbiertas.crecer(2);
+		this.funcionesRecorridas.crecer(2);
+
+	}
+	
+	public Dominio(DynamicArray cont, DynamicArray funcA, DynamicArray funcR, int c){
+		this.contenido = new DynamicArray();
+		this.funcionesAbiertas = new DynamicArray();
+		this.funcionesRecorridas = new DynamicArray();
+		
+		this.contenido.crecer(2);
+		this.funcionesAbiertas.crecer(2);
+		this.funcionesRecorridas.crecer(2);
+
+		for(int i = 0;i<cont.getPosicion();i++){
+			this.contenido.addOrd(cont.get(i));
+		}
+		for(int i = 0;i<funcA.getPosicion();i++){
+			this.funcionesAbiertas.addOrd(funcA.get(i));
+		}
+		for(int i = 0;i<funcR.getPosicion();i++){
+			this.funcionesAbiertas.addOrd(funcA.get(i));
+		}
+		
+		this.costo = c;
+
+	}
+	
+	public Dominio(Object[] cont, Object[] funcA, Object[] funcR, int c){
+		this.contenido = new DynamicArray();
+		this.funcionesAbiertas = new DynamicArray();
+		this.funcionesRecorridas = new DynamicArray();
+		
+		this.contenido.crecer(2);
+		this.funcionesAbiertas.crecer(2);
+		this.funcionesRecorridas.crecer(2);
+		
+		for(Object o: cont){
+			if(o!=null)this.contenido.addOrd(o);
+		}
+		for(Object o: funcA){
+			if(o!=null)this.funcionesAbiertas.addOrd(o);
+		}
+		for(Object o: funcR){
+			if(o!=null)this.funcionesRecorridas.addOrd(o);
+		}
+		
+		this.costo = c;
+
+	}
+	
+/*	
+	public Dominio(Lista<String> cont, Lista<String> func, int c) {
 		this.contenido = cont;
 		this.funcionesAbiertas = funcA;
 		this.funcionesRecorridas = funcR;
@@ -21,14 +82,18 @@ public class Dominio implements Comparable<Dominio> {
 		this.funcionesRecorridas = (Lista<String>) funcR.clone();
 		this.costo = c;
 	}
+*/
 	
+/*<<<<<<< Updated upstream
 	public Dominio(String cont, String funcA, String funcR, int c) {
 		this.contenido.add(cont);
 		this.funcionesAbiertas.add(funcA);
 		this.funcionesRecorridas.add(funcR);
 		this.costo = c;
 	}
-	
+=======
+*/
+		
 	public int compareTo(Dominio d) {
 		if(this.costo > d.costo){
 			return 1;
@@ -39,27 +104,29 @@ public class Dominio implements Comparable<Dominio> {
 	}
 	
 	public void agregarCont(String cont) {
-		this.contenido.add(cont);
+		this.contenido.addOrd(cont);
 	}
 	
 	public void agregarFuncionAb(String funcA) {
-		this.funcionesAbiertas.add(funcA);
+		this.funcionesAbiertas.addOrd(funcA);
 	}
 	
 	public void agregarFuncionRec(String funcR) {
-		this.funcionesRecorridas.add(funcR);
+		this.funcionesRecorridas.addOrd(funcR);
+
 	}
 	
-	public Lista<String> getCont() {
-		return this.contenido;
+	public DynamicArray getCont() {
+		return  this.contenido;
 	}
 	
-	public Lista<String> getFuncionesAb() {
+	public DynamicArray getFuncionesAb() {
 		return this.funcionesAbiertas;
 	}
 	
-	public Lista<String> getFuncionesRec() {
+	public DynamicArray getFuncionesRec() {
 		return this.funcionesRecorridas;
+
 	}
 	
 	public int getCosto() {

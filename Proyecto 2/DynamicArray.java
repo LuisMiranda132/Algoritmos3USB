@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+
 /**
  * 
  * @author Gabriela Limonta, Luis Miranda
@@ -9,6 +11,7 @@
 public class DynamicArray{
 	
 	private Object[] array;
+	private int posicion = 0;
 	
 	/*
 	 * Constructor
@@ -33,6 +36,49 @@ public class DynamicArray{
 		this.getArray()[pos] = x;
 	}
 
+	public void addOrdMov(Object o,int pos){
+		
+		if(this.posicion+1 == this.getArray().length){
+			this.crecer(2*this.getArray().length);
+		}
+		
+		for(int j = this.posicion; j >= pos ;j--){
+			this.add(this.get(j), j+1);
+		}
+		
+		this.posicion++;
+		this.add(o, pos);
+	}
+	
+	public int addOrd(Object x){
+		String cajita = x.toString();
+		int i = 0;
+		
+		if(this.get(0)==null){
+			this.add(x, 0);
+			this.posicion++;
+		}else{
+		
+			while(this.get(i)!=null&&i<this.getArray().length&&cajita.compareTo(this.get(i).toString())>0){
+				i++;
+			}
+			
+			if(this.posicion+1 == this.getArray().length){
+				this.crecer(2*this.getArray().length);
+			}
+			
+			for(int j = this.posicion; j >= i ;j--){
+				this.add(this.get(j), j+1);
+			}
+			
+			this.add(x, i);
+			this.posicion++;
+		
+		}
+		return i;
+		
+	}
+	
 	/*
 	 * Aumenta el arreglo
 	 */
@@ -72,6 +118,10 @@ public class DynamicArray{
 		this.array = dummy;
 	}
 	
+	public Object get(int pos){
+		return this.getArray()[pos];
+	}
+	
 	/*
 	 * Retorna el arreglo
 	 */
@@ -84,10 +134,11 @@ public class DynamicArray{
 	 */
 	private void resizeArray(Object oldAr, int newSi){
 
-		int oldSi = java.lang.reflect.Array.getLength(oldAr);
+		int oldSi = Array.getLength(oldAr);
 		
 		Class elementType = oldAr.getClass().getComponentType();
-		Object newArray = java.lang.reflect.Array.newInstance(elementType, newSi);		
+		Object newArray = Array.newInstance(elementType, newSi);		
+
 			
 		int preserveLength = Math.min(oldSi, newSi);
 		
@@ -98,5 +149,65 @@ public class DynamicArray{
 		this.array = (Object[]) newArray;
 	}
 
+	public Object clone(){
+		DynamicArray dummy = new DynamicArray();
+		for(Object o: this.array){
+			dummy.addFinal(o);
+		}
+		return dummy;
+	}
 	
+	public int binarySearchPos(Object element){
+    	Object[] array = this.array;
+    	int min = 0, max = this.posicion, mid = 0;
+    	boolean encontre = false;
+    	
+    	while(!encontre && min <= max){
+    		mid = (min + max)/2;
+    		if(mid >= this.posicion)break;
+
+    		if(array[mid].toString().compareTo(element.toString()) == 0){
+    			encontre = true;
+    		}else if(array[mid].toString().compareTo(element.toString()) > 0){
+    			max = mid -1;
+    		}else{
+    			min = mid + 1;
+    		}
+    		
+    	}
+    	
+    	if(encontre){
+    		return mid;
+    	}
+    	return -1;
+    }
+	
+	public Object binarySearch(Object element){
+    	Object[] array = this.array;
+    	int min = 0, max = this.posicion, mid = 0;
+    	boolean encontre = false;
+    	
+    	while(!encontre && min <= max){
+    		mid = (min + max)/2;
+    		if(mid >= this.posicion)break;
+
+    		if(array[mid].toString().compareTo(element.toString()) == 0){
+    			encontre = true;
+    		}else if(array[mid].toString().compareTo(element.toString()) > 0){
+    			max = mid -1;
+    		}else{
+    			min = mid + 1;
+    		}
+    		
+    	}
+    	
+    	if(encontre){
+    		return array[mid];
+    	}
+    	return null;
+    }
+	
+	public int getPosicion(){
+		return this.posicion;
+	}
 }

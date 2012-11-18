@@ -57,6 +57,45 @@ public class MiLista<E> implements Lista<E>{
     	this.tam ++;
     	return loLogre;
     }
+    
+    public boolean addOrdenado(E element) {
+    	boolean loLogre = false;
+    	Caja<E> nueva = new Caja<E>(element,null);
+    	Caja<E> ant = null;
+    	Caja<E> aux = this.primero;
+    	
+    	if (tam == 0) {
+    		this.primero = nueva;
+    		this.ultimo = nueva;
+    		loLogre = true;
+    	}
+    	else if (tam != 0) {
+    		if (element instanceof Nodo) {
+    			while (aux != null && 
+    				((Nodo) aux.obtenerCont()).compareTo((Nodo)element) > 0 ){
+    				ant = aux;
+    				aux = aux.obtenerSiguiente();
+    			}
+    		}
+    		else if (element instanceof Arco) {
+    			while (aux != null && 
+        				((Arco) aux.obtenerCont()).compareTo((Arco)element) > 0 ){
+    					ant = aux;
+        				aux = aux.obtenerSiguiente();
+        			}
+    		}
+    		if(ant != null)ant.cambiarSiguiente(nueva);
+    		if(aux!=null&&aux.equals(primero)){
+    			primero = nueva;
+    		}
+    		nueva.cambiarSiguiente(aux);
+    		loLogre = true;
+    	}
+    	
+    	this.tam++;
+    	return loLogre;
+    	
+    }
 
     /**
      * Funcion: clear
@@ -229,6 +268,10 @@ public class MiLista<E> implements Lista<E>{
     	Object[] arreglin = new Object[this.tam];
     	E elemAct;
     	Caja<E> aux = this.primero;
+    	
+    	if (aux == null)
+    		return arreglin;
+    	
     	elemAct = aux.obtenerCont();
     	int i = 0;
     	
@@ -258,6 +301,70 @@ public class MiLista<E> implements Lista<E>{
     	int i = 0;
     	for(i=0;i<this.toArray().length;i++) {
     		System.out.println(this.toArray()[i].toString());
+    	}
+    }
+    
+    public Object binarySearch(E element){
+    	Object[] array = this.toArray();
+    	int min = 0, max = array.length, mid = 0;
+    	boolean encontre = false;
+    	
+    	while(!encontre && min <= max){
+    		mid = (min + max)/2;
+    		if(mid >= array.length)break;
+    		if (element instanceof Nodo) {
+    			if(((Nodo)array[mid]).compareTo((Nodo)element) == 0){
+    				encontre = true;
+    			}else if(((Nodo)array[mid]).compareTo((Nodo)element) < 0){
+    				max = mid -1;
+    			}else{
+    				min = mid + 1;
+    			}
+    		}
+    		else if (element instanceof Arco) {
+    			if(((Arco)array[mid]).compareTo((Arco)element) == 0){
+    				encontre = true;
+    			}else if(((Arco)array[mid]).compareTo((Arco)element) < 0){
+    				max = mid -1;
+    			}else{
+    				min = mid + 1;
+    			}
+    		}
+    	}
+    	
+    	if(encontre){
+    		return array[mid];
+    	}
+    	return null;
+    }
+
+    public Object linearSearch(E element){
+    	if (this.tam == 0) {
+    		return null;
+    	}
+    	else {
+    		boolean encontre = false;
+    		Caja<E> aux = this.obtenerPrimero();
+    		E elemAux;
+    		if (aux == null) {
+    			return false;
+    		}
+    		else {
+    			elemAux = aux.obtenerCont();
+    		}
+        
+    		while ((aux != null) && (!encontre)) {
+    			encontre = (elemAux.equals(element));
+
+    			if(encontre)return elemAux;
+
+    			aux = aux.obtenerSiguiente();
+    			if (aux != null) {
+    				elemAux = aux.obtenerCont();
+    			}
+    		}
+    	   	
+    		return null;
     	}
     }
 }

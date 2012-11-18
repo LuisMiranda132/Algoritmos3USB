@@ -264,6 +264,31 @@ public class MiLista<E> implements Lista<E>{
      * @return an array of the elements from this {@code MiLista}.
      */
 
+    public DynamicArray toDynamicArray(){
+    	DynamicArray DynArreglin = new DynamicArray();
+    	DynArreglin.crecer(2);
+    	
+    	E elemAct;
+    	Caja<E> aux = this.primero;
+    	
+    	if (aux == null)
+    		return DynArreglin;
+    	
+    	elemAct = aux.obtenerCont();
+    	
+    	while (aux != null) {
+    		DynArreglin.addOrd(elemAct);
+    		aux = aux.obtenerSiguiente();
+    		try{
+    			elemAct = aux.obtenerCont();
+    		}catch(java.lang.NullPointerException e){
+    			return DynArreglin;
+    		}
+    	}
+    	
+    	return DynArreglin;
+    }
+    
     public Object[] toArray() {
     	Object[] arreglin = new Object[this.tam];
     	E elemAct;

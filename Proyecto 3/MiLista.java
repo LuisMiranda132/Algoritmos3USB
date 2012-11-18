@@ -304,14 +304,6 @@ public class MiLista<E> implements Lista<E>{
     	}
     }
     
-    /**
-     * Funcion: binarySearch
-     * Descripcion: Implementacion del algoritmo de busqueda binaria
-     * Parametros: N/A
-     * Precondicion: lista no este vacia
-     * Postcondicion: si el elemento esta, retorna el elemento, si no retorna 
-     * 				  null
-     */
     public Object binarySearch(E element){
     	Object[] array = this.toArray();
     	int min = 0, max = array.length, mid = 0;
@@ -344,6 +336,36 @@ public class MiLista<E> implements Lista<E>{
     		return array[mid];
     	}
     	return null;
+    }
+
+    public Object linearSearch(E element){
+    	if (this.tam == 0) {
+    		return null;
+    	}
+    	else {
+    		boolean encontre = false;
+    		Caja<E> aux = this.obtenerPrimero();
+    		E elemAux;
+    		if (aux == null) {
+    			return false;
+    		}
+    		else {
+    			elemAux = aux.obtenerCont();
+    		}
+        
+    		while ((aux != null) && (!encontre)) {
+    			encontre = (elemAux.equals(element));
+
+    			if(encontre)return elemAux;
+
+    			aux = aux.obtenerSiguiente();
+    			if (aux != null) {
+    				elemAux = aux.obtenerCont();
+    			}
+    		}
+    	   	
+    		return null;
+    	}
     }
 }
 
