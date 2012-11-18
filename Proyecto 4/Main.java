@@ -244,7 +244,7 @@ public class Main {
 				System.out.println(listafA.get(k));
 				System.out.println("\n------");
 //				if (!listafR.contains(listafA.toArray()[k])) {
-				if (listafR.binarySearchPos(k) == -1){
+				if (listafR.binarySearchPos(listafA.get(k)) == -1){
 					System.out.println("\n------");
 					System.out.println("wiii no la tengo en mis funciones recorridas!");
 					System.out.println("\n------");
@@ -288,14 +288,13 @@ public class Main {
 
 						
 						
-						int nuevCost = actual.getCosto() + ((Nodo) 
-								listafA.get(k)).getCosto();
+						int nuevCost = actual.getCosto() + ((Nodo)grafo.get(
+								(String)listafA.get(k))).getCosto();
 						
 						Dominio nuevo = new Dominio(listaDom,
 								listafA, listafR, nuevCost);
 						
-						nuevo.agregarFuncionRec(((Nodo) 
-								listafA.get(k)).toString());
+						nuevo.agregarFuncionRec((String) listafA.get(k));
 						
 						for (int l=0;l<sucs2.getPosicion();l++) {
 							nuevo.agregarCont(((Nodo) 
