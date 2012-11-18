@@ -160,6 +160,7 @@ public class Main {
 		Dominio inicial = new Dominio(inic,funcA,funcR,0);
 
 */		
+		
 		String[] funcA = new String[0];
 		String[] funcR = new String[0];
 		System.out.println("\n------");
@@ -168,6 +169,16 @@ public class Main {
 		}
 		System.out.println("\n------");
 		Dominio inicial = new Dominio(Entrada,funcA,funcR,0);
+		
+		for(int i=0;i<Entrada.length;i++) {
+			Lista<Nodo> sucesoritos = grafo.getSucs(Entrada[i]);
+			Object[] succ = sucesoritos.toArray();
+			for(Object f: succ) {
+				System.out.println(f.toString());
+				inicial.agregarFuncionAb(f.toString());
+			}
+		}
+		
 		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
 		abiertos.agregar(inicial);
 		
@@ -211,6 +222,7 @@ public class Main {
 			DynamicArray listafA = actual.getFuncionesAb();
 			System.out.println("\n------");
 			System.out.println("lista de funciones abiertas:");
+
 			for(Object s:listafA.getArray()){
 				if(s!=null)System.out.println(s.toString());
 			}
@@ -274,6 +286,8 @@ public class Main {
 						DynamicArray sucs2 =((MiLista<Nodo>) grafo.getSucs((String) 
 								listafA.get(k))).toDynamicArray();
 
+						
+						
 						int nuevCost = actual.getCosto() + ((Nodo) 
 								listafA.get(k)).getCosto();
 						
