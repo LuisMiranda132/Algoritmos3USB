@@ -174,7 +174,7 @@ public class Main {
 				System.out.println("\n------");
 				if (!listaDom.contains(Salida[k])) {
 					sali = true;
-					System.out.println("No tengo a salida[k]");
+					System.out.println("No tengo a salida["+k+"]");
 					System.out.println("\n------");
 				}
 				k++;
@@ -198,6 +198,8 @@ public class Main {
 				System.out.println("\n------");
 				for (int j=0;j<sucesores.getSize();j++) {
 					System.out.println("y a otro fooor :D");
+					System.out.println("\n---Sucesores["+j+"]---");
+					System.out.println(((Nodo) sucesores.toArray()[j]).toString());
 					System.out.println("\n------");
 					if (!((Nodo) sucesores.toArray()[j]).getVisitado()) {
 						System.out.println("entre al ifff de que no este visitado");
@@ -211,6 +213,8 @@ public class Main {
 						boolean noIgual = false;
 						while (i<predecesores.getSize() && !noIgual) {
 							System.out.println("Entre al otro whileee");
+							System.out.println("\n---predecesores["+i+"]---");
+							System.out.println(predecesores.toArray()[i].toString());
 							System.out.println("\n------");
 							if (!listaDom.contains(predecesores.toArray()[i].toString())) {
 								System.out.println("entre a ese if :D");
