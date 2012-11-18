@@ -11,9 +11,7 @@ public class Main {
 			for(int i=0;i<numLinea;i++) {
 
 				String[] primer = inFile.readLine().split(": \\(");
-				System.out.println(primer[0]);
 				Nodo nuevFunc = new Nodo(primer[0]);
-				System.out.println("\n"+nuevFunc+"\n");
 				nuevFunc.setFuncion(true);
 				grafo.add(nuevFunc);
 				
@@ -131,7 +129,10 @@ public class Main {
 		System.out.println(grafo.contains(prueba.toString()));
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static Dominio obtenerComposicion(String[] Entrada, String[] Salida) {
+		
+		int costoMio = 0;
 		
 		for(int g=0;g<grafo.getNodos().toArray().length;g++) {
 			((Nodo) grafo.getNodos().toArray()[g]).setVisitado(false);
@@ -144,57 +145,77 @@ public class Main {
 		}
 		
 		Lista<String> func = new MiLista<String>();
+		System.out.println("\n------");
 		inic.imprimirLista();
+		System.out.println("\n------");
 		func.imprimirLista();
+		System.out.println("\n------");
 		Dominio inicial = new Dominio(inic,func,0);
 		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
 		abiertos.agregar(inicial);
 		
 		while (!abiertos.esVacio()) {
 			System.out.println(abiertos.toString());
+			System.out.println("\n------");
 			System.out.println("abiertos no es vaciooo");
+			System.out.println("\n------");
 			Dominio actual = (Dominio) abiertos.getMin();
 			abiertos.removeMin();
 			
-			Lista<String> listaDom = actual.getCont();
+			MiLista<String> listaDom = (MiLista<String>) actual.getCont();
 			listaDom.imprimirLista();
+			System.out.println("\n------");
 			
 			int k=0;
 			boolean sali = false;
 			
 			while(k<Salida.length && !sali) {
 				System.out.println(Salida[k]);
+				System.out.println("\n------");
 				if (!listaDom.contains(Salida[k])) {
 					sali = true;
 					System.out.println("No tengo a salida[k]");
+					System.out.println("\n------");
 				}
 				k++;
 			}
 			
 			if (!sali) {
 				System.out.println("no saliii");
+				System.out.println("\n------");
 				return actual;
 			}
 			
 			for(k=0;k<listaDom.getSize();k++) {
-				System.out.println("entre a un for lindo del dijkstra");
+				System.out.println("entre a un for lindo del dijkstra: " + k);
+				System.out.println("\n---listaDom---");
 				listaDom.imprimirLista();
+				System.out.println("\n---listaDom[k]---");
 				System.out.println(((String)listaDom.toArray()[k]));
+				System.out.println("\n---Sucesores---");
 				Lista<Nodo> sucesores = grafo.getSucs(((String)listaDom.toArray()[k]));
 				sucesores.imprimirLista();
+				System.out.println("\n------");
 				for (int j=0;j<sucesores.getSize();j++) {
 					System.out.println("y a otro fooor :D");
+					System.out.println("\n------");
 					if (!((Nodo) sucesores.toArray()[j]).getVisitado()) {
 						System.out.println("entre al ifff de que no este visitado");
+						System.out.println("\n------");
 						Lista<Nodo> predecesores = 
 							grafo.getPreds(sucesores.toArray()[j].toString());
+						System.out.println("\n---Predecesores---");
+						predecesores.imprimirLista();
+						System.out.println("\n------");
 						int i=0;
 						boolean noIgual = false;
 						while (i<predecesores.getSize() && !noIgual) {
 							System.out.println("Entre al otro whileee");
+							System.out.println("\n------");
 							if (!listaDom.contains(predecesores.toArray()[i].toString())) {
 								System.out.println("entre a ese if :D");
 								System.out.println("no tengo a lo que sea");
+								System.out.println("\n------");
 								noIgual = true;
 							}
 							i++;
@@ -202,22 +223,50 @@ public class Main {
 						
 						if (!noIgual) {
 							System.out.println("ENtre a iguaaaal");
+							/*
+							 * Creo que aqui hay un problema con marcarlos 
+							 * visitado antes...
+							 */
+							System.out.println("\n---Sucesores["+j+"]---");
+							System.out.println(((Nodo)sucesores.toArray()[j]).toString());
+							System.out.println("\n------");
 							((Nodo)sucesores.toArray()[j]).setVisitado(true);
+
 							Lista<Nodo> sucs2 = grafo.getSucs((
 									(Nodo)sucesores.toArray()[j]).toString());
 							System.out.println("Costo actual: "+actual.getCosto());
 							System.out.println("nuevo costo func: "+
 									((Nodo) sucesores.toArray()[j]).getCosto());
+
 							int nuevCost = actual.getCosto() + 
 									((Nodo) sucesores.toArray()[j]).getCosto();
+
 							System.out.println("El nuevo costo es: "+nuevCost);
-							Dominio nuevo = new Dominio(listaDom,
-									actual.getFunciones(),nuevCost);
+							System.out.println("\n------");
+							
+/*							System.out.println("\n---Original---");
+							listaDom.imprimirLista();
+							System.out.println("\n---Clone---");
+							((MiLista<String>)listaDom.clone()).imprimirLista();
+							System.out.println("\n------");
+*/							
+							
+							/*
+							 * Cuando aqui le paso las listas casteadas como 
+							 * MiLista para que las clone
+							 */
+							
+							Dominio nuevo = new Dominio((MiLista)listaDom,
+									(MiLista)actual.getFunciones(),nuevCost);
 							nuevo.agregarFuncion(((Nodo) 
 									sucesores.toArray()[j]).toString());
-							for(k=0;k<sucs2.getSize();k++) {
+
+							/*
+							 * Cambie "k" por "l"
+							 */
+							for(int l=0;l<sucs2.getSize();l++) {
 								nuevo.agregarCont(((Nodo) 
-										sucs2.toArray()[k]).toString());
+										sucs2.toArray()[l]).toString());
 							}
 							abiertos.agregar(nuevo);
 							
@@ -241,8 +290,8 @@ public class Main {
 				
 				Dominio dom = obtenerComposicion(entrada,salida);
 				dom.getFunciones().imprimirLista();
-				System.out.println("El costo de la vaina es: ");
-				System.out.println(dom.toString());
+				System.out.println("\n\nEl costo de la vaina es: ");
+				System.out.println(dom.toString()+"\n");
 				
 			}
 			catch (IOException e) {
@@ -283,17 +332,17 @@ public class Main {
 		grafo = new DigraphLista();
 		
 		int numLinea = Integer.parseInt(inFile.readLine());
-		System.out.println(numLinea);
+//		System.out.println(numLinea);
 		
 		if(numLinea == 0){
 			System.exit(1);
 		}
 		
 		inFile = obtenerGrafo(inFile, numLinea);
-		System.out.println(grafo.toString());
+//		System.out.println(grafo.toString());
 		
 		int numComp = Integer.parseInt(inFile.readLine());
-		System.out.println(numComp);
+//		System.out.println(numComp);
 		
 		if(numComp == 0){
 			System.exit(1);

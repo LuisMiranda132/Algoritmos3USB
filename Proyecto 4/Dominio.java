@@ -10,6 +10,13 @@ public class Dominio implements Comparable<Dominio> {
 		this.costo = c;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Dominio(MiLista<String> cont, MiLista<String> func, int c) {
+		this.contenido = (Lista<String>) cont.clone();
+		this.funciones = (Lista<String>) func.clone();
+		this.costo = c;
+	}
+	
 	public Dominio(String cont, String func, int c) {
 		this.contenido.add(cont);
 		this.funciones.add(func);

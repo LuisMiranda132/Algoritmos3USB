@@ -338,6 +338,37 @@ public class MiLista<E> implements Lista<E>{
     	return null;
     }
 
+    @Override
+    public Object clone(){
+    	MiLista<E> dummy = new MiLista<E>();
+    	
+    	if (this.tam == 0) {
+    		return dummy;
+    	}
+    	else {
+    		Caja<E> aux = this.obtenerPrimero();
+    		E elemAux;
+    		if (aux == null) {
+    			return dummy;
+    		}
+    		else {
+    			elemAux = aux.obtenerCont();
+    		}
+        
+    		while ((aux != null)) {    		
+    			
+    			dummy.add(elemAux);
+    			
+    			aux = aux.obtenerSiguiente();
+    			if (aux != null) {
+    				elemAux = aux.obtenerCont();
+    			}
+    		}
+    	}
+    	
+    	return dummy;
+    }
+    
     public Object linearSearch(E element){
     	if (this.tam == 0) {
     		return null;
