@@ -133,6 +133,10 @@ public class Main {
 	
 	public static Dominio obtenerComposicion(String[] Entrada, String[] Salida) {
 		
+		for(int g=0;g<grafo.getNodos().toArray().length;g++) {
+			((Nodo) grafo.getNodos().toArray()[g]).setVisitado(false);
+		}
+		
 		Lista<String> inic = new MiLista<String>();
 		
 		for(int i=0;i<Entrada.length;i++) {
@@ -140,49 +144,73 @@ public class Main {
 		}
 		
 		Lista<String> func = new MiLista<String>();
-		Dominio inicial = new Dominio(inic,func,Integer.MAX_VALUE);
+		inic.imprimirLista();
+		func.imprimirLista();
+		Dominio inicial = new Dominio(inic,func,0);
 		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
 		abiertos.agregar(inicial);
 		
 		while (!abiertos.esVacio()) {
+			System.out.println(abiertos.toString());
+			System.out.println("abiertos no es vaciooo");
 			Dominio actual = (Dominio) abiertos.getMin();
+			abiertos.removeMin();
 			
 			Lista<String> listaDom = actual.getCont();
+			listaDom.imprimirLista();
 			
 			int k=0;
 			boolean sali = false;
 			
 			while(k<Salida.length && !sali) {
+				System.out.println(Salida[k]);
 				if (!listaDom.contains(Salida[k])) {
 					sali = true;
+					System.out.println("No tengo a salida[k]");
 				}
 				k++;
 			}
 			
 			if (!sali) {
+				System.out.println("no saliii");
 				return actual;
 			}
 			
 			for(k=0;k<listaDom.getSize();k++) {
+				System.out.println("entre a un for lindo del dijkstra");
+				listaDom.imprimirLista();
+				System.out.println(((String)listaDom.toArray()[k]));
 				Lista<Nodo> sucesores = grafo.getSucs(((String)listaDom.toArray()[k]));
+				sucesores.imprimirLista();
 				for (int j=0;j<sucesores.getSize();j++) {
+					System.out.println("y a otro fooor :D");
 					if (!((Nodo) sucesores.toArray()[j]).getVisitado()) {
+						System.out.println("entre al ifff de que no este visitado");
 						Lista<Nodo> predecesores = 
 							grafo.getPreds(sucesores.toArray()[j].toString());
 						int i=0;
 						boolean noIgual = false;
 						while (i<predecesores.getSize() && !noIgual) {
+							System.out.println("Entre al otro whileee");
 							if (!listaDom.contains(predecesores.toArray()[i].toString())) {
+								System.out.println("entre a ese if :D");
+								System.out.println("no tengo a lo que sea");
 								noIgual = true;
 							}
+							i++;
 						}
 						
 						if (!noIgual) {
+							System.out.println("ENtre a iguaaaal");
 							((Nodo)sucesores.toArray()[j]).setVisitado(true);
 							Lista<Nodo> sucs2 = grafo.getSucs((
 									(Nodo)sucesores.toArray()[j]).toString());
+							System.out.println("Costo actual: "+actual.getCosto());
+							System.out.println("nuevo costo func: "+
+									((Nodo) sucesores.toArray()[j]).getCosto());
 							int nuevCost = actual.getCosto() + 
 									((Nodo) sucesores.toArray()[j]).getCosto();
+							System.out.println("El nuevo costo es: "+nuevCost);
 							Dominio nuevo = new Dominio(listaDom,
 									actual.getFunciones(),nuevCost);
 							nuevo.agregarFuncion(((Nodo) 
@@ -198,13 +226,13 @@ public class Main {
 				}
 			}
 		}
-		return null;
+		return new Dominio(new MiLista<String>(),new MiLista<String>(),0);
 		
 	}
 	
 	public static void buscarComposiciones(int numComp, BufferedReader inFile) {
-		try {
-			for(int i=0;i<numComp;i++) {
+		for(int i=0;i<numComp;i++) {
+			try {
 				String[] primer = inFile.readLine().split("\\), \\(");
 				String[] segundo = primer[0].split("\\(");
 				String[] tercer = primer[1].split("\\)");
@@ -212,11 +240,14 @@ public class Main {
 				String[] salida = tercer[0].split(", ");
 				
 				Dominio dom = obtenerComposicion(entrada,salida);
+				dom.getFunciones().imprimirLista();
+				System.out.println("El costo de la vaina es: ");
+				System.out.println(dom.toString());
 				
 			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();
+			catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

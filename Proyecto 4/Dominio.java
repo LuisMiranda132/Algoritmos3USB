@@ -1,13 +1,13 @@
 
 public class Dominio implements Comparable<Dominio> {
-	private Lista<String> contenido = new MiLista<String>();
-	private Lista<String> funciones = new MiLista<String>();
-	private int costo  = Integer.MAX_VALUE;
+	private Lista<String> contenido;
+	private Lista<String> funciones;
+	private int costo;
 	
 	public Dominio(Lista<String> cont, Lista<String> func, int c) {
 		this.contenido = cont;
 		this.funciones = func;
-		this.costo = Integer.MAX_VALUE;
+		this.costo = c;
 	}
 	
 	public Dominio(String cont, String func, int c) {
@@ -47,6 +47,10 @@ public class Dominio implements Comparable<Dominio> {
 	
 	public void setCosto(int c) {
 		this.costo = c;
+	}
+	
+	public String toString() {
+		return this.costo+" ";
 	}
 	
 }
