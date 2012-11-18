@@ -1,25 +1,31 @@
 
 public class Dominio implements Comparable<Dominio> {
 	private Lista<String> contenido;
-	private Lista<String> funciones;
+	private Lista<String> funcionesAbiertas;
+	private Lista<String> funcionesRecorridas;
 	private int costo;
 	
-	public Dominio(Lista<String> cont, Lista<String> func, int c) {
+	public Dominio(Lista<String> cont, Lista<String> funcA,
+			Lista<String> funcR, int c) {
 		this.contenido = cont;
-		this.funciones = func;
+		this.funcionesAbiertas = funcA;
+		this.funcionesRecorridas = funcR;
 		this.costo = c;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Dominio(MiLista<String> cont, MiLista<String> func, int c) {
+	public Dominio(MiLista<String> cont, MiLista<String> funcA,
+			MiLista<String> funcR, int c) {
 		this.contenido = (Lista<String>) cont.clone();
-		this.funciones = (Lista<String>) func.clone();
+		this.funcionesAbiertas = (Lista<String>) funcA.clone();
+		this.funcionesRecorridas = (Lista<String>) funcR.clone();
 		this.costo = c;
 	}
 	
-	public Dominio(String cont, String func, int c) {
+	public Dominio(String cont, String funcA, String funcR, int c) {
 		this.contenido.add(cont);
-		this.funciones.add(func);
+		this.funcionesAbiertas.add(funcA);
+		this.funcionesRecorridas.add(funcR);
 		this.costo = c;
 	}
 	
@@ -36,16 +42,24 @@ public class Dominio implements Comparable<Dominio> {
 		this.contenido.add(cont);
 	}
 	
-	public void agregarFuncion(String func) {
-		this.funciones.add(func);
+	public void agregarFuncionAb(String funcA) {
+		this.funcionesAbiertas.add(funcA);
+	}
+	
+	public void agregarFuncionRec(String funcR) {
+		this.funcionesRecorridas.add(funcR);
 	}
 	
 	public Lista<String> getCont() {
 		return this.contenido;
 	}
 	
-	public Lista<String> getFunciones() {
-		return this.funciones;
+	public Lista<String> getFuncionesAb() {
+		return this.funcionesAbiertas;
+	}
+	
+	public Lista<String> getFuncionesRec() {
+		return this.funcionesRecorridas;
 	}
 	
 	public int getCosto() {
