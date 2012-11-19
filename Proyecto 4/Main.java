@@ -132,10 +132,6 @@ public class Main {
 	@SuppressWarnings("unchecked")
 	public static Dominio obtenerComposicion(String[] Entrada, String[] Salida) {
 		
-		for(int g=0;g<grafo.getNodos().toArray().length;g++) {
-			((Nodo) grafo.getNodos().toArray()[g]).setVisitado(false);
-		}
-		
 /*		Lista<String> inic = new MiLista<String>();
 		Lista<String> funcA = new MiLista<String>();
 		
@@ -161,23 +157,23 @@ public class Main {
 
 */		
 		
-		String[] funcA = new String[0];
+		String[] funcV = new String[0];
 		String[] funcR = new String[0];
 		System.out.println("\n------");
 		for(String s:Entrada){
 			System.out.println(s);
 		}
 		System.out.println("\n------");
-		Dominio inicial = new Dominio(Entrada,funcA,funcR,0);
+		Dominio inicial = new Dominio(Entrada,funcV,funcR,0);
 		
-		for(int i=0;i<Entrada.length;i++) {
+		/*for(int i=0;i<Entrada.length;i++) {
 			Lista<Nodo> sucesoritos = grafo.getSucs(Entrada[i]);
 			Object[] succ = sucesoritos.toArray();
 			for(Object f: succ) {
 				System.out.println(f.toString());
 				inicial.agregarFuncionAb(f.toString());
 			}
-		}
+		}*/
 		
 		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
 		abiertos.agregar(inicial);
@@ -219,11 +215,11 @@ public class Main {
 			}
 			
 //<<<<<<< Updated upstream
-			DynamicArray listafA = actual.getFuncionesAb();
+			DynamicArray listafV = actual.getFuncionesVis();
 			System.out.println("\n------");
-			System.out.println("lista de funciones abiertas:");
+			System.out.println("lista de funciones visitadas:");
 
-			for(Object s:listafA.getArray()){
+			for(Object s:listafV.getArray()){
 				if(s!=null)System.out.println(s.toString());
 			}
 			System.out.println("\n------");
@@ -238,18 +234,89 @@ public class Main {
 			System.out.println("\n------");
 			
 			
-			for (k=0;k<listafA.getPosicion();k++) {
+			for (k=0;k<listaDom.getPosicion();k++) {
 				System.out.println("\n------");
-				System.out.println("fncion abierta actual:");
-				System.out.println(listafA.get(k));
+				System.out.println("elemento del dominio actual:");
+				System.out.println(listaDom.get(k));
 				System.out.println("\n------");
-//				if (!listafR.contains(listafA.toArray()[k])) {
+				DynamicArray sucesores = ((MiLista<Nodo>) grafo.getSucs(
+						(String)listaDom.get(k))).toDynamicArray();
+				
+				System.out.println("\n------");
+				System.out.println("mis sucesores son:");
+				for(Object s:sucesores.getArray()){
+					if(s!=null)System.out.println(s.toString());
+				}
+				System.out.println("\n------");
+				
+				for (int j=0;j<sucesores.getPosicion();j++) {
+					if(listafV.binarySearchPos(sucesores.get(j)) == -1) {
+						listafV.addOrd(sucesores.get(j));
+						
+						DynamicArray listaPred = ((MiLista<Nodo>) 
+								grafo.getPreds(((Nodo)
+										sucesores.get(j)).toString())).toDynamicArray();
+						
+						System.out.println("\n------");
+						System.out.println("mis predecesores son:");
+						for(Object s:listaPred.getArray()){
+							if(s!=null)System.out.println(s.toString());
+						}
+						System.out.println("\n------");
+						
+						int i=0;
+						boolean noIgual=false;
+						
+						while(i<listaPred.getPosicion() && !noIgual) {
+							if (listaDom.binarySearchPos(listaPred.get(i))==-1){
+								System.out.println("\n------");
+								System.out.println("no tengo este predecesor :(");
+								System.out.println("\n------");
+								noIgual =true;
+							}
+							i++;
+						}
+						
+						if (!noIgual) {
+							DynamicArray sucs2 =((MiLista<Nodo>) 
+									grafo.getSucs(((Nodo) 
+									sucesores.get(k)).toString())).toDynamicArray();
+							
+							System.out.println("\n------");
+							System.out.println("mis sucesores (rango) son:");
+							for(Object s:sucs2.getArray()){
+								if(s!=null)System.out.println(s.toString());
+							}
+							System.out.println("\n------");
+							
+							int nuevCost = actual.getCosto() + ((Nodo)grafo.get(
+									((Nodo)sucesores.get(k)).toString())).getCosto();
+							
+							System.out.println("\n------");
+							System.out.println("el nuevo costo es:"+nuevCost);
+							System.out.println("\n------");
+							
+							Dominio nuevo = new Dominio(listaDom,
+									listafV, listafR, nuevCost);
+							
+							nuevo.agregarFuncionRec(((Nodo) 
+									sucesores.get(k)).toString());
+							
+							for (int l=0;l<sucs2.getPosicion();l++) {
+								nuevo.agregarCont(((Nodo) 
+										sucs2.get(l)).toString());
+							}
+							
+							abiertos.agregar(nuevo);
+							
+						}
+					}
+				}/*
 				if (listafR.binarySearchPos(listafA.get(k)) == -1){
 					System.out.println("\n------");
 					System.out.println("wiii no la tengo en mis funciones recorridas!");
 					System.out.println("\n------");
 
-//					Lista<Nodo> listaPred = grafo.getPreds((String)listafA.toArray()[k]);
 					DynamicArray listaPred = 
 						((MiLista<Nodo>) grafo.getPreds((String)listafA.get(k)))
 								.toDynamicArray();
@@ -265,7 +332,6 @@ public class Main {
 					boolean noIgual=false;
 					
 					while(i<listaPred.getPosicion() && !noIgual) {
-//						if (!listaDom.contains(listaPred.toArray()[i])) {
 						if (listaDom.binarySearchPos(listaPred.get(i))==-1){
 							System.out.println("\n------");
 							System.out.println("no tengo este predecesor :(");
@@ -279,10 +345,7 @@ public class Main {
 						System.out.println("\n------");
 						System.out.println("tengo a todos los predecesoreees :D");
 						System.out.println("\n------");
-						
-						/*
-						 * Arreglo de nodos
-						 */
+					
 						DynamicArray sucs2 =((MiLista<Nodo>) grafo.getSucs((String) 
 								listafA.get(k))).toDynamicArray();
 
@@ -300,9 +363,6 @@ public class Main {
 							nuevo.agregarCont(((Nodo) 
 									sucs2.get(l)).toString());
 
-							/*
-							 * Arreglo de nodos
-							 */
 							DynamicArray sucs3 = ((MiLista<Nodo>) grafo.getSucs(
 									sucs2.get(l).toString())).toDynamicArray();
 
@@ -312,7 +372,7 @@ public class Main {
 						}
 						
 						abiertos.agregar(nuevo);
-					}
+					}*/
 				}
 			}
 			
@@ -424,13 +484,13 @@ public class Main {
 					}
 				}
 			}*/
-		}
 
 		return new Dominio();
 		
 	}
 	
-	public static void buscarComposiciones(int numComp, BufferedReader inFile) {
+	public static void buscarComposiciones(int numComp, BufferedReader inFile,
+			BufferedWriter outFile) {
 		for(int i=0;i<numComp;i++) {
 			try {
 				String[] primer = inFile.readLine().split("\\), \\(");
@@ -446,6 +506,7 @@ public class Main {
 				}
 				System.out.println("\n\nEl costo de la vaina es: ");
 				System.out.println(dom.toString()+"\n");
+				
 				
 			}
 			catch (IOException e) {
@@ -502,7 +563,7 @@ public class Main {
 			System.exit(1);
 		}
 		
-		buscarComposiciones(numComp,inFile);
+		buscarComposiciones(numComp,inFile,outFile);
 		
 	}catch(IOException e){
 		e.printStackTrace();
