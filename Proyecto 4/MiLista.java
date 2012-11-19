@@ -325,7 +325,11 @@ public class MiLista<E> implements Lista<E>{
     	this.toArray();
     	int i = 0;
     	for(i=0;i<this.toArray().length;i++) {
-    		System.out.println(i +": "+this.toArray()[i].toString());
+    		if(this.toArray()[i]==null){
+    			System.out.println("null");
+    		}else{
+    			System.out.println(i +": "+this.toArray()[i].toString());
+    		}
     	}
     }
     
