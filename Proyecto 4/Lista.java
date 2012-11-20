@@ -64,6 +64,8 @@ public interface Lista<E> {
      * Imprime los contenidos de la lista en pantalla.
      */
     public void imprimirLista();
+    
+    public Object clone();
 
 }
 

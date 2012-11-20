@@ -233,6 +233,11 @@ public class MiLista<E> implements Lista<E>{
     		}
     		else {
     			ant.siguiente = sig;
+    			/*
+        		 * Si el siguiente es igual al ultimo, el anterior pasa
+        		 * a ser el ultimo
+        		 */
+        		if(aux.equals(this.ultimo))this.ultimo = ant;
     		}
     		
     		this.tam --;
@@ -325,7 +330,11 @@ public class MiLista<E> implements Lista<E>{
     	this.toArray();
     	int i = 0;
     	for(i=0;i<this.toArray().length;i++) {
-    		System.out.println(i +": "+this.toArray()[i].toString());
+    		if(this.toArray()[i]==null){
+    			System.out.println("null");
+    		}else{
+    			System.out.println(i +": "+this.toArray()[i].toString());
+    		}
     	}
     }
     

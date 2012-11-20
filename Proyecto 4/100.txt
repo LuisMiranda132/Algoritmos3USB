@@ -1,0 +1,112 @@
+100
+f0: (I, H, AM, S), (P, E, B) 410
+f1: (T), (Y, AF) 458
+f2: (W, X, M), (AP, S) 468
+f3: (Z, AN, S), (AI) 438
+f4: (AI), (S, Z, AK, AC) 384
+f5: (AC, K, F), (AE, AH, C, H) 396
+f6: (AJ, AN, AG), (Y, O, C) 460
+f7: (M, G, X), (A, AT, H, O) 145
+f8: (X, AC, O), (F, L, AD) 137
+f9: (H, O, AM, A), (Z, S, AA) 360
+f10: (AC, AT), (L, W) 172
+f11: (K, AL, Q), (AI, AD) 147
+f12: (F, T, AQ, H), (AN, D) 57
+f13: (L, AP, AB, AS), (N) 476
+f14: (K, AI), (I, AN, L, AA) 422
+f15: (F), (Q) 233
+f16: (A), (Y) 152
+f17: (D, L, B), (F) 351
+f18: (E, C), (AF, AD, M) 349
+f19: (C), (S, AO) 335
+f20: (AE, AF), (K) 213
+f21: (AL), (AK, K, AJ, R) 238
+f22: (B, S, F), (AF) 382
+f23: (O, W, V, AS), (F, E, AM) 373
+f24: (V, AA), (T) 228
+f25: (O, L, AK), (AE, Y, I, P) 177
+f26: (AJ, K), (F, Z, S) 357
+f27: (J, Y, AF, R), (AA, AT, D) 280
+f28: (AD, E, G), (M, AI) 106
+f29: (T, AL, AC), (AP) 8
+f30: (AR), (D, V, AP, AM) 234
+f31: (A, D), (AK, S) 302
+f32: (O), (Q, AA, R) 72
+f33: (AJ, AT), (C) 462
+f34: (AG, G), (AF, U) 297
+f35: (K, Z, AJ, S), (G, AQ, M, B) 384
+f36: (S, AF, AP), (AC, AA, L) 90
+f37: (A), (AC) 116
+f38: (B), (AI) 336
+f39: (F, AB, AK), (AR, R, AO, N) 206
+f40: (U), (AO, AD, E) 79
+f41: (X), (AI) 375
+f42: (D, Z), (N) 123
+f43: (AJ), (L, AK) 138
+f44: (T, AQ, X), (J, M, AD, AH) 415
+f45: (Q, AQ, AC), (A, H, V, AJ) 147
+f46: (AM), (A) 295
+f47: (AE, W), (A, O) 353
+f48: (AF, F, AO, I), (H, M, D, C) 181
+f49: (V, U), (AG, O, X) 128
+f50: (X, AL, AQ), (K) 196
+f51: (L, AS, G, AO), (E, X, AD) 304
+f52: (P, AL, R), (AI, AR, G, Y) 179
+f53: (AI, S, AH, AM), (AO, I) 287
+f54: (S, W), (R, F, AA) 284
+f55: (F, O, L, K), (AR) 107
+f56: (J), (Y, AN, AO) 122
+f57: (AJ, AM), (O, W, D) 390
+f58: (Z, J, AG, AM), (AK) 46
+f59: (X), (D, E, AN) 366
+f60: (AD, N), (T) 195
+f61: (AH, O, M), (R) 357
+f62: (AT, P), (AE, AA) 334
+f63: (AK, AM), (D, X, AT, P) 10
+f64: (AP, J, AA), (I) 436
+f65: (AP, U), (AJ, AA, AT) 381
+f66: (T), (W, L) 240
+f67: (U), (R) 56
+f68: (AR, AE, AL), (AC, D) 325
+f69: (V), (Z, B, AO, L) 99
+f70: (F), (AK) 368
+f71: (M, D), (AT, AP, AF, AR) 410
+f72: (W), (S, Q) 136
+f73: (Z, P, AQ), (G, AC, M) 182
+f74: (AR, AB, K), (A) 22
+f75: (K, D, X), (V, Q) 227
+f76: (A, R, AN), (AE, Z, V, F) 475
+f77: (AS, O, L), (AT) 115
+f78: (AD, M, AS), (P, Q) 236
+f79: (AM, AR, U, G), (O, AE, E, AQ) 55
+f80: (AL, AR, N, M), (E, AT) 189
+f81: (AM), (M, R) 489
+f82: (R, H), (L) 8
+f83: (Y), (J, W, AO) 128
+f84: (AH, F, X), (AB, AA, H, AD) 335
+f85: (U), (AN, AH, R, J) 485
+f86: (AE, AT), (S, I, AJ) 88
+f87: (J, AC), (D, F, AL) 145
+f88: (R, AK, AB), (Z, G, AR, AJ) 350
+f89: (C, I, AT, K), (AF) 332
+f90: (AM, X, J, AQ), (D, L, O) 423
+f91: (AO), (G) 433
+f92: (AB, A), (E) 358
+f93: (H, Z, U, AR), (K, Y) 484
+f94: (X), (O, AG, AJ) 490
+f95: (AO), (M, AK, A, AJ) 368
+f96: (B), (AC) 406
+f97: (I, P), (U) 386
+f98: (AQ, AT, N), (Q, AR, AO) 245
+f99: (AH, Q, AS), (E, AE) 337
+10
+(AJ, AT, AE), (C, M, U)
+(F, AC, AJ), (D, L, I, AT)
+(AG, N, L, AO), (AA)
+(AN), (AH)
+(AN, M, X), (P)
+(O, G, W), (C, P)
+(E, J), (C, F, AM)
+(AI), (AP, AC, AQ, B)
+(E), (G, AJ)
+(T), (AM, A)

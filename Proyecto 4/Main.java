@@ -85,7 +85,7 @@ public class Main {
 	}
 		
 	public static void prueba(){
-		Random generador = new Random();
+		//Random generador = new Random();
 		
 		String ant = RandomStringGenerator.generateRandomString(RandomStringGenerator.TYPE_MIXED_CASE, 5);
 		
@@ -104,386 +104,193 @@ public class Main {
 		grafo.add(new Arco(string, ant));
 		grafo.add(new Arco(ant, string));
 		
-		grafo.getNodos().imprimirLista();
-		System.out.println("\n"+"\n");
-		grafo.getArcos().imprimirLista();
+//		grafo.getNodos().imprimirLista();
+//		System.out.println("\n"+"\n");
+//		grafo.getArcos().imprimirLista();
 		
-		System.out.println("\n"+ant+"\n");
+//		System.out.println("\n"+ant+"\n");
 		
 		grafo.getOutArcos(string).imprimirLista();
 		grafo.getInArcos(ant).imprimirLista();
 
-		System.out.println("\n"+"\n");
+//		System.out.println("\n"+"\n");
 		grafo.remove(ant, string);
 		grafo.getOutArcos(string).imprimirLista();
 		grafo.getInArcos(ant).imprimirLista();
 		
-		System.out.println("\n"+"\n");
-		grafo.getArcos().imprimirLista();
-		System.out.println("\n"+"\n");
+//		System.out.println("\n"+"\n");
+//		grafo.getArcos().imprimirLista();
+//		System.out.println("\n"+"\n");
 		
 		grafo.remove(prueba.toString());
 		
-		grafo.getNodos().imprimirLista();
+//		grafo.getNodos().imprimirLista();
 		
-		System.out.println(grafo.contains(prueba.toString()));
+//		System.out.println(grafo.contains(prueba.toString()));
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static Dominio obtenerComposicion(String[] Entrada, String[] Salida) {
 		
-/*		Lista<String> inic = new MiLista<String>();
-		Lista<String> funcA = new MiLista<String>();
-		
-		for(int i=0;i<Entrada.length;i++) {
-			inic.add(Entrada[i]);
-			Lista<Nodo> sucesoritos = grafo.getSucs(Entrada[i]);
-			for(int f=0;f<sucesoritos.getSize();f++) {
-				System.out.println(((Nodo) sucesoritos.toArray()[f]).toString());
-				funcA.add(((Nodo) sucesoritos.toArray()[f]).toString());
-			}
-		}
-		
-		funcA.imprimirLista();
-		
-		
-		Lista<String> funcR = new MiLista<String>();
-		System.out.println("\n------");
-		inic.imprimirLista();
-		System.out.println("\n------");
-		funcR.imprimirLista();
-		System.out.println("\n------");
-		Dominio inicial = new Dominio(inic,funcA,funcR,0);
-
-*/		
-		
-		String[] funcV = new String[0];
 		String[] funcR = new String[0];
-		System.out.println("\n------");
+//		System.out.println("\n------");
+		MiLista<String> contRevInic = new MiLista<String>();
 		for(String s:Entrada){
-			System.out.println(s);
+//			System.out.println(s);
+			contRevInic.add(s);
 		}
-		System.out.println("\n------");
-		Dominio inicial = new Dominio(Entrada,funcV,funcR,0);
-		
-		/*for(int i=0;i<Entrada.length;i++) {
-			Lista<Nodo> sucesoritos = grafo.getSucs(Entrada[i]);
-			Object[] succ = sucesoritos.toArray();
-			for(Object f: succ) {
-				System.out.println(f.toString());
-				inicial.agregarFuncionAb(f.toString());
-			}
-		}*/
+//		System.out.println("\n------");
+		Dominio inicial = new Dominio(Entrada,contRevInic,funcR,0);
 		
 		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
 		abiertos.agregar(inicial);
 		
 		while (!abiertos.esVacio()) {
-			System.out.println(abiertos.toString());
+/*			System.out.println(abiertos.toString());
 			System.out.println("\n------");
 			System.out.println("abiertos no es vaciooo");
 			System.out.println("\n------");
-			Dominio actual = (Dominio) abiertos.getMin();
+*/			Dominio actual = (Dominio) abiertos.getMin();
 			abiertos.removeMin();
 			
+			Lista<String> revisar = actual.getContArev();
 			DynamicArray listaDom = actual.getCont();
 
-			for(Object s:listaDom.getArray()){
-				if(s!=null)System.out.println(s.toString());
+/*			for(int i=0;i<revisar.getSize();i++) {
+				System.out.println(((String) revisar.toArray()[i]));
 			}
 			System.out.println("\n------");
-			
+*/			
 			int k=0;
 			boolean sali = false;
 			
 			while(k<Salida.length && !sali) {
-				System.out.println(Salida[k]);
-				System.out.println("\n------");
-//				if (!listaDom.contains(Salida[k])) {
+//				System.out.println(Salida[k]);
+//				System.out.println("\n------");
 				if(listaDom.binarySearchPos(Salida[k]) == -1){
 					sali = true;
-					System.out.println("No tengo a salida["+k+"]");
-					System.out.println("\n------");
+//					System.out.println("No tengo a salida["+k+"]");
+//					System.out.println("\n------");
 				}
 				k++;
 			}
 			
 			if (!sali) {
-				System.out.println("no saliii");
-				System.out.println("\n------");
+//				System.out.println("no saliii");
+//				System.out.println("\n------");
 				return actual;
 			}
 			
-//<<<<<<< Updated upstream
-			DynamicArray listafV = actual.getFuncionesVis();
-			System.out.println("\n------");
-			System.out.println("lista de funciones visitadas:");
-
-			for(Object s:listafV.getArray()){
-				if(s!=null)System.out.println(s.toString());
-			}
-			System.out.println("\n------");
-			
 			DynamicArray listafR = actual.getFuncionesRec();
-			System.out.println("\n------");
-			System.out.println("lista de funciones recorridas:");
+//			System.out.println("\n------");
+//			System.out.println("lista de funciones recorridas:");
 			
-			for(Object s:listafR.getArray()){
+/*			for(Object s:listafR.getArray()){
 				if(s!=null)System.out.println(s.toString());
 			}
 			System.out.println("\n------");
+*/			
 			
-			
-			for (k=0;k<listaDom.getPosicion();k++) {
-				System.out.println("\n------");
-				System.out.println("elemento del dominio actual:");
-				System.out.println(listaDom.get(k));
-				System.out.println("\n------");
+			for (k=0;k<revisar.getSize();k++) {
+//				System.out.println("\n---"+k+"---");
+//				System.out.println("elemento del dominio actual:");
+				String actString = (String) revisar.toArray()[k];
+//				System.out.println(revisar.toArray()[k]);
+//				System.out.println("\n------");
 				DynamicArray sucesores = ((MiLista<Nodo>) grafo.getSucs(
-						(String)listaDom.get(k))).toDynamicArray();
+						(String)revisar.toArray()[k])).toDynamicArray();
 				
-				System.out.println("\n------");
-				System.out.println("mis sucesores son:");
-				for(Object s:sucesores.getArray()){
+//				System.out.println("\n------");
+//				System.out.println("mis sucesores son:");
+/*				for(Object s:sucesores.getArray()){
 					if(s!=null)System.out.println(s.toString());
 				}
 
 				System.out.println("\n------");
-				
+*/				
 				for (int j=0;j<sucesores.getPosicion();j++) {
-					if(listafV.binarySearchPos(sucesores.get(j)) == -1) {
-						listafV.addOrd(sucesores.get(j));
+					if(listafR.binarySearchPos(sucesores.get(j)) == -1) {
 						
 						DynamicArray listaPred = ((MiLista<Nodo>) 
 								grafo.getPreds(((Nodo)
 										sucesores.get(j)).toString())).toDynamicArray();
 						
-						System.out.println("\n------");
-						System.out.println("mis predecesores son:");
-						for(Object s:listaPred.getArray()){
+//						System.out.println("\n------");
+//						System.out.println("mis predecesores son:");
+/*						for(Object s:listaPred.getArray()){
 							if(s!=null)System.out.println(s.toString());
 						}
 						System.out.println("\n------");
-						
+*/						
 						int i=0;
 						boolean noIgual=false;
 						
 						while(i<listaPred.getPosicion() && !noIgual) {
 							if (listaDom.binarySearchPos(listaPred.get(i))==-1){
-								System.out.println("\n------");
+/*								System.out.println("\n------");
 								System.out.println("no tengo este predecesor :(");
 								System.out.println("\n------");
-								noIgual =true;
+*/								noIgual =true;
 							}
 							i++;
 						}
 						
 						if (!noIgual) {
-							DynamicArray sucs2 =((MiLista<Nodo>) 
+							/*
+							 * Cambio de j por k
+							 */
+							DynamicArray sucs2 = ((MiLista<Nodo>) 
 									grafo.getSucs(((Nodo) 
-									sucesores.get(k)).toString())).toDynamicArray();
+									sucesores.get(j)).toString())).toDynamicArray();
+//									sucesores.get(k)).toString())).toDynamicArray();
 							
-							System.out.println("\n------");
-							System.out.println("mis sucesores (rango) son:");
-							for(Object s:sucs2.getArray()){
+							
+//							System.out.println("\n------");
+//							System.out.println("mis sucesores (rango) son:");
+/*							for(Object s:sucs2.getArray()){
 								if(s!=null)System.out.println(s.toString());
 							}
 							System.out.println("\n------");
-							
+*/							
 							int nuevCost = actual.getCosto() + ((Nodo)grafo.get(
-									((Nodo)sucesores.get(k)).toString())).getCosto();
+									((Nodo)sucesores.get(j)).toString())).getCosto();
+//									((Nodo)sucesores.get(k)).toString())).getCosto();
 							
-							System.out.println("\n------");
+/*							System.out.println("\n------");
 							System.out.println("el nuevo costo es:"+nuevCost);
 							System.out.println("\n------");
-							
+*/							
 							Dominio nuevo = new Dominio(listaDom,
-									listafV, listafR, nuevCost);
+									(MiLista<String>) revisar.clone(), listafR, nuevCost);
 							
 							nuevo.agregarFuncionRec(((Nodo) 
-									sucesores.get(k)).toString());
+									sucesores.get(j)).toString());
+//									sucesores.get(k)).toString());
+//							System.out.println("\n---revisar---");
+//							revisar.imprimirLista();
+//							System.out.println("\n------");
+							nuevo.eliminardeContArev(actString);
+//							nuevo.getContArev().imprimirLista();
 							
 							for (int l=0;l<sucs2.getPosicion();l++) {
 								nuevo.agregarCont(((Nodo) 
 										sucs2.get(l)).toString());
-							}
-							
-							abiertos.agregar(nuevo);
-							
-						}
-					}
-				}/*
-				if (listafR.binarySearchPos(listafA.get(k)) == -1){
-					System.out.println("\n------");
-					System.out.println("wiii no la tengo en mis funciones recorridas!");
-					System.out.println("\n------");
-
-					DynamicArray listaPred = 
-						((MiLista<Nodo>) grafo.getPreds((String)listafA.get(k)))
-								.toDynamicArray();
-					
-					System.out.println("\n------");
-					System.out.println("mis predecesores son:");
-					for(Object s:listaPred.getArray()){
-						if(s!=null)System.out.println(s.toString());
-					}
-					System.out.println("\n------");
-					
-					int i=0;
-					boolean noIgual=false;
-					
-					while(i<listaPred.getPosicion() && !noIgual) {
-						if (listaDom.binarySearchPos(listaPred.get(i))==-1){
-							System.out.println("\n------");
-							System.out.println("no tengo este predecesor :(");
-							System.out.println("\n------");
-							noIgual =true;
-						}
-						i++;
-					}
-					
-					if (!noIgual) {
-						System.out.println("\n------");
-						System.out.println("tengo a todos los predecesoreees :D");
-						System.out.println("\n------");
-					
-						DynamicArray sucs2 =((MiLista<Nodo>) grafo.getSucs((String) 
-								listafA.get(k))).toDynamicArray();
-						
-						int nuevCost = actual.getCosto() + ((Nodo)grafo.get(
-								(String)listafA.get(k))).getCosto();
-						
-						Dominio nuevo = new Dominio(listaDom,
-								listafA, listafR, nuevCost);
-						
-						nuevo.agregarFuncionRec((String) listafA.get(k));
-						
-						for (int l=0;l<sucs2.getPosicion();l++) {
-							nuevo.agregarCont(((Nodo) 
-									sucs2.get(l)).toString());
-
-							DynamicArray sucs3 = ((MiLista<Nodo>) grafo.getSucs(
-									sucs2.get(l).toString())).toDynamicArray();
-
-							for (int r=0;r<sucs3.getPosicion();r++) {
-								nuevo.agregarFuncionAb(sucs3.get(r).toString());
-							}
-						}
-						
-						abiertos.agregar(nuevo);
-					}*/
-				}
-			}
-			
-/*
-//			for(k=0;k<listaDom.getSize();k++) {
-			for(k=0;k<listaDom.getPosicion();k++){
-				System.out.println("entre a un for lindo del dijkstra: " + k);
-				System.out.println("\n---listaDom---");
-				for(Object s:listaDom.getArray()){
-					if(s!=null)System.out.println(s.toString());
-				}
-				System.out.println("\n---listaDom["+k+"]---");
-				System.out.println(listaDom.get(k));
-				System.out.println("\n---Sucesores---");
-				MiLista<Nodo> sucesores = (MiLista<Nodo>) grafo.getSucs((String)listaDom.get(k));
-				sucesores.imprimirLista();
-				System.out.println("\n------");
-				
-				DynamicArray suces = sucesores.toDynamicArray();
-
-				for (int j=0;j<suces.getPosicion();j++) {
-					System.out.println("y a otro fooor :D");
-					System.out.println("\n---Sucesores["+j+"]---");
-					System.out.println(((Nodo) suces.get(j)).toString());
-					System.out.println("\n------");
-
-					if (!((Nodo) suces.get(j)).getVisitado()) {
-						System.out.println("entre al ifff de que no este visitado");
-						System.out.println("\n------");
-//						Lista<Nodo> predecesores = grafo.getPreds(sucesores.toArray()[j].toString());
-						
-						
-						//Arreglo de Nodos
-						
-						DynamicArray predecesores = 
-							((MiLista<Nodo>) grafo.getPreds((
-									(Nodo)suces.get(j)).toString())).toDynamicArray();
-						System.out.println("\n---Predecesores---");
-						for(Object s:predecesores.getArray()){
-							if(s!=null)System.out.println(s.toString());
-						}
-						System.out.println("\n------");
-						
-						int i=0;
-						boolean noIgual = false;
-						while (i<predecesores.getPosicion() && !noIgual) {
-							System.out.println("Entre al otro whileee");
-							System.out.println("\n---predecesores["+i+"]---");
-							System.out.println(predecesores.get(i).toString());
-							System.out.println("\n------");
-//							if (!listaDom.contains(predecesores.toArray()[i].toString())) {
-							if(listaDom.binarySearchPos(predecesores.get(i).toString())==-1){
-								System.out.println("entre a ese if :D");
-								System.out.println("no tengo a lo que sea");
-								System.out.println("\n------");
-								noIgual = true;
-							}
-							i++;
-						}
-						
-						if (!noIgual) {
-							System.out.println("ENtre a iguaaaal");*/
-							/*
-							 * Creo que aqui hay un problema con marcarlos 
-							 * visitado antes...
-							 */
-/*							System.out.println("\n---Sucesores["+j+"]---");
-//							System.out.println(((Nodo)sucesores.toArray()[j]).toString());
-							System.out.println(suces.get(j).toString());
-
-//							Lista<Nodo> sucs2 = grafo.getSucs(((Nodo)sucesores.toArray()[j]).toString());
-							
-							
-							// Arreglo de Nodos
-							
-							DynamicArray sucs2 = 
-								((MiLista<Nodo>)grafo.getSucs(
-										((Nodo)suces.get(j))
-											.toString())).toDynamicArray();
-							
-							System.out.println("Costo actual: "+actual.getCosto());
-							System.out.println("nuevo costo func: "+
-//									((Nodo) sucesores.toArray()[j]).getCosto());
-									((Nodo)suces.get(j)).getCosto());
-
-							int nuevCost = actual.getCosto() + 
-//									((Nodo) sucesores.toArray()[j]).getCosto();
-									((Nodo)suces.get(j)).getCosto();
-
-							System.out.println("El nuevo costo es: "+nuevCost);
-							System.out.println("\n------");
-		*/					
-							
-/*							Dominio nuevo = new Dominio(listaDom.getArray(),
-									actual.getFunciones().getArray(),nuevCost);
-							nuevo.agregarFuncion(((Nodo)suces.get(j)).toString());
-//									((Nodo) sucesores.toArray()[j]).toString());
-
-							/*
-							 * Cambie "k" por "l"
-							 */
-/*							for(int l=0;l<sucs2.getPosicion();l++) {
-								nuevo.agregarCont(((Nodo) 
+								nuevo.agregarAcontArev(((Nodo) 
 										sucs2.get(l)).toString());
 							}
+							
+//							System.out.println("\n---final---");
+//							nuevo.getContArev().imprimirLista();
+							
 							abiertos.agregar(nuevo);
 							
 						}
 					}
-				}
-			}*/
 
+				}
+			}
+		}
+			
 		return new Dominio();
 		
 	}
@@ -526,7 +333,7 @@ public class Main {
 		out = args[1];
 	}
 	
-	String linea = "";
+	//String linea = "";
 	BufferedReader inFile = null;
 	FileWriter sali = null;
 	BufferedWriter outFile = null;
