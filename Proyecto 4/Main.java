@@ -247,6 +247,7 @@ public class Main {
 				for(Object s:sucesores.getArray()){
 					if(s!=null)System.out.println(s.toString());
 				}
+
 				System.out.println("\n------");
 				
 				for (int j=0;j<sucesores.getPosicion();j++) {
@@ -348,8 +349,6 @@ public class Main {
 					
 						DynamicArray sucs2 =((MiLista<Nodo>) grafo.getSucs((String) 
 								listafA.get(k))).toDynamicArray();
-
-						
 						
 						int nuevCost = actual.getCosto() + ((Nodo)grafo.get(
 								(String)listafA.get(k))).getCosto();
