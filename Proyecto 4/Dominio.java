@@ -1,8 +1,6 @@
 
 public class Dominio implements Comparable<Dominio> {
 
-//	private Lista<String> contenido;
-//	private Lista<String> funciones;
 	private DynamicArray contenido;
 	private Lista<String> contArev;
 	private DynamicArray funcionesRecorridas;

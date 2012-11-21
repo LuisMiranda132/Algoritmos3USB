@@ -313,7 +313,20 @@ public class Main {
 				System.out.println("\n\nEl costo de la vaina es: ");
 				System.out.println(dom.toString()+"\n");
 				
+				outFile.write("(");
+				if (dom.getCosto() == 0) {
+					outFile.write("), 0\n");
+				}
+				else {
+					int k=0;
+					while (k<dom.getFuncionesRec().getPosicion()-1) {
+						outFile.write((String)dom.getFuncionesRec().get(k)+", ");
+						k++;
+					}
+					outFile.write((String) dom.getFuncionesRec().get(k)+"), ");
+					outFile.write(dom.getCosto()+"\n");
 				
+				}
 			}
 			catch (IOException e) {
 				e.printStackTrace();
