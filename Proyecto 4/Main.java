@@ -21,7 +21,7 @@ public class Main {
 				grafo.add(nuevFunc);
 				
 
-				String[] segundo = primer[1].split("\\),  \\(");
+				String[] segundo = primer[1].split("\\), \\(");
 				String[] dominio = segundo[0].split(", ");
 				//agregamos todos los elementos del dominio de la funcion al grafo
 				for(int j=0;j<dominio.length;j++) {
@@ -245,6 +245,7 @@ public class Main {
 		grafo = new DigraphLista();
 		
 		int numLinea = Integer.parseInt(inFile.readLine());
+		System.out.println(numLinea);
 		
 		if(numLinea == 0){
 			System.exit(1);
