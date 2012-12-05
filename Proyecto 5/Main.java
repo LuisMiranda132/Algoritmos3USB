@@ -5,9 +5,9 @@ public class Main {
 	
 	static Scanner scan = null;
 	
-	public static DynamicArray leerArchivo(int numEscenario) {
+	public static BinaryHeap<Arco> leerArchivo(int numEscenario) {
         
-		DynamicArray lados = new DynamicArray();
+		BinaryHeap<Arco> lados = new BinaryHeap<Arco>();
 		int numCiudad = scan.nextInt();
 		//System.out.println(numCiudad);
 		for(int i=0;i<numCiudad;i++) {
@@ -26,7 +26,7 @@ public class Main {
 				int costo = scan.nextInt();
 				//System.out.println(vec+" "+costo);
 				Arco aux = new Arco(i+1,vec,costo);
-				lados.addOrd(aux);
+				lados.agregar(aux);
 			}
 		}
 		int yaConect = scan.nextInt();
@@ -35,33 +35,40 @@ public class Main {
 			int c1 = scan.nextInt();
 			int c2 = scan.nextInt();
 			Arco aux2 = new Arco(c1,c2,0);
-			lados.addOrd(aux2);
+			lados.agregar(aux2);
 		}
-		DynamicArray lados2 = Kruskal(lados,numCiudad);
+		BinaryHeap<Arco> lados2 = Kruskal(lados,numCiudad);
 		return lados2;
 	}
 	
-	public static DynamicArray Kruskal(DynamicArray lad, int nC) {
+	public static BinaryHeap<Arco> Kruskal(BinaryHeap<Arco> lad, int nC) {
 		DisjointSet E = new DisjointSet(nC);
-		DynamicArray ladK = new DynamicArray();
+		BinaryHeap<Arco> ladK = new BinaryHeap<Arco>();
 		int i=0;
 		while (E.getConexas() > 1) {
-			Arco e = (Arco) lad.get(i);
+			System.out.println("---Iteracion "+i+"---");
+			Arco e = (Arco) lad.getMin();
+			lad.removeMin();
+			System.out.println("---Revisamos el arco: "+e.toString()+"---");
 			int[] rep = E.getRepres();
+			System.out.println("---origen:"+rep[e.getSrc()]+"---");
+			System.out.println("---destino:"+rep[e.getDst()]+"---");
 			if (rep[e.getSrc()] != rep[e.getDst()]) {
+				System.out.println("---Entre al if---");
 				E.union(e.getSrc(), e.getDst());
-				ladK.addOrd(e);
+				ladK.agregar(e);
 			}
 			i++;
 		}
 		return ladK;
 	}
 	
-	public static void imprimirArch(DynamicArray lK, BufferedWriter out) {
+	public static void imprimirArch(BinaryHeap<Arco> lK, BufferedWriter out) {
 		try {
 			int cost = 0;
-			for(int i=0;i<lK.getPosicion();i++) {
-				Arco act = (Arco) lK.get(i);
+			while(!lK.esVacio()) {
+				Arco act = (Arco) lK.getMin();
+				lK.removeMin();
 				cost += act.getCost();
 			}
 			out.write(cost+"\n");
@@ -97,7 +104,7 @@ public class Main {
 		scan = new Scanner(arch);
 		int numEsc = scan.nextInt();
 		for(int i=0;i<numEsc;i++) {
-			DynamicArray ladKrus = leerArchivo(i);
+			BinaryHeap<Arco> ladKrus = leerArchivo(i);
 			imprimirArch(ladKrus,outFile);
 		}
 				
