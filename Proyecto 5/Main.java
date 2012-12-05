@@ -46,15 +46,15 @@ public class Main {
 		BinaryHeap<Arco> ladK = new BinaryHeap<Arco>();
 		int i=0;
 		while (E.getConexas() > 1) {
-			System.out.println("---Iteracion "+i+"---");
+			//System.out.println("---Iteracion "+i+"---");
 			Arco e = (Arco) lad.getMin();
 			lad.removeMin();
-			System.out.println("---Revisamos el arco: "+e.toString()+"---");
+			//System.out.println("---Revisamos el arco: "+e.toString()+"---");
 			int[] rep = E.getRepres();
-			System.out.println("---origen:"+rep[e.getSrc()]+"---");
-			System.out.println("---destino:"+rep[e.getDst()]+"---");
+			//System.out.println("---origen:"+rep[e.getSrc()]+"---");
+			//System.out.println("---destino:"+rep[e.getDst()]+"---");
 			if (rep[e.getSrc()] != rep[e.getDst()]) {
-				System.out.println("---Entre al if---");
+				//System.out.println("---Entre al if---");
 				E.union(e.getSrc(), e.getDst());
 				ladK.agregar(e);
 			}
