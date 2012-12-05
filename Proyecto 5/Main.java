@@ -26,7 +26,7 @@ public class Main {
 				int costo = scan.nextInt();
 				//System.out.println(vec+" "+costo);
 				Arco aux = new Arco(i+1,vec,costo);
-				lados.addFinal(aux);
+				lados.addOrd(aux);
 			}
 		}
 		int yaConect = scan.nextInt();
@@ -35,13 +35,40 @@ public class Main {
 			int c1 = scan.nextInt();
 			int c2 = scan.nextInt();
 			Arco aux2 = new Arco(c1,c2,0);
-			lados.addFinal(aux2);
+			lados.addOrd(aux2);
 		}
-		return lados;
+		DynamicArray lados2 = Kruskal(lados,numCiudad);
+		return lados2;
 	}
 	
-	public static DynamicArray Kruskal(DynamicArray lad) {
-		return new DynamicArray();
+	public static DynamicArray Kruskal(DynamicArray lad, int nC) {
+		DisjointSet E = new DisjointSet(nC);
+		DynamicArray ladK = new DynamicArray();
+		int i=0;
+		while (E.getConexas() > 1) {
+			Arco e = (Arco) lad.get(i);
+			int[] rep = E.getRepres();
+			if (rep[e.getSrc()] != rep[e.getDst()]) {
+				E.union(e.getSrc(), e.getDst());
+				ladK.addOrd(e);
+			}
+			i++;
+		}
+		return ladK;
+	}
+	
+	public static void imprimirArch(DynamicArray lK, BufferedWriter out) {
+		try {
+			int cost = 0;
+			for(int i=0;i<lK.getPosicion();i++) {
+				Arco act = (Arco) lK.get(i);
+				cost += act.getCost();
+			}
+			out.write(cost+"\n");
+			System.out.println(cost);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -70,8 +97,8 @@ public class Main {
 		scan = new Scanner(arch);
 		int numEsc = scan.nextInt();
 		for(int i=0;i<numEsc;i++) {
-			DynamicArray laditos = leerArchivo(i);
-			DynamicArray ladKrus = Kruskal(laditos);
+			DynamicArray ladKrus = leerArchivo(i);
+			imprimirArch(ladKrus,outFile);
 		}
 				
 	}catch(FileNotFoundException e){
