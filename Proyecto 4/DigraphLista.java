@@ -65,7 +65,7 @@ public class DigraphLista extends Digraph {
         if(i==-1)return false;
         
         j = this.nodos.binarySearchPos(noditoD.toString());
-        if (i==-1)return false;        
+        if (j==-1)return false;        
         
         if (this.contains(e.getSrc(), e.getDst())) {
         	return false;

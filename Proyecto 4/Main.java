@@ -11,26 +11,28 @@ public class Main {
 			for(int i=0;i<numLinea;i++) {
 
 				String[] primer = inFile.readLine().split(": \\(");
-				Nodo nuevFunc = new Nodo(primer[0]);
+				Nodo nuevFunc = new Nodo(primer[0].intern());
 				nuevFunc.setFuncion(true);
 				grafo.add(nuevFunc);
-				
 
-				String[] segundo = primer[1].split("\\), \\(");
+				String[] segundo = primer[1].split("\\),  \\(");
 				String[] dominio = segundo[0].split(", ");
 				for(int j=0;j<dominio.length;j++) {
-					grafo.add(new Nodo(dominio[j]));
-					grafo.add(new Arco(dominio[j],primer[0]));
+					grafo.add(new Nodo(dominio[j].intern()));
+					grafo.add(new Arco(dominio[j].intern(),primer[0].intern()));
+					nuevFunc.addDominio(dominio[j].intern());
 				}
-				String[] tercero = segundo[1].split("\\) ");
+				String[] tercero = segundo[1].split("\\)");
 				String[] rango = tercero[0].split(", ");
 				for(int k=0;k<rango.length;k++) {
 					grafo.add(new Nodo(rango[k]));
-					grafo.add(new Arco(primer[0],rango[k]));
+					grafo.add(new Arco(primer[0].intern(),rango[k].intern()));
 				}
-				grafo.get(primer[0]).setCosto(Integer.parseInt(tercero[1]));
+				grafo.get(primer[0]).setCosto(Integer.parseInt(tercero[1].split(" ")[1]));				
+				 
 				
 			}
+			
 			return inFile;
 			
 		}
@@ -129,7 +131,6 @@ public class Main {
 //		System.out.println(grafo.contains(prueba.toString()));
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static Dominio obtenerComposicion(String[] Entrada, String[] Salida) {
 		
 		String[] funcR = new String[0];
@@ -137,10 +138,12 @@ public class Main {
 		MiLista<String> contRevInic = new MiLista<String>();
 		for(String s:Entrada){
 //			System.out.println(s);
-			contRevInic.add(s);
+			contRevInic.add(s.intern());
 		}
 //		System.out.println("\n------");
 		Dominio inicial = new Dominio(Entrada,contRevInic,funcR,0);
+		
+		funcR = null; contRevInic = null;
 		
 		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
 		abiertos.agregar(inicial);
@@ -194,7 +197,7 @@ public class Main {
 			for (k=0;k<revisar.getSize();k++) {
 //				System.out.println("\n---"+k+"---");
 //				System.out.println("elemento del dominio actual:");
-				String actString = (String) revisar.toArray()[k];
+				String actString = ((String) revisar.toArray()[k]).intern();
 //				System.out.println(revisar.toArray()[k]);
 //				System.out.println("\n------");
 				DynamicArray sucesores = ((MiLista<Nodo>) grafo.getSucs(
@@ -206,17 +209,20 @@ public class Main {
 					if(s!=null)System.out.println(s.toString());
 				}
 
+				S
+
 				System.out.println("\n------");
 */				
 				for (int j=0;j<sucesores.getPosicion();j++) {
 					if(listafR.binarySearchPos(sucesores.get(j)) == -1) {
 						
-						DynamicArray listaPred = ((MiLista<Nodo>) 
+						DynamicArray listaPred = ((Nodo)sucesores.get(j)).getDominio();
+/*							((MiLista<Nodo>) 
 								grafo.getPreds(((Nodo)
 										sucesores.get(j)).toString())).toDynamicArray();
-						
+*/						
 //						System.out.println("\n------");
-//						System.out.println("mis predecesores son:");
+//						System.out.println(-Xmx2048m"mis predecesores son:");
 /*						for(Object s:listaPred.getArray()){
 							if(s!=null)System.out.println(s.toString());
 						}
@@ -241,7 +247,7 @@ public class Main {
 							 */
 							DynamicArray sucs2 = ((MiLista<Nodo>) 
 									grafo.getSucs(((Nodo) 
-									sucesores.get(j)).toString())).toDynamicArray();
+									sucesores.get(j)).toString().intern())).toDynamicArray();
 //									sucesores.get(k)).toString())).toDynamicArray();
 							
 							
@@ -253,7 +259,7 @@ public class Main {
 							System.out.println("\n------");
 */							
 							int nuevCost = actual.getCosto() + ((Nodo)grafo.get(
-									((Nodo)sucesores.get(j)).toString())).getCosto();
+									((Nodo)sucesores.get(j)).toString().intern())).getCosto();
 //									((Nodo)sucesores.get(k)).toString())).getCosto();
 							
 /*							System.out.println("\n------");
@@ -261,10 +267,11 @@ public class Main {
 							System.out.println("\n------");
 */							
 							Dominio nuevo = new Dominio(listaDom,
-									(MiLista<String>) revisar.clone(), listafR, nuevCost);
+									//revisar.clone
+									(MiLista<String>) revisar, listafR, nuevCost);
 							
 							nuevo.agregarFuncionRec(((Nodo) 
-									sucesores.get(j)).toString());
+									sucesores.get(j)).toString().intern());
 //									sucesores.get(k)).toString());
 //							System.out.println("\n---revisar---");
 //							revisar.imprimirLista();
@@ -290,7 +297,9 @@ public class Main {
 				}
 			}
 		}
-			
+		
+		
+		
 		return new Dominio();
 		
 	}
@@ -305,13 +314,9 @@ public class Main {
 				String[] entrada = segundo[1].split(", ");
 				String[] salida = tercer[0].split(", ");
 				
+				
+				
 				Dominio dom = obtenerComposicion(entrada,salida);
-
-				for(Object s:dom.getFuncionesRec().getArray()){
-					if(s!=null)System.out.println(s.toString());
-				}
-				System.out.println("\n\nEl costo de la vaina es: ");
-				System.out.println(dom.toString()+"\n");
 				
 				outFile.write("(");
 				if (dom.getCosto() == 0) {
@@ -324,7 +329,9 @@ public class Main {
 						k++;
 					}
 					outFile.write((String) dom.getFuncionesRec().get(k)+"), ");
-					outFile.write(dom.getCosto()+"\n");
+					outFile.write(dom.getCosto()+", 0\n");
+				primer = null;segundo = null;tercer=null;entrada=null;salida=null;
+
 				
 				}
 			}
@@ -361,7 +368,8 @@ public class Main {
 	outFile = new BufferedWriter(sali);
 
 	try{
-		inFile = new BufferedReader(new FileReader(in));
+//		inFile = new BufferedReader(new FileReader("/home/luismiranda/Documents/Java/Algoritmos3USB/Proyecto 4/100.txt"));
+                inFile = new BufferedReader(new FileReader(in));
 		
 		grafo = new DigraphLista();
 		
@@ -373,7 +381,6 @@ public class Main {
 		}
 		
 		inFile = obtenerGrafo(inFile, numLinea);
-//		System.out.println(grafo.toString());
 		
 		int numComp = Integer.parseInt(inFile.readLine());
 //		System.out.println(numComp);
@@ -383,6 +390,8 @@ public class Main {
 		}
 		
 		buscarComposiciones(numComp,inFile,outFile);
+		
+		grafo = null;
 		
 	}catch(IOException e){
 		e.printStackTrace();

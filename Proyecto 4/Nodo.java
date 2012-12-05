@@ -15,14 +15,27 @@ public class Nodo implements Comparable<Nodo>{
     private boolean funcion = false;
     private String funcAnt = " ";
     private int costo = -1;
+    private DynamicArray dominio; 
     
     public Nodo(String i){
-    	this.id = new String(i);	
+    	this.id = new String(i);
+    	this.dominio = new DynamicArray();
+    	this.dominio.crecer(2);
     }
     
     public Nodo(String i,int c){
     	this.id = new String(i);
     	this.costo = c;
+    	this.dominio = new DynamicArray();
+    	this.dominio.crecer(2);
+    }
+    
+    public void addDominio(String x){
+    	this.dominio.addOrd(x);
+    }
+    
+    public DynamicArray getDominio(){
+    	return this.dominio;
     }
     
     /**
