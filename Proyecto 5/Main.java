@@ -82,20 +82,22 @@ public class Main {
 
 	public static void prueba(){
 		DynamicArray dummy = new DynamicArray(2);
+		Random random = new Random();
 		
-		for(int i=100;i>0;i--){
-			dummy.addFinal(RandomStringGenerator.generateRandomString(RandomStringGenerator.TYPE_MIXED_CASE, 10));
+		for(int i=50000;i>0;i--){
+			Arco arco = new Arco(random.nextInt(20),random.nextInt(20), random.nextInt(10000));
+			dummy.addFinal(arco);
 		}
 		
 		for(int i= 0;i < dummy.getPosicion();i++){
-			System.out.println(dummy.get(i));
+			System.out.println(((Arco)dummy.get(i)).getCost()+": "+dummy.get(i).toString());
 		}
 		
 		System.out.println("\n----------------\n");
 		dummy.heapSort();
 		
 		for(int i= 0;i < dummy.getPosicion();i++){
-			System.out.println(dummy.get(i));
+			System.out.println(((Arco)dummy.get(i)).getCost()+": "+ dummy.get(i).toString());
 		}
 	}
 
