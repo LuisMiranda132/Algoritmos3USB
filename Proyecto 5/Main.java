@@ -104,7 +104,6 @@ public class Main {
 	public static void imprimirArch(int lK, BufferedWriter out) {
 		try {
 			out.write(lK+"\n");
-			System.out.println(lK);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
