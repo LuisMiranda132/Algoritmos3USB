@@ -9,7 +9,7 @@ public class DisjointSet {
 		this.repres = new int [tam+1];
 		this.rango = new int [tam+1];
 
-		for(int i=0;i<tam;i++){
+		for(int i=0;i<tam+1;i++){
 			this.repres[i] = i;
 		}
 		

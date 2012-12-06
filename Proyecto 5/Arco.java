@@ -96,7 +96,7 @@ public class Arco implements Comparable<Arco> {
 
     @Override
     public String toString() {
-	return "("+src + ", " + dst+")";
+	return costo+": ("+src + ", " + dst+")";
     }
 
 	@Override

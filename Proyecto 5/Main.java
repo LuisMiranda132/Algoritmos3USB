@@ -43,25 +43,36 @@ public class Main {
 	
 	public static DynamicArray Kruskal(DynamicArray lad, int nC) {
 		DisjointSet E = new DisjointSet(nC);
+		
+/*		for(int j=0;j<E.getRepres().length;j++){
+			System.out.println(j+" : "+E.getRepres()[j]);
+		}
+*/		
 		DynamicArray ladK = new DynamicArray(2);
-		
-		lad.heapSort();
-		
+/*		
 		for(int j=0;j<lad.getPosicion();j++){
 			System.out.println(lad.get(j).toString());
 		}
+*/		
+//		System.out.println("\n-----------\n");
 		
+		lad.heapSort();
+/*		
+		for(int j=0;j<lad.getPosicion();j++){
+			System.out.println(lad.get(j).toString());
+		}
+*/		
 		
 		int i=0;
 		while (E.getConexas() > 1) {
-			//System.out.println("---Iteracion "+i+"---");
+//			System.out.println("\n--- Iteracion "+i+"---\n");
 			Arco e = (Arco) lad.get(i);
-			//System.out.println("---Revisamos el arco: "+e.toString()+"---");
+//			System.out.println("\n--- Revisamos el arco: "+e.toString()+"---\n ");
 			int[] rep = E.getRepres();
-			//System.out.println("---origen:"+rep[e.getSrc()]+"---");
-			//System.out.println("---destino:"+rep[e.getDst()]+"---");
+//			System.out.println("\n--- origen: "+rep[e.getSrc()]+" ---\n");
+//			System.out.println("\n--- destino: "+rep[e.getDst()]+" ---\n");
 			if (rep[e.getSrc()] != rep[e.getDst()]) {
-				//System.out.println("---Entre al if---");
+//				System.out.println("\n---Entre al if---\n");
 				E.union(e.getSrc(), e.getDst());
 				ladK.addFinal(e);
 			}

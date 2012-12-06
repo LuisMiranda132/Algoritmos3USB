@@ -240,7 +240,7 @@ public class DynamicArray{
 	}
 
 	public void heapSort(){
-		enheapear(this.array,this.posicion);
+		heapify();
 		int fin = this.posicion-1;
 		
 		Object elem;
@@ -250,41 +250,41 @@ public class DynamicArray{
 			this.add(this.get(fin),0);
 			this.add(elem, fin);
 			fin = fin - 1;
-			acomodar(this.array,0,fin);
+			shift(0,fin);
 		}
 	}
 	
-	private static void enheapear(Object[] arreglo, int n) {
-        int inicio = (n-2)/2;
+	private void heapify() {
+        int inicio = (this.posicion -2)/2;
         
         while (inicio >= 0) {
-            acomodar(arreglo,inicio,n-1);
+            shift(inicio,this.posicion-1);
             inicio = inicio-1;
         }
     }
 	
 	@SuppressWarnings("unchecked")
-	private static void acomodar(Object[] arreglo, int inicio, int fin) {
-        int raiz = inicio;
-        int hijo,swap;
+	private void shift(int inicio, int fin) {
+        int source = inicio;
+        int son,swap;
         
-        while ((raiz*2)+1 <= fin) {
-            hijo = (raiz*2)+1;
-            swap = raiz;
-            if (((Comparable)arreglo[swap]).compareTo(arreglo[hijo])<0) {
-                swap = hijo;
+        while ((source*2)+1 <= fin) {
+            son = (source*2)+1;
+            swap = source;
+            if (((Comparable)this.array[swap]).compareTo(this.array[son])<0) {
+                swap = son;
             }
             
-            if ((hijo+1<=fin)&&
-                (((Comparable)arreglo[swap]).compareTo(arreglo[hijo+1])<0)) {
-                swap = hijo+1;
+            if ((son+1<=fin)&&
+                (((Comparable)this.array[swap]).compareTo(this.array[son+1])<0)) {
+                swap = son+1;
             }
             
-            if (swap != raiz) {
-                Object elem2 = arreglo[raiz];
-                arreglo[raiz] = arreglo[swap];
-                arreglo[swap] = elem2;
-                raiz = swap;
+            if (swap != source) {
+                Object elem2 = this.array[source];
+                this.array[source] = this.array[swap];
+                this.array[swap] = elem2;
+                source = swap;
             } else {
                 break;
             }
