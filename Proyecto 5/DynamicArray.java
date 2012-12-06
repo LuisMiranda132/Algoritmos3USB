@@ -20,13 +20,31 @@ public class DynamicArray{
 		this.array = new Object[0];
 	}
 	
+	public DynamicArray(int i){
+		this.array = new Object[i];
+	}
+	
 	/*
 	 * Agrega un elemento al final del arreglo. El arreglo final es
 	 * es mayor que el de origen.
 	 */
 	public void addFinal(Object x){
-		this.resizeArray(this.array, this.array.length+1);
+/*		this.resizeArray(this.array, this.array.length+1);
 		this.array[this.array.length -1] = x;
+*/
+		if(this.get(0)==null){
+			this.add(x, 0);
+			this.posicion++;
+		}else{
+			
+			if(this.posicion+1 == this.getArray().length){
+				this.crecer(2*this.getArray().length);
+			}
+			
+			this.add(x, this.posicion);
+			this.posicion++;
+		
+		}
 	}
 	
 	/*
@@ -219,5 +237,57 @@ public class DynamicArray{
 	
 	public int getPosicion(){
 		return this.posicion;
+	}
+
+	public void heapSort(){
+		enheapear(this.array,this.posicion);
+		int fin = this.posicion-1;
+		
+		Object elem;
+		
+		while(fin >= 0){
+			elem = this.get(0);
+			this.add(this.get(fin),0);
+			this.add(elem, fin);
+			fin = fin - 1;
+			acomodar(this.array,0,fin);
+		}
+	}
+	
+	private static void enheapear(Object[] arreglo, int n) {
+        int inicio = (n-2)/2;
+        
+        while (inicio >= 0) {
+            acomodar(arreglo,inicio,n-1);
+            inicio = inicio-1;
+        }
+    }
+	
+	@SuppressWarnings("unchecked")
+	private static void acomodar(Object[] arreglo, int inicio, int fin) {
+        int raiz = inicio;
+        int hijo,swap;
+        
+        while ((raiz*2)+1 <= fin) {
+            hijo = (raiz*2)+1;
+            swap = raiz;
+            if (((Comparable)arreglo[swap]).compareTo(arreglo[hijo])<0) {
+                swap = hijo;
+            }
+            
+            if ((hijo+1<=fin)&&
+                (((Comparable)arreglo[swap]).compareTo(arreglo[hijo+1])<0)) {
+                swap = hijo+1;
+            }
+            
+            if (swap != raiz) {
+                Object elem2 = arreglo[raiz];
+                arreglo[raiz] = arreglo[swap];
+                arreglo[swap] = elem2;
+                raiz = swap;
+            } else {
+                break;
+            }
+        }
 	}
 }

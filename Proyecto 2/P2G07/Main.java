@@ -209,7 +209,7 @@ public class Main {
 						 */
 						try {
 							salida.write
-							(perAct.toString()+"> \n");
+							(perAct.toString()+">\n");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -221,7 +221,7 @@ public class Main {
 						}else{
 							
 							try {
-								salida.write("> \n");
+								salida.write(">\n");
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
