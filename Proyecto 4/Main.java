@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Random;
 
 public class Main {
 
@@ -8,15 +7,21 @@ public class Main {
 	public static BufferedReader obtenerGrafo(BufferedReader inFile,
 												int numLinea) {
 		try {
+			/*
+			 * leemos la cantidad de lineas en el archivo correspondientes 
+			 * a funciones para construir el grafo
+			 */
 			for(int i=0;i<numLinea;i++) {
-
+				
 				String[] primer = inFile.readLine().split(": \\(");
 				Nodo nuevFunc = new Nodo(primer[0].intern());
 				nuevFunc.setFuncion(true);
+				//tenemos en primer[0] la funcion, asi que la agregamos al grafo
 				grafo.add(nuevFunc);
 
 				String[] segundo = primer[1].split("\\),  \\(");
 				String[] dominio = segundo[0].split(", ");
+				//agregamos todos los elementos del dominio de la funcion al grafo
 				for(int j=0;j<dominio.length;j++) {
 					grafo.add(new Nodo(dominio[j].intern()));
 					grafo.add(new Arco(dominio[j].intern(),primer[0].intern()));
@@ -24,12 +29,14 @@ public class Main {
 				}
 				String[] tercero = segundo[1].split("\\)");
 				String[] rango = tercero[0].split(", ");
+				//agregamos todos los elementos del rango de la funcion al grafo
 				for(int k=0;k<rango.length;k++) {
 					grafo.add(new Nodo(rango[k]));
 					grafo.add(new Arco(primer[0].intern(),rango[k].intern()));
 				}
-				grafo.get(primer[0]).setCosto(Integer.parseInt(tercero[1].split(" ")[1]));				
-				 
+
+				//agregamos al grafo el costo de la funcion.
+				grafo.get(primer[0]).setCosto(Integer.parseInt(tercero[1]));
 				
 			}
 			
@@ -42,105 +49,16 @@ public class Main {
 		return null;
 	}
 	
-	public static class RandomStringGenerator {
-		public final static short TYPE_MIXED_CASE = 0;
-		public final static short TYPE_UPPER_ONLY = 1;
-		public final static short TYPE_LOWER_ONLY = 2;
-		public final static Random rnd = new Random();
-		
-		static final char[] alphas = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-				         			  'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-		
-		/**
-		 * Generate a random string of characters at the specified length.  The first argument (type) is a constant 
-		 * TYPE_MIXED_CASE, TYPE_UPPER_ONLY, TYPE_LOWER_ONLY.  This is followed by length.  That is followed by whether or not
-		 * the first character should be capitalized (regardless of lower only).  It is of course silly to use initial caps
-		 * with TYPE_UPPER_ONLY.  
-		 * 
-		 * @param type
-		 * @param length
-		 * @param initialCaps
-		 * @return
-		 */
-		public static String generateRandomString(short type,int length, boolean initialCaps) {
-			int min = type == TYPE_LOWER_ONLY ? 26 : 0;
-			int max = type == TYPE_UPPER_ONLY ? 26 : alphas.length;
-			String generated = "";
-			for (int i = 0; i < length; i++) {			
-				int random = rnd.nextInt(max - min) + min;
-				generated += alphas[random];
-			}
-			generated = initialCaps ? (""+generated.charAt(0)).toUpperCase() + generated.substring(1) : generated;
-			return generated;
-			
-			
-		}
-		/**
-		 * Generate a random string of characters at the specified length without the option of initial caps.  See the other method in this class.
-		 * @param type
-		 * @param length
-		 * @return
-		 */
-		public static String generateRandomString(short type,int length) {
-			return generateRandomString(type, length, false);
-		}
-	}
-		
-	public static void prueba(){
-		//Random generador = new Random();
-		
-		String ant = RandomStringGenerator.generateRandomString(RandomStringGenerator.TYPE_MIXED_CASE, 5);
-		
-		Nodo prueba = new Nodo(ant); 
-		grafo.add(prueba);
-		String string = RandomStringGenerator.generateRandomString(RandomStringGenerator.TYPE_MIXED_CASE, 5);
-		grafo.add(new Nodo(string));
-		for(int i = 0; i<200;i++){
-			String string1 = RandomStringGenerator.generateRandomString(RandomStringGenerator.TYPE_MIXED_CASE, 5);
-			grafo.add(new Nodo(string1));
-			ant = string1;
-			
-			
-		}
-		
-		grafo.add(new Arco(string, ant));
-		grafo.add(new Arco(ant, string));
-		
-//		grafo.getNodos().imprimirLista();
-//		System.out.println("\n"+"\n");
-//		grafo.getArcos().imprimirLista();
-		
-//		System.out.println("\n"+ant+"\n");
-		
-		grafo.getOutArcos(string).imprimirLista();
-		grafo.getInArcos(ant).imprimirLista();
 
-//		System.out.println("\n"+"\n");
-		grafo.remove(ant, string);
-		grafo.getOutArcos(string).imprimirLista();
-		grafo.getInArcos(ant).imprimirLista();
-		
-//		System.out.println("\n"+"\n");
-//		grafo.getArcos().imprimirLista();
-//		System.out.println("\n"+"\n");
-		
-		grafo.remove(prueba.toString());
-		
-//		grafo.getNodos().imprimirLista();
-		
-//		System.out.println(grafo.contains(prueba.toString()));
-	}
-	
 	public static Dominio obtenerComposicion(String[] Entrada, String[] Salida) {
 		
 		String[] funcR = new String[0];
-//		System.out.println("\n------");
 		MiLista<String> contRevInic = new MiLista<String>();
+		//agregamos los tipos de datos que debemos revisar, estos son al principio
+		//el contenido de la entrada
 		for(String s:Entrada){
-//			System.out.println(s);
-			contRevInic.add(s.intern());
+			contRevInic.add(s);
 		}
-//		System.out.println("\n------");
 		Dominio inicial = new Dominio(Entrada,contRevInic,funcR,0);
 		
 		funcR = null; contRevInic = null;
@@ -148,147 +66,102 @@ public class Main {
 		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
 		abiertos.agregar(inicial);
 		
+		/*
+		 * almacenamos en nuestra cola de prioridades conjuntos que representan
+		 * subgrafos del grafo inicial con las composiciones posibles a realizar
+		 * y su costo. Mientras tengamos elementos en la cola continuamos con 
+		 * el algoritmo.
+		 */
 		while (!abiertos.esVacio()) {
-/*			System.out.println(abiertos.toString());
-			System.out.println("\n------");
-			System.out.println("abiertos no es vaciooo");
-			System.out.println("\n------");
-*/			Dominio actual = (Dominio) abiertos.getMin();
+			Dominio actual = (Dominio) abiertos.getMin();
 			abiertos.removeMin();
 			
 			Lista<String> revisar = actual.getContArev();
 			DynamicArray listaDom = actual.getCont();
 
-/*			for(int i=0;i<revisar.getSize();i++) {
-				System.out.println(((String) revisar.toArray()[i]));
-			}
-			System.out.println("\n------");
-*/			
 			int k=0;
 			boolean sali = false;
-			
+			/*
+			 * revisamos si el contenido de la salida está en nuestro dominio
+			 * actual
+			 */
 			while(k<Salida.length && !sali) {
-//				System.out.println(Salida[k]);
-//				System.out.println("\n------");
 				if(listaDom.binarySearchPos(Salida[k]) == -1){
 					sali = true;
-//					System.out.println("No tengo a salida["+k+"]");
-//					System.out.println("\n------");
 				}
 				k++;
 			}
-			
+			//si esta, entonces retornamos.
 			if (!sali) {
-//				System.out.println("no saliii");
-//				System.out.println("\n------");
 				return actual;
 			}
 			
 			DynamicArray listafR = actual.getFuncionesRec();
-//			System.out.println("\n------");
-//			System.out.println("lista de funciones recorridas:");
 			
-/*			for(Object s:listafR.getArray()){
-				if(s!=null)System.out.println(s.toString());
-			}
-			System.out.println("\n------");
-*/			
-			
+			/*
+			 * tenemos en la lista revisar los nodos que vamos a intentar 
+			 * expandir para evitar revisar y empilar de mas.
+			 */
 			for (k=0;k<revisar.getSize();k++) {
-//				System.out.println("\n---"+k+"---");
-//				System.out.println("elemento del dominio actual:");
-				String actString = ((String) revisar.toArray()[k]).intern();
-//				System.out.println(revisar.toArray()[k]);
-//				System.out.println("\n------");
+				String actString = (String) revisar.toArray()[k];
 				DynamicArray sucesores = ((MiLista<Nodo>) grafo.getSucs(
 						(String)revisar.toArray()[k])).toDynamicArray();
-				
-//				System.out.println("\n------");
-//				System.out.println("mis sucesores son:");
-/*				for(Object s:sucesores.getArray()){
-					if(s!=null)System.out.println(s.toString());
-				}
-
-				S
-
-				System.out.println("\n------");
-*/				
+								
+				// revisamos los sucesores del nodo actual
 				for (int j=0;j<sucesores.getPosicion();j++) {
+					/*
+					 * si es una funcion que no hemos recorrido entonces
+					 * buscamos a ver si tenemos todos los elementos necesarios
+					 * para ejecutarla 
+					 */
 					if(listafR.binarySearchPos(sucesores.get(j)) == -1) {
 						
 						DynamicArray listaPred = ((Nodo)sucesores.get(j)).getDominio();
-/*							((MiLista<Nodo>) 
-								grafo.getPreds(((Nodo)
-										sucesores.get(j)).toString())).toDynamicArray();
-*/						
-//						System.out.println("\n------");
-//						System.out.println(-Xmx2048m"mis predecesores son:");
-/*						for(Object s:listaPred.getArray()){
-							if(s!=null)System.out.println(s.toString());
-						}
-						System.out.println("\n------");
-*/						
 						int i=0;
 						boolean noIgual=false;
 						
+						//buscamos que todos lo elementos necesarios esten 
+						//en el dominio
 						while(i<listaPred.getPosicion() && !noIgual) {
 							if (listaDom.binarySearchPos(listaPred.get(i))==-1){
-/*								System.out.println("\n------");
-								System.out.println("no tengo este predecesor :(");
-								System.out.println("\n------");
-*/								noIgual =true;
+								noIgual =true;
 							}
 							i++;
 						}
 						
+						/*
+						 * si estan todos los elementos entonces procedemos a 
+						 * construir el nuevo "subgrafo" resultante de ejecutar
+						 * esa funcion
+						 */
 						if (!noIgual) {
-							/*
-							 * Cambio de j por k
-							 */
 							DynamicArray sucs2 = ((MiLista<Nodo>) 
 									grafo.getSucs(((Nodo) 
-									sucesores.get(j)).toString().intern())).toDynamicArray();
-//									sucesores.get(k)).toString())).toDynamicArray();
-							
-							
-//							System.out.println("\n------");
-//							System.out.println("mis sucesores (rango) son:");
-/*							for(Object s:sucs2.getArray()){
-								if(s!=null)System.out.println(s.toString());
-							}
-							System.out.println("\n------");
-*/							
+									sucesores.get(j)).toString())).toDynamicArray();
+														
 							int nuevCost = actual.getCosto() + ((Nodo)grafo.get(
-									((Nodo)sucesores.get(j)).toString().intern())).getCosto();
-//									((Nodo)sucesores.get(k)).toString())).getCosto();
+									((Nodo)sucesores.get(j)).toString())).getCosto();
 							
-/*							System.out.println("\n------");
-							System.out.println("el nuevo costo es:"+nuevCost);
-							System.out.println("\n------");
-*/							
 							Dominio nuevo = new Dominio(listaDom,
 									//revisar.clone
 									(MiLista<String>) revisar, listafR, nuevCost);
 							
 							nuevo.agregarFuncionRec(((Nodo) 
-									sucesores.get(j)).toString().intern());
-//									sucesores.get(k)).toString());
-//							System.out.println("\n---revisar---");
-//							revisar.imprimirLista();
-//							System.out.println("\n------");
+									sucesores.get(j)).toString());
 							nuevo.eliminardeContArev(actString);
-//							nuevo.getContArev().imprimirLista();
 							
+							/* 
+							 * agregamos el rango de la funcion que ejecutamos
+							 * al dominio y a los elementos que podemos expandir
+							 */
 							for (int l=0;l<sucs2.getPosicion();l++) {
 								nuevo.agregarCont(((Nodo) 
 										sucs2.get(l)).toString());
 								nuevo.agregarAcontArev(((Nodo) 
 										sucs2.get(l)).toString());
 							}
-							
-//							System.out.println("\n---final---");
-//							nuevo.getContArev().imprimirLista();
-							
+														
+							//agregamos al heap el nuevo estado
 							abiertos.agregar(nuevo);
 							
 						}
@@ -306,6 +179,7 @@ public class Main {
 	
 	public static void buscarComposiciones(int numComp, BufferedReader inFile,
 			BufferedWriter outFile) {
+		//leemos del archivo el numero de composiciones que debemos buscar
 		for(int i=0;i<numComp;i++) {
 			try {
 				String[] primer = inFile.readLine().split("\\), \\(");
@@ -319,9 +193,17 @@ public class Main {
 				Dominio dom = obtenerComposicion(entrada,salida);
 				
 				outFile.write("(");
+				/*
+				 * si el costo es cero es porque no hay un camino asi que 
+				 * imprimimos la secuencia vacia
+				 */
 				if (dom.getCosto() == 0) {
-					outFile.write("), 0\n");
+					outFile.write("), 0, 0\n");
 				}
+				/*
+				 * sino entonces imprimimos la secuencia de funciones que 
+				 * recorrimos y el costo.
+				 */
 				else {
 					int k=0;
 					while (k<dom.getFuncionesRec().getPosicion()-1) {
@@ -330,8 +212,6 @@ public class Main {
 					}
 					outFile.write((String) dom.getFuncionesRec().get(k)+"), ");
 					outFile.write(dom.getCosto()+", 0\n");
-				primer = null;segundo = null;tercer=null;entrada=null;salida=null;
-
 				
 				}
 			}
@@ -343,8 +223,6 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-//		prueba();
-		
 	String in = "file.in";
 	String out = "file.out";
 	
@@ -353,7 +231,6 @@ public class Main {
 		out = args[1];
 	}
 	
-	//String linea = "";
 	BufferedReader inFile = null;
 	FileWriter sali = null;
 	BufferedWriter outFile = null;
@@ -374,7 +251,7 @@ public class Main {
 		grafo = new DigraphLista();
 		
 		int numLinea = Integer.parseInt(inFile.readLine());
-//		System.out.println(numLinea);
+		System.out.println(numLinea);
 		
 		if(numLinea == 0){
 			System.exit(1);
@@ -383,7 +260,6 @@ public class Main {
 		inFile = obtenerGrafo(inFile, numLinea);
 		
 		int numComp = Integer.parseInt(inFile.readLine());
-//		System.out.println(numComp);
 		
 		if(numComp == 0){
 			System.exit(1);
