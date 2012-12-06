@@ -5,7 +5,7 @@ public class Main {
 	
 	static Scanner scan = null;
 	
-	public static DynamicArray leerArchivo(int numEscenario) {
+	public static int leerArchivo(int numEscenario) {
         
 		DynamicArray lados = new DynamicArray(2);
 		int numCiudad = scan.nextInt();
@@ -37,11 +37,11 @@ public class Main {
 			Arco aux2 = new Arco(c1,c2,0);
 			lados.addFinal(aux2);
 		}
-		DynamicArray lados2 = Kruskal(lados,numCiudad);
+		int lados2 = Kruskal(lados,numCiudad);
 		return lados2;
 	}
 	
-	public static DynamicArray Kruskal(DynamicArray lad, int nC) {
+	public static int Kruskal(DynamicArray lad, int nC) {
 		DisjointSet E = new DisjointSet(nC);
 		
 /*		for(int j=0;j<E.getRepres().length;j++){
@@ -64,6 +64,7 @@ public class Main {
 */		
 		
 		int i=0;
+		int cost=0;
 		while (E.getConexas() > 1) {
 //			System.out.println("\n--- Iteracion "+i+"---\n");
 			Arco e = (Arco) lad.get(i);
@@ -71,25 +72,26 @@ public class Main {
 			int[] rep = E.getRepres();
 //			System.out.println("\n--- origen: "+rep[e.getSrc()]+" ---\n");
 //			System.out.println("\n--- destino: "+rep[e.getDst()]+" ---\n");
-			if (rep[e.getSrc()] != rep[e.getDst()]) {
+			if (E.find(e.getSrc()) != E.find(e.getDst())) {
 //				System.out.println("\n---Entre al if---\n");
 				E.union(e.getSrc(), e.getDst());
-				ladK.addFinal(e);
+				//ladK.addFinal(e);
+				cost += e.getCost();
 			}
 			i++;
 		}
-		return ladK;
+		return cost;
 	}
 	
-	public static void imprimirArch(DynamicArray lK, BufferedWriter out) {
+	public static void imprimirArch(int lK, BufferedWriter out) {
 		try {
-			int cost = 0;
-			for(int k=0;k<lK.getPosicion();k++) {
-				Arco act = (Arco) lK.get(k);
-				cost += act.getCost();
-			}
-			out.write(cost+"\n");
-			System.out.println(cost);
+			//int cost = 0;
+			//for(int k=0;k<lK.getPosicion();k++) {
+				//Arco act = (Arco) lK.get(k);
+				//cost += act.getCost();
+			//}
+			out.write(lK+"\n");
+			System.out.println(lK);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -121,7 +123,7 @@ public class Main {
 		scan = new Scanner(arch);
 		int numEsc = scan.nextInt();
 		for(int i=0;i<numEsc;i++) {
-			DynamicArray ladKrus = leerArchivo(i);
+			int ladKrus = leerArchivo(i);
 			imprimirArch(ladKrus,outFile);
 		}
 				
