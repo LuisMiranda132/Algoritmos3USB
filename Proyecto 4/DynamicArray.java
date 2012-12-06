@@ -37,7 +37,9 @@ public class DynamicArray{
 	}
 
 	public void removeOrdMov(int pos){
-				
+		
+		this.add(null, pos);
+		
 //		for(int j = this.posicion; j >= pos ;j--){
 		for(int j = pos+1; j<this.posicion ;j++){
 			this.add(this.get(j), j-1);
@@ -72,6 +74,16 @@ public class DynamicArray{
 			while(this.get(i)!=null&&i<this.getArray().length&&cajita.compareTo(this.get(i).toString())>0){
 				i++;
 			}
+			
+//			i = this.binarySearchPosUlt(x);
+						
+//			System.out.print(i+": ");
+			
+			Object dummy = this.get(i);
+			
+//			if(dummy!=null)System.out.println(this.get(i).toString());
+						
+			if(dummy!=null)if(dummy.toString().compareTo(cajita)==0)return -1;
 			
 			if(this.posicion+1 == this.getArray().length){
 				this.crecer(2*this.getArray().length);
@@ -190,6 +202,31 @@ public class DynamicArray{
     		return mid;
     	}
     	return -1;
+    }
+	
+	public int binarySearchPosUlt(Object element){
+    	Object[] array = this.array;
+    	int min = 0, max = this.posicion, mid = 0;
+    	boolean encontre = false;
+    	
+    	while(!encontre && min <= max){
+    		mid = (min + max)/2;
+    		if(mid >= this.posicion)break;
+
+    		if(array[mid].toString().compareTo(element.toString()) == 0){
+    			encontre = true;
+    		}else if(array[mid].toString().compareTo(element.toString()) > 0){
+    			max = mid -1;
+    		}else{
+    			min = mid + 1;
+    		}
+    		
+    	}
+    	
+    	if(encontre){
+    		return mid;
+    	}
+    	return mid;
     }
 	
 	public Object binarySearch(Object element){

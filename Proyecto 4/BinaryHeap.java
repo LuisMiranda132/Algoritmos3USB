@@ -83,6 +83,8 @@ public class BinaryHeap<T extends Comparable<T>>{
 		}else{
 			this.size--;
 			
+                        this.data.add(null, 0);
+                        
 			this.data.add(this.data.get(this.size), 0);
 //			this.data.getArray()[0] = this.data.getArray()[this.size];
 			

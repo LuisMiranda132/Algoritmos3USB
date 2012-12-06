@@ -240,6 +240,8 @@ public class MiLista<E> implements Lista<E>{
         		if(aux.equals(this.ultimo))this.ultimo = ant;
     		}
     		
+                aux.remove();
+                
     		this.tam --;
     	}
     	

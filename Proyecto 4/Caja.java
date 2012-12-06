@@ -15,6 +15,11 @@ public class Caja<E> {
 	 * Metodos para el nodo 
 	 */
 	
+        public void remove(){
+            this.cont = null;
+            this.siguiente = null;
+        }
+        
 	/*
 	 * Devuelve el contenido de la caja.
 	 */

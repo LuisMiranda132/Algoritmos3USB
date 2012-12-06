@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Random;
 
 public class Main {
 
@@ -15,30 +14,32 @@ public class Main {
 			for(int i=0;i<numLinea;i++) {
 				
 				String[] primer = inFile.readLine().split(": \\(");
-				Nodo nuevFunc = new Nodo(primer[0]);
+				Nodo nuevFunc = new Nodo(primer[0].intern());
 				nuevFunc.setFuncion(true);
 				//tenemos en primer[0] la funcion, asi que la agregamos al grafo
 				grafo.add(nuevFunc);
-				
 
-				String[] segundo = primer[1].split("\\), \\(");
+				String[] segundo = primer[1].split("\\),  \\(");
 				String[] dominio = segundo[0].split(", ");
 				//agregamos todos los elementos del dominio de la funcion al grafo
 				for(int j=0;j<dominio.length;j++) {
-					grafo.add(new Nodo(dominio[j]));
-					grafo.add(new Arco(dominio[j],primer[0]));
+					grafo.add(new Nodo(dominio[j].intern()));
+					grafo.add(new Arco(dominio[j].intern(),primer[0].intern()));
+					nuevFunc.addDominio(dominio[j].intern());
 				}
-				String[] tercero = segundo[1].split("\\) ");
+				String[] tercero = segundo[1].split("\\)");
 				String[] rango = tercero[0].split(", ");
 				//agregamos todos los elementos del rango de la funcion al grafo
 				for(int k=0;k<rango.length;k++) {
 					grafo.add(new Nodo(rango[k]));
-					grafo.add(new Arco(primer[0],rango[k]));
+					grafo.add(new Arco(primer[0].intern(),rango[k].intern()));
 				}
+
 				//agregamos al grafo el costo de la funcion.
 				grafo.get(primer[0]).setCosto(Integer.parseInt(tercero[1]));
 				
 			}
+			
 			return inFile;
 			
 		}
@@ -48,7 +49,7 @@ public class Main {
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
+
 	public static Dominio obtenerComposicion(String[] Entrada, String[] Salida) {
 		
 		String[] funcR = new String[0];
@@ -59,6 +60,8 @@ public class Main {
 			contRevInic.add(s);
 		}
 		Dominio inicial = new Dominio(Entrada,contRevInic,funcR,0);
+		
+		funcR = null; contRevInic = null;
 		
 		BinaryHeap<Dominio> abiertos = new BinaryHeap<Dominio>();
 		abiertos.agregar(inicial);
@@ -113,10 +116,7 @@ public class Main {
 					 */
 					if(listafR.binarySearchPos(sucesores.get(j)) == -1) {
 						
-						DynamicArray listaPred = ((MiLista<Nodo>) 
-								grafo.getPreds(((Nodo)
-										sucesores.get(j)).toString())).toDynamicArray();
-												
+						DynamicArray listaPred = ((Nodo)sucesores.get(j)).getDominio();
 						int i=0;
 						boolean noIgual=false;
 						
@@ -143,7 +143,8 @@ public class Main {
 									((Nodo)sucesores.get(j)).toString())).getCosto();
 							
 							Dominio nuevo = new Dominio(listaDom,
-									(MiLista<String>) revisar.clone(), listafR, nuevCost);
+									//revisar.clone
+									(MiLista<String>) revisar, listafR, nuevCost);
 							
 							nuevo.agregarFuncionRec(((Nodo) 
 									sucesores.get(j)).toString());
@@ -169,7 +170,9 @@ public class Main {
 				}
 			}
 		}
-			
+		
+		
+		
 		return new Dominio();
 		
 	}
@@ -184,6 +187,8 @@ public class Main {
 				String[] tercer = primer[1].split("\\)");
 				String[] entrada = segundo[1].split(", ");
 				String[] salida = tercer[0].split(", ");
+				
+				
 				
 				Dominio dom = obtenerComposicion(entrada,salida);
 				
@@ -240,7 +245,8 @@ public class Main {
 	outFile = new BufferedWriter(sali);
 
 	try{
-		inFile = new BufferedReader(new FileReader(in));
+//		inFile = new BufferedReader(new FileReader("/home/luismiranda/Documents/Java/Algoritmos3USB/Proyecto 4/100.txt"));
+                inFile = new BufferedReader(new FileReader(in));
 		
 		grafo = new DigraphLista();
 		
@@ -260,6 +266,8 @@ public class Main {
 		}
 		
 		buscarComposiciones(numComp,inFile,outFile);
+		
+		grafo = null;
 		
 	}catch(IOException e){
 		e.printStackTrace();

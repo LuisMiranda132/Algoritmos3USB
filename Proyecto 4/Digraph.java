@@ -110,6 +110,9 @@ public abstract class Digraph {
     			preds.add(new Nodo(dummy.getSrc()));
     			caja = caja.obtenerSiguiente();
     		}
+    		
+    		arcos = null;
+    		caja = null;
     	}catch(java.lang.NullPointerException e){
     		return null;
     	}    	
