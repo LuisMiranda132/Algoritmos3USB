@@ -43,11 +43,6 @@ public class Main {
 	
 	public static int Kruskal(DynamicArray lad, int nC) {
 		DisjointSet E = new DisjointSet(nC);
-		
-/*		for(int j=0;j<E.getRepres().length;j++){
-			System.out.println(j+" : "+E.getRepres()[j]);
-		}
-*/		
 		DynamicArray ladK = new DynamicArray(2);
 /*		
 		for(int j=0;j<lad.getPosicion();j++){

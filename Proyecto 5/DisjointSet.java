@@ -37,12 +37,12 @@ public class DisjointSet {
 		}
 	}
 
-	public void union(int x, int y){
+	public boolean union(int x, int y){
 		int px = find(x);
 		int py = find(y);
 		
 		if(px == py){
-			return;
+			return false;
 		}else{		
 			this.conexas--; 
 			if(rango[px]>rango[py]){
@@ -53,6 +53,7 @@ public class DisjointSet {
 				repres[py] = px;
 				rango[px]++;
 			}
+			return true;
 		}
 	}
 }
