@@ -1,8 +1,6 @@
 import java.io.*;
 import java.util.Scanner;
 
-import java.util.Random;
-
 public class Main {
 	
 	static Scanner scan = null;
@@ -46,7 +44,14 @@ public class Main {
 	public static DynamicArray Kruskal(DynamicArray lad, int nC) {
 		DisjointSet E = new DisjointSet(nC);
 		DynamicArray ladK = new DynamicArray(2);
+		
 		lad.heapSort();
+		
+		for(int j=0;j<lad.getPosicion();j++){
+			System.out.println(lad.get(j).toString());
+		}
+		
+		
 		int i=0;
 		while (E.getConexas() > 1) {
 			//System.out.println("---Iteracion "+i+"---");
